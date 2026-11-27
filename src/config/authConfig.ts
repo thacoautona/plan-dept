@@ -4,30 +4,30 @@
 export const AUTH_CONFIG = {
   /**
    * Đặt REQUIRE_AUTH = true khi bạn muốn bật bắt buộc đăng nhập Google mới được vào web.
-   * Hiện tại để false để mọi người vẫn có thể truy cập bình thường.
+   * Hiện tại để false theo yêu cầu để mọi người vẫn có thể truy cập bình thường.
    */
   REQUIRE_AUTH: false,
 
   /**
    * Google OAuth 2.0 Web Client ID (tạo tại Google Cloud Console -> APIs & Services -> Credentials).
-   * Authorized JavaScript origins cần khai báo:
-   *   - https://thacoautona.github.io
-   *   - http://localhost:5173
    */
-  GOOGLE_CLIENT_ID: '',
+  GOOGLE_CLIENT_ID: '120189691712-m2tvn40njmc9lp3ttbg3ft4ch1qhvaqq.apps.googleusercontent.com',
 
   /**
-   * Danh sách Gmail Quản trị viên (được phép upload/xóa tài liệu trong Cơ sở dữ liệu).
+   * Danh sách Gmail Quản trị viên (được phép upload/xóa tài liệu trong Cơ sở dữ liệu và truy cập toàn hệ thống).
    */
   ADMIN_EMAILS: [
-    // Điền Gmail của bạn vào đây, ví dụ: 'manhhoang...@gmail.com'
+    'manhhung.navn@gmail.com',
+    'backup.thaco@gmail.com',
+    'manhhung.mggm@gmail.com'
   ] as string[],
 
   /**
-   * Danh sách các tài khoản Gmail được phép truy cập hệ thống khi bật REQUIRE_AUTH = true.
+   * Danh sách các tài khoản Gmail nhân sự được phép truy cập hệ thống khi bật REQUIRE_AUTH = true.
    */
   ALLOWED_EMAILS: [
-    // Thêm các Gmail được cấp quyền vào đây...
+    'nmh.workspace@gmail.com',
+    'sheepa.reader@gmail.com'
   ] as string[],
 
   UNAUTHORIZED_MESSAGE: 'Vui lòng liên hệ quản trị viên.'
