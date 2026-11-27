@@ -21,6 +21,13 @@ import {
   mockGovernanceDocs,
   mockDigitalInitiatives
 } from './data/mockData';
+import {
+  INITIAL_WEEKLY_REPORT,
+  WeeklyReportData,
+  sumVehicleSegment,
+  sumServicePlan,
+  calcPct
+} from './data/weeklyPlanData';
 import { orgPositionsData } from './data/orgData';
 import { PlanGoal, GovernanceDoc, PlanStatus } from './types';
 
@@ -32,6 +39,32 @@ export function App() {
   const [plans, setPlans] = useState<PlanGoal[]>(mockPlanGoals);
   const [docs, setDocs] = useState<GovernanceDoc[]>(mockGovernanceDocs);
   const [digitalList] = useState(mockDigitalInitiatives);
+  const [weeklyReport, setWeeklyReport] = useState<WeeklyReportData>(() => {
+    try {
+      const saved = localStorage.getItem('thaco_na_weekly_report_v1');
+      return saved ? JSON.parse(saved) : INITIAL_WEEKLY_REPORT;
+    } catch {
+      return INITIAL_WEEKLY_REPORT;
+    }
+  });
+
+  const handleUpdateWeeklyReport = (updated: WeeklyReportData) => {
+    setWeeklyReport(updated);
+    try {
+      localStorage.setItem('thaco_na_weekly_report_v1', JSON.stringify(updated));
+    } catch {
+      // ignore
+    }
+  };
+
+  const handleResetWeeklyReport = () => {
+    setWeeklyReport(INITIAL_WEEKLY_REPORT);
+    try {
+      localStorage.removeItem('thaco_na_weekly_report_v1');
+    } catch {
+      // ignore
+    }
+  };
 
   // Auth State
   const [authUser, setAuthUser] = useState<AuthUser | null>(() => {
@@ -155,30 +188,22 @@ export function App() {
 
   // Export Executive Report as Markdown
   const handleExportReport = () => {
-    const totalWeight = plans.reduce((acc, p) => acc + p.weight, 0);
-    const weightedProgress =
-      plans.reduce((acc, p) => acc + p.progressPct * p.weight, 0) / (totalWeight || 1);
+    const pc = sumVehicleSegment(weeklyReport.vehicles, 'PC');
+    const cv = sumVehicleSegment(weeklyReport.vehicles, 'CV');
+    const dl = sumServicePlan(weeklyReport.services[0]);
+    const tb = sumServicePlan(weeklyReport.services[1]);
 
     const reportContent = `# BÁO CÁO TỔNG HỢP KẾ HOẠCH & QUẢN TRỊ ĐIỀU HÀNH
-Đơn vị: THACO AUTO Nghệ An | Kỳ báo cáo: Tháng 11/2026
+Đơn vị: THACO AUTO Nghệ An | Kỳ báo cáo: ${weeklyReport.reportTitle}
 Người lập: Trợ lý Kế hoạch | Ngày xuất: ${new Date().toLocaleDateString('vi-VN')}
 
 ---
 
-## I. ĐÁNH GIÁ TIẾN ĐỘ THỰC HIỆN MỤC TIÊU CHUNG
-* **Tỷ lệ hoàn thành mục tiêu trọng số**: ${weightedProgress.toFixed(1)}%
-* **Tổng số mục tiêu đang theo dõi**: ${plans.length} mục tiêu
-  - Hoàn thành: ${plans.filter((p) => p.status === 'completed').length}
-  - Đang thực hiện: ${plans.filter((p) => p.status === 'in_progress').length}
-  - Có rủi ro / Cần chú ý: ${plans.filter((p) => p.status === 'at_risk').length}
-
-### Chi tiết các chỉ tiêu:
-${plans
-  .map(
-    (p) =>
-      `* **[${p.code}] ${p.title}** (${p.department}): Đạt ${p.actualValue}/${p.targetValue} ${p.unit} (${p.progressPct}%). Trạng thái: ${p.status}.\n  - *Ý kiến tham mưu:* ${p.advisoryNote}`
-  )
-  .join('\n\n')}
+## I. LŨY KẾ THỰC HIỆN TUẦN
+* **Xe Du lịch (PC)**: XHĐ ${pc.xhdTh}/${pc.xhdCt} xe (${calcPct(pc.xhdTh, pc.xhdCt)}% CT) | KHĐ: ${pc.khd} | HĐ tồn chưa XHĐ: ${pc.hdTon}
+* **Xe Tải & Bus (CV)**: XHĐ ${cv.xhdTh}/${cv.xhdCt} xe (${calcPct(cv.xhdTh, cv.xhdCt)}% CT) | KHĐ: ${cv.khd} | HĐ tồn chưa XHĐ: ${cv.hdTon}
+* **DT DVPT Xe Du lịch**: ${dl.th.toFixed(2)}/${dl.ct} tỷ đ (${calcPct(dl.th, dl.ct)}% CT) | DT tồn: ${dl.dtTon.toFixed(2)} tỷ đ
+* **DT DVPT Xe Tải, Bus**: ${tb.th.toFixed(2)}/${tb.ct} tỷ đ (${tb.ct > 0 ? ((tb.th / tb.ct) * 100).toFixed(1) : 0}% CT) | DT tồn: ${tb.dtTon.toFixed(2)} tỷ đ
 
 ---
 
@@ -186,16 +211,6 @@ ${plans
 * Tổng số văn bản quy trình, quy định áp dụng: ${docs.length} văn bản
   - Văn bản Quản trị Khung từ VPĐH: ${docs.filter((d) => d.sourceLevel === 'VPDH').length} văn bản
   - Văn bản Ban hành nội bộ THACO AUTO Nghệ An: ${docs.filter((d) => d.sourceLevel === 'NOI_BO').length} văn bản (từ 10 bộ phận nghiệp vụ)
-
----
-
-## III. DỰ ÁN CHUYỂN ĐỔI SỐ & CẢI TIẾN
-${digitalList
-  .map(
-    (d) =>
-      `* **${d.name}** [${d.code}]: Tiến độ ${d.progressPct}%. Hiệu quả: ${d.benefits}`
-  )
-  .join('\n')}
 `;
 
     const blob = new Blob([reportContent], { type: 'text/markdown;charset=utf-8' });
@@ -235,7 +250,7 @@ ${digitalList
         setDarkMode={setDarkMode}
         isAdmin={isAdmin}
         stats={{
-          plansCount: plans.length,
+          plansCount: weeklyReport.vehicles.length + weeklyReport.services.length,
           docsCount: docs.length,
           digitalCount: digitalList.length
         }}
@@ -257,20 +272,19 @@ ${digitalList
         <main className="flex-1 overflow-y-auto px-4 sm:px-8 lg:px-12 py-4 max-w-7xl mx-auto w-full">
           {activeTab === 'dashboard' && (
             <DashboardView
-              plans={plans}
+              weeklyReport={weeklyReport}
               docs={docs}
               digitalList={digitalList}
-              onNavigateTab={setActiveTab}
-              onSelectPlan={setSelectedPlanForDetail}
+              onNavigateTab={handleSelectTab}
             />
           )}
 
           {activeTab === 'planning' && (
             <PlanningView
-              plans={plans}
-              onSelectPlan={setSelectedPlanForDetail}
-              onOpenCreatePlan={() => setIsCreateModalOpen(true)}
-              onUpdatePlanStatus={handleUpdatePlanStatus}
+              report={weeklyReport}
+              onUpdateReport={handleUpdateWeeklyReport}
+              onResetReport={handleResetWeeklyReport}
+              isAdmin={isAdmin}
             />
           )}
 
