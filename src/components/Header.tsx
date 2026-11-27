@@ -3,23 +3,29 @@ import {
   Search,
   Plus,
   Download,
-  ChevronRight
+  ChevronRight,
+  LogIn
 } from 'lucide-react';
 import { ActiveTab } from './Sidebar';
 import { AppIcon } from './AppIcon';
+import { AuthUser } from '../config/authConfig';
 
 interface HeaderProps {
   activeTab: ActiveTab;
   onOpenSearch: () => void;
   onOpenCreateModal: () => void;
   onExportReport: () => void;
+  authUser?: AuthUser | null;
+  onOpenAuthPreview?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   activeTab,
   onOpenSearch,
   onOpenCreateModal,
-  onExportReport
+  onExportReport,
+  authUser,
+  onOpenAuthPreview
 }) => {
   const getTabTitle = () => {
     switch (activeTab) {
@@ -27,6 +33,8 @@ export const Header: React.FC<HeaderProps> = ({
         return 'Tổng quan Điều hành & Báo cáo Tham mưu';
       case 'planning':
         return 'Quản trị Kế hoạch & Tiến độ Mục tiêu';
+      case 'database':
+        return 'Cơ sở dữ liệu & Kho tài liệu';
       case 'governance':
         return 'Hệ thống Quy trình Quy định';
       case 'org':
@@ -74,6 +82,20 @@ export const Header: React.FC<HeaderProps> = ({
           <Download className="w-3.5 h-3.5" />
           <span className="hidden md:inline">Xuất báo cáo</span>
         </button>
+
+        {/* Gmail Auth Preview / Status */}
+        {onOpenAuthPreview && (
+          <button
+            onClick={onOpenAuthPreview}
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium text-[#444] dark:text-[#DDD] hover:bg-[#EAEAEA] dark:hover:bg-[#2A2A2A] transition-colors border border-[#E0E0DE] dark:border-[#383838]"
+            title="Đăng nhập / Kiểm tra phân quyền Gmail"
+          >
+            <LogIn className="w-3.5 h-3.5 text-[#004B87] dark:text-blue-400" />
+            <span className="hidden lg:inline">
+              {authUser ? authUser.email : 'Đăng nhập Gmail'}
+            </span>
+          </button>
+        )}
 
         {/* Primary Action Button */}
         <button

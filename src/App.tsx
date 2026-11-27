@@ -3,9 +3,12 @@ import { Sidebar, ActiveTab } from './components/Sidebar';
 import { Header } from './components/Header';
 import { DashboardView } from './components/views/DashboardView';
 import { PlanningView } from './components/views/PlanningView';
+import { DatabaseView } from './components/views/DatabaseView';
 import { GovernanceView } from './components/views/GovernanceView';
 import { OrgStructureView } from './components/views/OrgStructureView';
 import { DigitalTransformationView } from './components/views/DigitalTransformationView';
+import { AuthGate } from './components/AuthGate';
+import { AUTH_CONFIG, AuthUser, isEmailAuthorized } from './config/authConfig';
 import { CommandPalette } from './components/CommandPalette';
 import { PlanDetailModal } from './components/PlanDetailModal';
 import { CreateItemModal } from './components/CreateItemModal';
@@ -27,6 +30,35 @@ export function App() {
   const [plans, setPlans] = useState<PlanGoal[]>(mockPlanGoals);
   const [docs, setDocs] = useState<GovernanceDoc[]>(mockGovernanceDocs);
   const [digitalList] = useState(mockDigitalInitiatives);
+
+  // Auth State
+  const [authUser, setAuthUser] = useState<AuthUser | null>(() => {
+    try {
+      const saved = localStorage.getItem('thaco_na_auth_user');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  });
+  const [isAuthPreview, setIsAuthPreview] = useState(false);
+
+  const handleLogin = (user: AuthUser) => {
+    setAuthUser(user);
+    try {
+      localStorage.setItem('thaco_na_auth_user', JSON.stringify(user));
+    } catch {
+      // ignore
+    }
+  };
+
+  const handleLogout = () => {
+    setAuthUser(null);
+    try {
+      localStorage.removeItem('thaco_na_auth_user');
+    } catch {
+      // ignore
+    }
+  };
 
   // Modals & Drawers
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -127,6 +159,20 @@ ${digitalList
     URL.revokeObjectURL(url);
   };
 
+  const isLockedOut = AUTH_CONFIG.REQUIRE_AUTH && (!authUser || !isEmailAuthorized(authUser.email));
+
+  if (isLockedOut || isAuthPreview) {
+    return (
+      <AuthGate
+        user={authUser}
+        onLogin={handleLogin}
+        onLogout={handleLogout}
+        isPreviewMode={!isLockedOut && isAuthPreview}
+        onExitPreview={() => setIsAuthPreview(false)}
+      />
+    );
+  }
+
   return (
     <div className="flex h-screen w-full overflow-hidden bg-[#FBFBFA] dark:bg-[#191919] text-[#37352F] dark:text-[#E3E2E0]">
       {/* Sidebar Navigation */}
@@ -152,6 +198,8 @@ ${digitalList
           onOpenSearch={() => setIsSearchOpen(true)}
           onOpenCreateModal={() => setIsCreateModalOpen(true)}
           onExportReport={handleExportReport}
+          authUser={authUser}
+          onOpenAuthPreview={() => setIsAuthPreview(true)}
         />
 
         {/* Dynamic Content Views with Notion-style inner padding & max-width */}
@@ -174,6 +222,8 @@ ${digitalList
               onUpdatePlanStatus={handleUpdatePlanStatus}
             />
           )}
+
+          {activeTab === 'database' && <DatabaseView />}
 
           {activeTab === 'governance' && (
             <GovernanceView

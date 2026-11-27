@@ -8,7 +8,7 @@ import {
 } from 'lucide-react';
 import { AppIcon, AppIconName } from './AppIcon';
 
-export type ActiveTab = 'dashboard' | 'planning' | 'governance' | 'org' | 'digital';
+export type ActiveTab = 'dashboard' | 'planning' | 'database' | 'governance' | 'org' | 'digital';
 
 interface SidebarProps {
   activeTab: ActiveTab;
@@ -47,6 +47,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
       iconName: 'target_goal' as AppIconName,
       badge: stats.plansCount,
       desc: 'Mục tiêu, Tiến độ & KPI'
+    },
+    {
+      id: 'database' as ActiveTab,
+      label: 'Cơ sở dữ liệu',
+      iconName: 'binder_archive' as AppIconName,
+      badge: undefined,
+      desc: 'Báo cáo, Hướng dẫn, Layout'
     },
     {
       id: 'governance' as ActiveTab,
