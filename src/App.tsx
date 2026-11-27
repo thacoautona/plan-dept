@@ -200,8 +200,8 @@ Người lập: Trợ lý Kế hoạch | Ngày xuất: ${new Date().toLocaleDate
 ---
 
 ## I. LŨY KẾ THỰC HIỆN TUẦN
-* **Xe Du lịch (PC)**: XHĐ ${pc.xhdTh}/${pc.xhdCt} xe (${calcPct(pc.xhdTh, pc.xhdCt)}% CT) | KHĐ: ${pc.khd} | HĐ tồn chưa XHĐ: ${pc.hdTon}
-* **Xe Tải & Bus (CV)**: XHĐ ${cv.xhdTh}/${cv.xhdCt} xe (${calcPct(cv.xhdTh, cv.xhdCt)}% CT) | KHĐ: ${cv.khd} | HĐ tồn chưa XHĐ: ${cv.hdTon}
+* **Xe Du lịch**: XHĐ ${pc.xhdTh}/${pc.xhdCt} xe (${calcPct(pc.xhdTh, pc.xhdCt)}% CT) | KHĐ: ${pc.khd} | HĐ tồn chưa XHĐ: ${pc.hdTon}
+* **Xe Tải Bus**: XHĐ ${cv.xhdTh}/${cv.xhdCt} xe (${calcPct(cv.xhdTh, cv.xhdCt)}% CT) | KHĐ: ${cv.khd} | HĐ tồn chưa XHĐ: ${cv.hdTon}
 * **DT DVPT Xe Du lịch**: ${dl.th.toFixed(2)}/${dl.ct} tỷ đ (${calcPct(dl.th, dl.ct)}% CT) | DT tồn: ${dl.dtTon.toFixed(2)} tỷ đ
 * **DT DVPT Xe Tải, Bus**: ${tb.th.toFixed(2)}/${tb.ct} tỷ đ (${tb.ct > 0 ? ((tb.th / tb.ct) * 100).toFixed(1) : 0}% CT) | DT tồn: ${tb.dtTon.toFixed(2)} tỷ đ
 

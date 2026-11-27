@@ -221,7 +221,7 @@ export const PlanningView: React.FC<PlanningViewProps> = ({
         {/* PC Summary */}
         <div className="p-4 rounded-2xl bg-white dark:bg-[#202020] border border-[#E9E9E7] dark:border-[#2F2F2F] shadow-2xs space-y-2">
           <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
-            <span className="font-semibold">Xe Du lịch (PC)</span>
+            <span className="font-semibold">Xe Du lịch</span>
             <Car className="w-4 h-4 text-[#004B87] dark:text-blue-400" />
           </div>
           <div className="flex items-baseline justify-between">
@@ -247,7 +247,7 @@ export const PlanningView: React.FC<PlanningViewProps> = ({
         {/* CV Summary */}
         <div className="p-4 rounded-2xl bg-white dark:bg-[#202020] border border-[#E9E9E7] dark:border-[#2F2F2F] shadow-2xs space-y-2">
           <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
-            <span className="font-semibold">Xe Tải & Bus (CV)</span>
+            <span className="font-semibold">Xe Tải Bus</span>
             <Truck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
           </div>
           <div className="flex items-baseline justify-between">
@@ -330,7 +330,7 @@ export const PlanningView: React.FC<PlanningViewProps> = ({
           {[
             { id: 'ALL' as SegmentFilter, label: 'Tất cả mảng' },
             { id: 'PC' as SegmentFilter, label: 'Xe Du lịch (7)' },
-            { id: 'CV' as SegmentFilter, label: 'Xe Tải & Bus (4)' },
+            { id: 'CV' as SegmentFilter, label: 'Xe Tải Bus (4)' },
             { id: 'DVPT' as SegmentFilter, label: 'Dịch vụ Phụ tùng (2)' }
           ].map((seg) => (
             <button
@@ -381,7 +381,7 @@ export const PlanningView: React.FC<PlanningViewProps> = ({
           {(segmentFilter === 'ALL' || segmentFilter === 'PC') && (
             <div className="space-y-3">
               <h2 className="text-sm font-bold uppercase tracking-wider text-[#004B87] dark:text-blue-400">
-                1. Kinh doanh Xe Du lịch (PC)
+                1. Kinh doanh Xe Du lịch
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
                 {pcVehicles.map((brand) => {
@@ -459,7 +459,7 @@ export const PlanningView: React.FC<PlanningViewProps> = ({
           {(segmentFilter === 'ALL' || segmentFilter === 'CV') && (
             <div className="space-y-3">
               <h2 className="text-sm font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
-                2. Kinh doanh Xe Tải & Bus (CV)
+                2. Kinh doanh Xe Tải Bus
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {cvVehicles.map((brand) => {

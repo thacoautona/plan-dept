@@ -153,8 +153,8 @@ export const CreateItemModal: React.FC<CreateItemModalProps> = ({
                   onChange={(e) => setPlanDept(e.target.value)}
                   className="w-full mt-1 px-3 py-1.5 bg-gray-50 dark:bg-[#282828] border border-gray-200 dark:border-[#383838] rounded-lg"
                 >
-                  <option value="PKD-PC">PKD-PC (Xe Du lịch)</option>
-                  <option value="PKD-CV">PKD-CV (Xe Thương mại)</option>
+                  <option value="KDDL">KDDL (Xe Du lịch)</option>
+                  <option value="KDTB">KDTB (Xe Tải Bus)</option>
                   <option value="PDV">PDV (Dịch vụ Phụ tùng)</option>
                   <option value="PTC">PTC (Tài chính Kế toán)</option>
                   <option value="PKH">PKH (Kế hoạch Quản trị)</option>

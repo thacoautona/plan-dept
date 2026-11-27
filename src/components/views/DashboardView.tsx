@@ -83,7 +83,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           className="p-4 rounded-xl bg-white dark:bg-[#202020] border border-[#E9E9E7] dark:border-[#2F2F2F] shadow-2xs hover:border-blue-300 dark:hover:border-blue-700 transition-all cursor-pointer"
         >
           <div className="flex items-center justify-between text-xs text-[#787774] dark:text-[#9B9A97]">
-            <span>XHĐ Xe Du lịch (PC)</span>
+            <span>XHĐ Xe Du lịch</span>
             <div className="p-1 rounded-md bg-blue-50 dark:bg-blue-900/30">
               <AppIcon name="growth_chart" className="w-4 h-4" />
             </div>
@@ -114,7 +114,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           className="p-4 rounded-xl bg-white dark:bg-[#202020] border border-[#E9E9E7] dark:border-[#2F2F2F] shadow-2xs hover:border-emerald-300 dark:hover:border-emerald-700 transition-all cursor-pointer"
         >
           <div className="flex items-center justify-between text-xs text-[#787774] dark:text-[#9B9A97]">
-            <span>XHĐ Xe Tải & Bus (CV)</span>
+            <span>XHĐ Xe Tải Bus</span>
             <div className="p-1 rounded-md bg-emerald-50 dark:bg-emerald-900/30">
               <AppIcon name="target_goal" className="w-4 h-4" />
             </div>
@@ -225,7 +225,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               </span>
             </div>
             <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
-              Toàn Công ty đang có <strong>{pcTotal.hdTon} HĐ tồn PC</strong> và <strong>{cvTotal.hdTon} HĐ tồn CV</strong>. Cần đôn đốc giải ngân ngân hàng, hoàn thiện hồ sơ giao xe để đẩy nhanh tỷ lệ XHĐ (hiện đạt {pcPct}% PC và {cvPct}% CV).
+              Toàn Công ty đang có <strong>{pcTotal.hdTon} HĐ tồn Xe Du lịch</strong> và <strong>{cvTotal.hdTon} HĐ tồn Xe Tải Bus</strong>. Cần đôn đốc giải ngân ngân hàng, hoàn thiện hồ sơ giao xe để đẩy nhanh tỷ lệ XHĐ (hiện đạt {pcPct}% Xe Du lịch và {cvPct}% Xe Tải Bus).
             </p>
           </div>
 
@@ -276,8 +276,8 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               <thead>
                 <tr className="bg-[#F7F6F3] dark:bg-[#252525] border-b border-[#E9E9E7] dark:border-[#333] text-[11px] font-semibold text-gray-600 dark:text-gray-300">
                   <th className="py-3 px-4 text-left">Đơn vị Showroom</th>
-                  <th className="py-3 px-3">PC (XHĐ / CT)</th>
-                  <th className="py-3 px-3">CV (XHĐ / CT)</th>
+                  <th className="py-3 px-3">Xe Du lịch (XHĐ / CT)</th>
+                  <th className="py-3 px-3">Xe Tải Bus (XHĐ / CT)</th>
                   <th className="py-3 px-3">Tổng HĐ tồn</th>
                   <th className="py-3 px-3">DVPT DL (tỷ)</th>
                   <th className="py-3 px-3">DVPT T,B (tỷ)</th>
