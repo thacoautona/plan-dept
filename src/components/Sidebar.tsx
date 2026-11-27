@@ -17,6 +17,7 @@ interface SidebarProps {
   setIsCollapsed: (collapsed: boolean) => void;
   darkMode: boolean;
   setDarkMode: (dark: boolean) => void;
+  isAdmin: boolean;
   stats: {
     plansCount: number;
     docsCount: number;
@@ -31,52 +32,61 @@ export const Sidebar: React.FC<SidebarProps> = ({
   setIsCollapsed,
   darkMode,
   setDarkMode,
+  isAdmin,
   stats
 }) => {
-  const navItems = [
+  const allNavItems = [
     {
       id: 'dashboard' as ActiveTab,
       label: 'Tổng quan Điều hành',
       iconName: 'presentation_chart' as AppIconName,
       badge: undefined,
-      desc: 'Báo cáo tóm tắt & Tham mưu'
+      desc: 'Báo cáo tóm tắt & Tham mưu',
+      adminOnly: true
     },
     {
       id: 'planning' as ActiveTab,
       label: 'Quản trị Kế hoạch',
       iconName: 'target_goal' as AppIconName,
       badge: stats.plansCount,
-      desc: 'Mục tiêu, Tiến độ & KPI'
+      desc: 'Mục tiêu, Tiến độ & KPI',
+      adminOnly: true
     },
     {
       id: 'database' as ActiveTab,
       label: 'Cơ sở dữ liệu',
       iconName: 'binder_archive' as AppIconName,
       badge: undefined,
-      desc: 'Báo cáo, Hướng dẫn, Layout'
+      desc: 'Báo cáo, Hướng dẫn, Layout',
+      adminOnly: false
     },
     {
       id: 'governance' as ActiveTab,
       label: 'Quy trình Quy định',
       iconName: 'folder_archive' as AppIconName,
       badge: stats.docsCount,
-      desc: 'VPĐH & THACO AUTO Nghệ An'
+      desc: 'VPĐH & THACO AUTO Nghệ An',
+      adminOnly: false
     },
     {
       id: 'org' as ActiveTab,
       label: 'Cấu trúc & Chức năng nhiệm vụ',
       iconName: 'org_chart' as AppIconName,
       badge: undefined,
-      desc: 'Sơ đồ cấu trúc & Nhiệm vụ chức danh'
+      desc: 'Sơ đồ cấu trúc & Nhiệm vụ chức danh',
+      adminOnly: false
     },
     {
       id: 'digital' as ActiveTab,
       label: 'Chuyển đổi số & Cải tiến',
       iconName: 'cloud_upload' as AppIconName,
       badge: stats.digitalCount,
-      desc: 'Sáng kiến & Tự động hóa'
+      desc: 'Sáng kiến & Tự động hóa',
+      adminOnly: false
     }
   ];
+
+  const navItems = allNavItems.filter((item) => !item.adminOnly || isAdmin);
 
   return (
     <aside

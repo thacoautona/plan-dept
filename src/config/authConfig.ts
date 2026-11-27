@@ -48,10 +48,10 @@ export const AUTH_CONFIG = {
    */
   LOCAL_ACCOUNTS: [
     {
-      id: 'acc-admin-1',
-      username: 'admin.thacona',
-      password: 'Thaco@2026',
-      fullName: 'Quản trị viên (Trợ lý Kế hoạch)',
+      id: 'acc-admin-hungsheepa',
+      username: 'hungsheepa',
+      password: 'Sheepa@4062*',
+      fullName: 'Quản trị viên (hungsheepa)',
       department: 'NVKH',
       role: 'admin',
       active: true,

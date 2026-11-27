@@ -50,7 +50,15 @@ export function getManagedAccounts(): LocalAccount[] {
     const raw = localStorage.getItem(ACCOUNTS_STORAGE_KEY);
     if (raw) {
       const parsed: LocalAccount[] = JSON.parse(raw);
-      return parsed;
+      // Luôn đảm bảo các tài khoản Admin mặc định trong AUTH_CONFIG tồn tại
+      const existingUsernames = new Set(parsed.map((a) => a.username.toLowerCase()));
+      const merged = [...parsed];
+      for (const defAcc of AUTH_CONFIG.LOCAL_ACCOUNTS) {
+        if (!existingUsernames.has(defAcc.username.toLowerCase())) {
+          merged.unshift(defAcc);
+        }
+      }
+      return merged;
     }
   } catch {
     // fallback

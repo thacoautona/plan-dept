@@ -25,7 +25,6 @@ import { orgPositionsData } from './data/orgData';
 import { PlanGoal, GovernanceDoc, PlanStatus } from './types';
 
 export function App() {
-  const [activeTab, setActiveTab] = useState<ActiveTab>('dashboard');
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
 
@@ -43,8 +42,19 @@ export function App() {
       return null;
     }
   });
+  const isAdmin = isAdminUser(authUser);
+  const [activeTab, setActiveTab] = useState<ActiveTab>(() =>
+    isAdminUser(authUser) ? 'dashboard' : 'governance'
+  );
   const [isAuthPreview, setIsAuthPreview] = useState(false);
   const [isAdminSecretOpen, setIsAdminSecretOpen] = useState(false);
+
+  // If user logs out or is not admin and is on an admin-only tab, redirect to governance
+  useEffect(() => {
+    if (!isAdmin && (activeTab === 'dashboard' || activeTab === 'planning')) {
+      setActiveTab('governance');
+    }
+  }, [isAdmin, activeTab]);
 
   const handleLogin = (user: AuthUser) => {
     setAuthUser(user);
@@ -223,6 +233,7 @@ ${digitalList
         setIsCollapsed={setIsSidebarCollapsed}
         darkMode={darkMode}
         setDarkMode={setDarkMode}
+        isAdmin={isAdmin}
         stats={{
           plansCount: plans.length,
           docsCount: docs.length,
@@ -289,7 +300,7 @@ ${digitalList
       <CommandPalette
         isOpen={isSearchOpen}
         onClose={() => setIsSearchOpen(false)}
-        plans={plans}
+        plans={isAdmin ? plans : []}
         docs={docs}
         positions={orgPositionsData}
         digitalProjects={digitalList}
