@@ -8,7 +8,7 @@ import { GovernanceView } from './components/views/GovernanceView';
 import { OrgStructureView } from './components/views/OrgStructureView';
 import { DigitalTransformationView } from './components/views/DigitalTransformationView';
 import { AuthGate } from './components/AuthGate';
-import { AUTH_CONFIG, AuthUser, isEmailAuthorized } from './config/authConfig';
+import { AUTH_CONFIG, AuthUser, isEmailAuthorized, isAdminUser } from './config/authConfig';
 import { CommandPalette } from './components/CommandPalette';
 import { PlanDetailModal } from './components/PlanDetailModal';
 import { CreateItemModal } from './components/CreateItemModal';
@@ -223,7 +223,7 @@ ${digitalList
             />
           )}
 
-          {activeTab === 'database' && <DatabaseView />}
+          {activeTab === 'database' && <DatabaseView isAdmin={isAdminUser(authUser?.email)} />}
 
           {activeTab === 'governance' && (
             <GovernanceView

@@ -12,7 +12,9 @@ import {
   Image as ImageIcon,
   Link2,
   Trash2,
-  X
+  X,
+  Upload,
+  Lock
 } from 'lucide-react';
 import {
   DATABASE_FOLDERS,
@@ -20,6 +22,10 @@ import {
   DbFileFormat
 } from '../../data/databaseData';
 import { AppIcon } from '../AppIcon';
+
+interface DatabaseViewProps {
+  isAdmin: boolean;
+}
 
 const STORAGE_KEY = 'thaco_na_database_files_v1';
 
@@ -56,7 +62,7 @@ const FORMAT_META: Record<DbFileFormat, { label: string; color: string; icon: Re
   }
 };
 
-export const DatabaseView: React.FC = () => {
+export const DatabaseView: React.FC<DatabaseViewProps> = ({ isAdmin }) => {
   const [selectedFolderId, setSelectedFolderId] = useState<string>('he-thong-bao-cao');
   const [selectedSubFolderId, setSelectedSubFolderId] = useState<string>('vpdh-mien');
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -70,10 +76,13 @@ export const DatabaseView: React.FC = () => {
   });
 
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [uploadMode, setUploadMode] = useState<'file' | 'link'>('file');
   const [newName, setNewName] = useState('');
   const [newDesc, setNewDesc] = useState('');
   const [newFormat, setNewFormat] = useState<DbFileFormat>('xlsx');
   const [newUrl, setNewUrl] = useState('');
+  const [attachedFileName, setAttachedFileName] = useState('');
+  const [attachedFileSize, setAttachedFileSize] = useState('');
 
   useEffect(() => {
     try {
@@ -118,9 +127,38 @@ export const DatabaseView: React.FC = () => {
         : f.folderId === folderId
     ).length;
 
+  const handleFileAttach = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setAttachedFileName(file.name);
+    const sizeKB = file.size / 1024;
+    setAttachedFileSize(
+      sizeKB > 1024 ? `${(sizeKB / 1024).toFixed(1)} MB` : `${Math.round(sizeKB)} KB`
+    );
+    if (!newName.trim()) {
+      setNewName(file.name.replace(/\.[^/.]+$/, ''));
+    }
+
+    const ext = file.name.split('.').pop()?.toLowerCase() || '';
+    if (ext === 'xlsx' || ext === 'xls' || ext === 'csv') setNewFormat('xlsx');
+    else if (ext === 'pdf') setNewFormat('pdf');
+    else if (ext === 'doc' || ext === 'docx') setNewFormat('docx');
+    else if (ext === 'ppt' || ext === 'pptx') setNewFormat('pptx');
+    else if (['png', 'jpg', 'jpeg', 'svg', 'webp'].includes(ext)) setNewFormat('image');
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result === 'string') {
+        setNewUrl(reader.result);
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
   const handleAddFile = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newName.trim() || !newUrl.trim()) return;
+    if (!isAdmin || !newName.trim() || !newUrl.trim()) return;
 
     const item: DatabaseFileItem = {
       id: `db-${Date.now()}`,
@@ -129,6 +167,7 @@ export const DatabaseView: React.FC = () => {
       name: newName.trim(),
       description: newDesc.trim() || 'Tài liệu lưu trữ trên hệ thống Cơ sở dữ liệu.',
       format: newFormat,
+      size: attachedFileSize || undefined,
       updatedAt: new Date().toLocaleDateString('vi-VN'),
       downloadUrl: newUrl.trim()
     };
@@ -137,10 +176,13 @@ export const DatabaseView: React.FC = () => {
     setNewName('');
     setNewDesc('');
     setNewUrl('');
+    setAttachedFileName('');
+    setAttachedFileSize('');
     setIsAddModalOpen(false);
   };
 
   const handleDeleteFile = (id: string) => {
+    if (!isAdmin) return;
     setFiles((prev) => prev.filter((f) => f.id !== id));
   };
 
@@ -162,13 +204,20 @@ export const DatabaseView: React.FC = () => {
           </div>
         </div>
 
-        <button
-          onClick={() => setIsAddModalOpen(true)}
-          className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-[#004B87] hover:bg-[#003A69] text-white transition-colors shadow-2xs self-start md:self-auto"
-        >
-          <Plus className="w-4 h-4" />
-          Thêm tài liệu / Link tải
-        </button>
+        {isAdmin ? (
+          <button
+            onClick={() => setIsAddModalOpen(true)}
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-[#004B87] hover:bg-[#003A69] text-white transition-colors shadow-2xs self-start md:self-auto"
+          >
+            <Plus className="w-4 h-4" />
+            Tải lên tài liệu
+          </button>
+        ) : (
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[11px] font-medium bg-gray-100 dark:bg-[#262626] text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-gray-700 self-start md:self-auto">
+            <Lock className="w-3.5 h-3.5" />
+            Chỉ Quản trị viên được phép tải lên
+          </div>
+        )}
       </div>
 
       {/* Main Split Layout: Folder Tree (Left) + File List (Right) */}
@@ -294,15 +343,19 @@ export const DatabaseView: React.FC = () => {
                     Chưa có tệp dữ liệu trong thư mục này
                   </h3>
                   <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 max-w-md mx-auto">
-                    Bạn có thể bấm <strong>“Thêm tài liệu / Link tải”</strong> để gắn link Google Drive / OneDrive hoặc gửi file cho tôi để nạp sẵn lên hệ thống cho mọi người tải xuống.
+                    {isAdmin
+                      ? 'Bạn có thể bấm “Tải lên tài liệu” để đính kèm tệp hoặc gắn link Google Drive / OneDrive.'
+                      : 'Hiện chưa có tệp nào được Quản trị viên tải lên trong thư mục này.'}
                   </p>
                 </div>
-                <button
-                  onClick={() => setIsAddModalOpen(true)}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-blue-50 dark:bg-blue-950/40 text-[#004B87] dark:text-blue-300 hover:bg-blue-100 transition-colors"
-                >
-                  <Plus className="w-3.5 h-3.5" /> Thêm tài liệu vào đây
-                </button>
+                {isAdmin && (
+                  <button
+                    onClick={() => setIsAddModalOpen(true)}
+                    className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-blue-50 dark:bg-blue-950/40 text-[#004B87] dark:text-blue-300 hover:bg-blue-100 transition-colors"
+                  >
+                    <Plus className="w-3.5 h-3.5" /> Tải lên tài liệu vào đây
+                  </button>
+                )}
               </div>
             ) : (
               <div className="divide-y divide-[#E9E9E7] dark:divide-[#2F2F2F]">
@@ -337,20 +390,22 @@ export const DatabaseView: React.FC = () => {
                           href={file.downloadUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          download
+                          download={file.name}
                           className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#004B87] hover:bg-[#003A69] text-white transition-colors"
                         >
                           <Download className="w-3.5 h-3.5" />
                           Tải xuống
                           <ExternalLink className="w-3 h-3 opacity-75" />
                         </a>
-                        <button
-                          onClick={() => handleDeleteFile(file.id)}
-                          className="p-1.5 rounded-lg text-gray-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors"
-                          title="Xóa khỏi danh sách"
-                        >
-                          <Trash2 className="w-3.5 h-3.5" />
-                        </button>
+                        {isAdmin && (
+                          <button
+                            onClick={() => handleDeleteFile(file.id)}
+                            className="p-1.5 rounded-lg text-gray-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors"
+                            title="Xóa khỏi danh sách"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        )}
                       </div>
                     </div>
                   );
@@ -378,6 +433,68 @@ export const DatabaseView: React.FC = () => {
             </div>
 
             <form onSubmit={handleAddFile} className="space-y-3 text-xs">
+              {/* Mode Switcher: Attach File vs Paste Link */}
+              <div className="grid grid-cols-2 gap-1.5 p-1 rounded-xl bg-[#F7F6F3] dark:bg-[#2A2A2A] border border-gray-200 dark:border-gray-700">
+                <button
+                  type="button"
+                  onClick={() => setUploadMode('file')}
+                  className={`py-1.5 rounded-lg font-semibold transition-all ${
+                    uploadMode === 'file'
+                      ? 'bg-white dark:bg-[#191919] text-[#004B87] dark:text-blue-400 shadow-2xs'
+                      : 'text-gray-500 dark:text-gray-400'
+                  }`}
+                >
+                  Đính kèm tệp từ máy
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setUploadMode('link')}
+                  className={`py-1.5 rounded-lg font-semibold transition-all ${
+                    uploadMode === 'link'
+                      ? 'bg-white dark:bg-[#191919] text-[#004B87] dark:text-blue-400 shadow-2xs'
+                      : 'text-gray-500 dark:text-gray-400'
+                  }`}
+                >
+                  Dán link Drive / URL
+                </button>
+              </div>
+
+              {uploadMode === 'file' ? (
+                <div>
+                  <label className="block font-semibold text-gray-700 dark:text-gray-300 mb-1">
+                    Chọn tệp đính kèm *
+                  </label>
+                  <label className="flex flex-col items-center justify-center w-full py-4 px-3 border-2 border-dashed border-blue-300 dark:border-blue-800 rounded-xl bg-blue-50/40 dark:bg-blue-950/20 hover:bg-blue-50 dark:hover:bg-blue-950/30 cursor-pointer transition-colors text-center">
+                    <Upload className="w-5 h-5 text-[#004B87] dark:text-blue-400 mb-1" />
+                    <span className="font-semibold text-[#004B87] dark:text-blue-300">
+                      {attachedFileName ? `${attachedFileName} (${attachedFileSize})` : 'Nhấp để chọn tệp từ máy tính'}
+                    </span>
+                    <span className="text-[10px] text-gray-500 mt-0.5">
+                      Hỗ trợ Excel, PDF, Word, PowerPoint, Ảnh...
+                    </span>
+                    <input
+                      type="file"
+                      className="hidden"
+                      onChange={handleFileAttach}
+                    />
+                  </label>
+                </div>
+              ) : (
+                <div>
+                  <label className="block font-semibold text-gray-700 dark:text-gray-300 mb-1">
+                    Đường dẫn tải xuống (Google Drive / OneDrive / URL) *
+                  </label>
+                  <input
+                    type="url"
+                    required
+                    value={newUrl}
+                    onChange={(e) => setNewUrl(e.target.value)}
+                    placeholder="https://drive.google.com/..."
+                    className="w-full px-3 py-2 rounded-lg bg-[#F7F6F3] dark:bg-[#2A2A2A] border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-white focus:outline-none focus:border-[#004B87]"
+                  />
+                </div>
+              )}
+
               <div>
                 <label className="block font-semibold text-gray-700 dark:text-gray-300 mb-1">
                   Tên tài liệu / Báo cáo *
@@ -408,20 +525,6 @@ export const DatabaseView: React.FC = () => {
                   <option value="image">Ảnh / Layout (.png/.jpg/.svg)</option>
                   <option value="link">Liên kết Drive / OneDrive</option>
                 </select>
-              </div>
-
-              <div>
-                <label className="block font-semibold text-gray-700 dark:text-gray-300 mb-1">
-                  Đường dẫn tải xuống (Google Drive / OneDrive / URL) *
-                </label>
-                <input
-                  type="url"
-                  required
-                  value={newUrl}
-                  onChange={(e) => setNewUrl(e.target.value)}
-                  placeholder="https://drive.google.com/..."
-                  className="w-full px-3 py-2 rounded-lg bg-[#F7F6F3] dark:bg-[#2A2A2A] border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-white focus:outline-none focus:border-[#004B87]"
-                />
               </div>
 
               <div>
