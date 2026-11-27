@@ -60,6 +60,23 @@ export const DATABASE_FOLDERS: DatabaseFolder[] = [
     description: 'Biên bản họp giao ban, thông báo kết luận và văn bản chỉ đạo.'
   },
   {
+    id: 'ho-so-phap-ly',
+    name: 'Hồ sơ pháp lý',
+    description: 'Hồ sơ pháp lý doanh nghiệp, giấy chứng nhận và văn bản ủy quyền của THACO AUTO Nghệ An.',
+    subFolders: [
+      {
+        id: 'dang-ky-kinh-doanh',
+        name: 'Đăng ký kinh doanh',
+        description: 'Giấy chứng nhận đăng ký doanh nghiệp, đăng ký hoạt động chi nhánh/địa điểm kinh doanh.'
+      },
+      {
+        id: 'giay-uy-quyen',
+        name: 'Giấy ủy quyền',
+        description: 'Các giấy ủy quyền ký kết hợp đồng, giao dịch và làm việc với cơ quan chức năng.'
+      }
+    ]
+  },
+  {
     id: 'layout-csvc',
     name: 'Layout vận hành, cơ sở vật chất',
     description: 'Tài liệu tổ chức vận hành và bản vẽ layout công năng Showroom & Xưởng dịch vụ.',
