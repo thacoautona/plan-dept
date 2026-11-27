@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Search, X, ArrowRight } from 'lucide-react';
-import { PlanGoal, GovernanceDoc, DigitalInitiative } from '../types';
+import { PlanGoal, GovernanceDoc } from '../types';
 import { OrgPositionItem } from '../data/orgData';
 import { ActiveTab } from './Sidebar';
 import { AppIcon } from './AppIcon';
@@ -11,9 +11,8 @@ interface CommandPaletteProps {
   plans: PlanGoal[];
   docs: GovernanceDoc[];
   positions: OrgPositionItem[];
-  digitalProjects: DigitalInitiative[];
   onSelectTab: (tab: ActiveTab) => void;
-  onSelectItem: (type: 'plan' | 'doc' | 'dept' | 'digital', item: any) => void;
+  onSelectItem: (type: 'plan' | 'doc' | 'dept', item: any) => void;
 }
 
 export const CommandPalette: React.FC<CommandPaletteProps> = ({
@@ -22,7 +21,6 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
   plans,
   docs,
   positions,
-  digitalProjects,
   onSelectTab,
   onSelectItem
 }) => {
@@ -67,14 +65,8 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
       pos.deptCode.toLowerCase().includes(query.toLowerCase())
   );
 
-  const filteredDigital = digitalProjects.filter(
-    (dp) =>
-      dp.name.toLowerCase().includes(query.toLowerCase()) ||
-      dp.code.toLowerCase().includes(query.toLowerCase())
-  );
-
   const totalResults =
-    filteredPlans.length + filteredDocs.length + filteredPositions.length + filteredDigital.length;
+    filteredPlans.length + filteredDocs.length + filteredPositions.length;
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 bg-black/40 backdrop-blur-xs transition-opacity animate-in fade-in duration-150">
@@ -206,32 +198,6 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                 </div>
               )}
 
-              {/* Digital Transformation Section */}
-              {filteredDigital.length > 0 && (
-                <div>
-                  <p className="px-3 py-1 text-[11px] font-semibold text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
-                    <AppIcon name="cloud_upload" className="w-3.5 h-3.5" /> Sáng kiến Chuyển đổi số ({filteredDigital.length})
-                  </p>
-                  <div className="mt-1 space-y-0.5">
-                    {filteredDigital.map((dp) => (
-                      <button
-                        key={dp.id}
-                        onClick={() => {
-                          onSelectTab('digital');
-                          onSelectItem('digital', dp);
-                          onClose();
-                        }}
-                        className="w-full text-left px-3 py-2 rounded-lg text-xs hover:bg-gray-100 dark:hover:bg-[#2A2A2A] flex items-center justify-between group transition-colors"
-                      >
-                        <span className="text-gray-800 dark:text-gray-100 truncate font-medium">
-                          {dp.name}
-                        </span>
-                        <span className="text-[11px] text-gray-400">{dp.progressPct}%</span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
             </>
           )}
         </div>

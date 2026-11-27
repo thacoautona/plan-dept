@@ -4,7 +4,7 @@ import {
   ChevronRight,
   ExternalLink
 } from 'lucide-react';
-import { GovernanceDoc, DigitalInitiative } from '../../types';
+import { GovernanceDoc } from '../../types';
 import {
   WeeklyReportData,
   SHOWROOMS,
@@ -12,6 +12,7 @@ import {
   sumServicePlan,
   calcPct
 } from '../../data/weeklyPlanData';
+import { SYSTEM_DATABASE_FILES } from '../../data/databaseData';
 import { ActiveTab } from '../Sidebar';
 import { AppIcon } from '../AppIcon';
 
@@ -33,14 +34,12 @@ const DEPT_COLORS: Record<string, { bg: string; text: string; border: string }> 
 interface DashboardViewProps {
   weeklyReport: WeeklyReportData;
   docs: GovernanceDoc[];
-  digitalList: DigitalInitiative[];
   onNavigateTab: (tab: ActiveTab) => void;
 }
 
 export const DashboardView: React.FC<DashboardViewProps> = ({
   weeklyReport,
   docs,
-  digitalList,
   onNavigateTab
 }) => {
   const pcTotal = sumVehicleSegment(weeklyReport.vehicles, 'PC');
@@ -395,42 +394,36 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           </div>
         </div>
 
-        {/* Digital Initiatives */}
+        {/* Database Files Summary */}
         <div className="p-4 rounded-xl bg-white dark:bg-[#202020] border border-[#E9E9E7] dark:border-[#2F2F2F] shadow-2xs">
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300 flex items-center gap-2">
-              <AppIcon name="idea_bulb" className="w-4 h-4" />
-              Chuyển đổi số & Tự động hóa tại THACO AUTO Nghệ An
+              <AppIcon name="binder_archive" className="w-4 h-4" />
+              Kho Cơ sở dữ liệu ({SYSTEM_DATABASE_FILES.length} tệp hệ thống)
             </h3>
             <button
-              onClick={() => onNavigateTab('digital')}
-              className="text-[11px] text-blue-600 dark:text-blue-400 hover:underline"
+              onClick={() => onNavigateTab('database')}
+              className="text-[11px] text-[#004B87] dark:text-blue-400 hover:underline flex items-center gap-1 font-medium"
             >
-              Chi tiết
+              Mở kho dữ liệu <ChevronRight className="w-3 h-3" />
             </button>
           </div>
           <div className="space-y-2.5">
-            {digitalList.map((project) => (
+            {SYSTEM_DATABASE_FILES.slice(0, 4).map((file) => (
               <div
-                key={project.id}
-                className="p-2.5 rounded-lg bg-gray-50 dark:bg-[#282828] border border-gray-200 dark:border-[#383838] text-xs space-y-1.5"
+                key={file.id}
+                className="p-2.5 rounded-lg bg-gray-50 dark:bg-[#282828] border border-gray-200 dark:border-[#383838] text-xs space-y-1"
               >
-                <div className="flex items-center justify-between">
-                  <span className="font-semibold text-gray-800 dark:text-gray-200">
-                    {project.name}
+                <div className="flex items-center justify-between gap-2">
+                  <span className="font-semibold text-gray-800 dark:text-gray-100 line-clamp-1">
+                    {file.name}
                   </span>
-                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 font-medium">
-                    {project.progressPct}%
+                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-blue-50 dark:bg-blue-950/40 text-[#004B87] dark:text-blue-300 font-semibold uppercase flex-shrink-0">
+                    {file.format}
                   </span>
                 </div>
-                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1 overflow-hidden">
-                  <div
-                    className="bg-blue-600 h-1 rounded-full"
-                    style={{ width: `${project.progressPct}%` }}
-                  />
-                </div>
-                <p className="text-[11px] text-gray-500 dark:text-gray-400">
-                  {project.benefits}
+                <p className="text-[11px] text-gray-500 dark:text-gray-400 line-clamp-1">
+                  {file.description} • Cập nhật: {file.updatedAt}
                 </p>
               </div>
             ))}

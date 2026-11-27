@@ -6,7 +6,6 @@ import { PlanningView } from './components/views/PlanningView';
 import { DatabaseView } from './components/views/DatabaseView';
 import { GovernanceView } from './components/views/GovernanceView';
 import { OrgStructureView } from './components/views/OrgStructureView';
-import { DigitalTransformationView } from './components/views/DigitalTransformationView';
 import { AuthGate } from './components/AuthGate';
 import { AdminSecretModal } from './components/AdminSecretModal';
 import { AiAssistantBot } from './components/AiAssistantBot';
@@ -18,8 +17,7 @@ import { CreateItemModal } from './components/CreateItemModal';
 
 import {
   mockPlanGoals,
-  mockGovernanceDocs,
-  mockDigitalInitiatives
+  mockGovernanceDocs
 } from './data/mockData';
 import {
   INITIAL_WEEKLY_REPORT,
@@ -38,7 +36,6 @@ export function App() {
   // Core Data State
   const [plans, setPlans] = useState<PlanGoal[]>(mockPlanGoals);
   const [docs, setDocs] = useState<GovernanceDoc[]>(mockGovernanceDocs);
-  const [digitalList] = useState(mockDigitalInitiatives);
   const [weeklyReport, setWeeklyReport] = useState<WeeklyReportData>(() => {
     try {
       const saved = localStorage.getItem('thaco_na_weekly_report_v1');
@@ -84,7 +81,7 @@ export function App() {
 
   // If user logs out or is not admin and is on an admin-only tab, redirect to governance
   useEffect(() => {
-    if (!isAdmin && (activeTab === 'dashboard' || activeTab === 'digital')) {
+    if (!isAdmin && activeTab === 'dashboard') {
       setActiveTab('governance');
     }
   }, [isAdmin, activeTab]);
@@ -251,8 +248,7 @@ Người lập: Trợ lý Kế hoạch | Ngày xuất: ${new Date().toLocaleDate
         isAdmin={isAdmin}
         stats={{
           plansCount: weeklyReport.vehicles.length + weeklyReport.services.length,
-          docsCount: docs.length,
-          digitalCount: digitalList.length
+          docsCount: docs.length
         }}
       />
 
@@ -274,7 +270,6 @@ Người lập: Trợ lý Kế hoạch | Ngày xuất: ${new Date().toLocaleDate
             <DashboardView
               weeklyReport={weeklyReport}
               docs={docs}
-              digitalList={digitalList}
               onNavigateTab={handleSelectTab}
             />
           )}
@@ -300,13 +295,6 @@ Người lập: Trợ lý Kế hoạch | Ngày xuất: ${new Date().toLocaleDate
           {activeTab === 'org' && (
             <OrgStructureView />
           )}
-
-          {activeTab === 'digital' && (
-            <DigitalTransformationView
-              initiatives={digitalList}
-              onOpenCreateModal={() => setIsCreateModalOpen(true)}
-            />
-          )}
         </main>
       </div>
 
@@ -317,8 +305,7 @@ Người lập: Trợ lý Kế hoạch | Ngày xuất: ${new Date().toLocaleDate
         plans={isAdmin ? plans : []}
         docs={docs}
         positions={orgPositionsData}
-        digitalProjects={isAdmin ? digitalList : []}
-        onSelectTab={setActiveTab}
+        onSelectTab={handleSelectTab}
         onSelectItem={(type, item) => {
           if (type === 'plan') setSelectedPlanForDetail(item);
         }}

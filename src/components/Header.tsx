@@ -39,8 +39,6 @@ export const Header: React.FC<HeaderProps> = ({
         return 'Hệ thống Quy trình Quy định';
       case 'org':
         return 'Cấu trúc & Chức năng nhiệm vụ';
-      case 'digital':
-        return 'Chuyển đổi số & Sáng kiến Cải tiến Vận hành';
       default:
         return 'Không gian làm việc';
     }

@@ -8,7 +8,7 @@ import {
 } from 'lucide-react';
 import { AppIcon, AppIconName } from './AppIcon';
 
-export type ActiveTab = 'dashboard' | 'planning' | 'database' | 'governance' | 'org' | 'digital';
+export type ActiveTab = 'dashboard' | 'planning' | 'database' | 'governance' | 'org';
 
 interface SidebarProps {
   activeTab: ActiveTab;
@@ -21,7 +21,6 @@ interface SidebarProps {
   stats: {
     plansCount: number;
     docsCount: number;
-    digitalCount: number;
   };
 }
 
@@ -75,14 +74,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
       badge: undefined,
       desc: 'Sơ đồ cấu trúc & Nhiệm vụ chức danh',
       adminOnly: false
-    },
-    {
-      id: 'digital' as ActiveTab,
-      label: 'Chuyển đổi số & Cải tiến',
-      iconName: 'cloud_upload' as AppIconName,
-      badge: stats.digitalCount,
-      desc: 'Sáng kiến & Tự động hóa',
-      adminOnly: true
     }
   ];
 
