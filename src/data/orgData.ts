@@ -1551,7 +1551,7 @@ export const orgPositionsData: OrgPositionItem[] = [
     "deptName": "Dịch vụ Phụ tùng - Showroom",
     "category": "Showroom",
     "title": "QĐ Xưởng MGĐ/ Đồng Sơn",
-    "tier": 1,
+    "tier": 2,
     "duties": [
       "Chịu trách nhiệm quản trị hoạt động sửa chữa. Tổ chức giao và kiểm soát thực hiện chỉ tiêu Doanh thu DVSC, lượt xe sửa chữa đến từng Tổ và từng KTV. Tổ chức vận hành hoạt động xưởng tuân thủ layout, công năng và Quy định-Quy trình.",
       "Chịu trách nhiệm về chỉ tiêu: Lượt xe, Doanh thu DVSC, chi phí hoạt động xưởng, chỉ số hài lòng khách hàng.",
@@ -1571,7 +1571,7 @@ export const orgPositionsData: OrgPositionItem[] = [
     "deptName": "Dịch vụ Phụ tùng - Showroom",
     "category": "Showroom",
     "title": "TT MGĐ/ Đồng sơn",
-    "tier": 1,
+    "tier": 3,
     "duties": [
       "Chịu trách nhiệm về chỉ tiêu của Tổ sửa chữa và cá nhân, bao gồm: Lượt xe, Doanh thu DVSC và chỉ số hài lòng khách hàng.",
       "Tổ chức phân giao công việc phù hợp, quản lý và giám sát thực hiện đảm bảo chỉ tiêu của Tổ và từng KTV.",
@@ -1589,7 +1589,7 @@ export const orgPositionsData: OrgPositionItem[] = [
     "deptName": "Dịch vụ Phụ tùng - Showroom",
     "category": "Showroom",
     "title": "KTV MGĐ/ Đồng Sơn",
-    "tier": 1,
+    "tier": 4,
     "duties": [
       "Chịu trách nhiệm về chỉ tiêu cá nhân, bao gồm: Doanh thu DVSC, Lượt xe, Doanh thu DVSC và chỉ số hài lòng khách hàng.",
       "Thực hiện sửa chữa đảm bảo tiến độ, chất lượng sửa chữa và tuân thủ theo Quy định, quy trình tại Đơn vị.",

@@ -90,11 +90,11 @@ slide_dept_map = {
 
 def infer_tier(title):
     t = title.lower()
-    if any(k in t for k in ["tgđ", "p.tgđ", "gđ showroom", "gđ kd", "gđ/", "gđ bán hàng"]):
+    if t.startswith(("tgđ", "p.tgđ", "gđ ", "gđ/")):
         return 1 # Ban Giám đốc / Giám đốc mảng
-    if any(k in t for k in ["tp ", "tp/", "tpquản", "qđ xưởng"]):
+    if t.startswith(("tp ", "tp/", "tpquản", "qđ ")):
         return 2 # Trưởng phòng / Quản đốc
-    if any(k in t for k in ["tn ", "tổ trưởng", "tt "]):
+    if t.startswith(("tn ", "tổ trưởng", "tt ")):
         return 3 # Trưởng nhóm / Tổ trưởng
     return 4 # Chuyên viên / Nhân viên / KTV / TVBH
 

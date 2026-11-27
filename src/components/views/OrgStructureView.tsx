@@ -1,18 +1,18 @@
-import React, { useState, useMemo, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   Search,
   Copy,
   Check,
   ArrowUp,
   ArrowDown,
-  GitBranch,
   Table2,
   LayoutGrid,
   FileText,
   Layers,
   ChevronRight,
   Info,
-  X
+  X,
+  Users
 } from 'lucide-react';
 import {
   deptFunctionAreas,
@@ -25,59 +25,66 @@ type OrgSubTab = 'positions' | 'functions' | 'structure';
 type PositionViewMode = 'cards' | 'table';
 type SortMode = 'default' | 'tier' | 'dept' | 'title';
 
-interface ConnectorLine {
-  id: string;
-  fromId: string;
-  toId: string;
-  type: 'report' | 'coord';
-  x1: number;
-  y1: number;
-  x2: number;
-  y2: number;
-}
+const DEPT_TAG_STYLES: Record<string, { bg: string; text: string; border: string }> = {
+  // Kinh doanh xe (#FFC5C5)
+  KDX: { bg: '#FFC5C5', text: '#7F1D1D', border: '#FCA5A5' },
+  SR_KD: { bg: '#FFC5C5', text: '#7F1D1D', border: '#FCA5A5' },
+  KDDL: { bg: '#FFC5C5', text: '#7F1D1D', border: '#FCA5A5' },
+  KDTB: { bg: '#FFC5C5', text: '#7F1D1D', border: '#FCA5A5' },
+  // Dịch vụ phụ tùng & Xe đã QSD (#BFBFBF)
+  DVPT: { bg: '#BFBFBF', text: '#1F2937', border: '#9CA3AF' },
+  SR_DV: { bg: '#BFBFBF', text: '#1F2937', border: '#9CA3AF' },
+  QSD: { bg: '#BFBFBF', text: '#1F2937', border: '#9CA3AF' },
+  DVDL: { bg: '#BFBFBF', text: '#1F2937', border: '#9CA3AF' },
+  DVTB: { bg: '#BFBFBF', text: '#1F2937', border: '#9CA3AF' },
+  'DVDL / DVTB': { bg: '#BFBFBF', text: '#1F2937', border: '#9CA3AF' },
+  // Tài chính, HCNS, Kế hoạch, Marketing (#FFFCD5)
+  TCKT: { bg: '#FFFCD5', text: '#713F12', border: '#FDE047' },
+  HCNS: { bg: '#FFFCD5', text: '#713F12', border: '#FDE047' },
+  QTVP: { bg: '#FFFCD5', text: '#713F12', border: '#FDE047' },
+  NVKH: { bg: '#FFFCD5', text: '#713F12', border: '#FDE047' },
+  MKT: { bg: '#FFFCD5', text: '#713F12', border: '#FDE047' },
+  // Tiêu chuẩn hoạt động, CSVC, QLCL & Kho xe (#E1FFFF)
+  TCHĐ: { bg: '#E1FFFF', text: '#134E4A', border: '#5EEAD4' },
+  QLCL: { bg: '#E1FFFF', text: '#134E4A', border: '#5EEAD4' },
+  NVCN: { bg: '#E1FFFF', text: '#134E4A', border: '#5EEAD4' },
+  // Các nhóm chờ xác nhận thêm màu (tạm dùng màu trung tính)
+  BGD: { bg: '#DBEAFE', text: '#1E3A8A', border: '#93C5FD' },
+  QTCP: { bg: '#F3F4F6', text: '#374151', border: '#D1D5DB' },
+  TDBH: { bg: '#F3F4F6', text: '#374151', border: '#D1D5DB' },
+  HTKD: { bg: '#F3F4F6', text: '#374151', border: '#D1D5DB' }
+};
 
-const TIER_LABELS: Record<number, { label: string; badgeBg: string; badgeText: string; border: string }> = {
+const getTagStyle = (deptCode: string) =>
+  DEPT_TAG_STYLES[deptCode] || { bg: '#F3F4F6', text: '#374151', border: '#D1D5DB' };
+
+const TIER_LABELS: Record<number, { label: string; badgeBg: string; badgeText: string }> = {
   1: {
     label: 'Cấp 1 • Ban Lãnh đạo / Giám đốc mảng',
     badgeBg: 'bg-blue-100 dark:bg-blue-900/40',
-    badgeText: 'text-[#004B87] dark:text-blue-300',
-    border: 'border-blue-200 dark:border-blue-800/60'
+    badgeText: 'text-[#004B87] dark:text-blue-300'
   },
   2: {
     label: 'Cấp 2 • Trưởng phòng / Quản đốc',
     badgeBg: 'bg-emerald-100 dark:bg-emerald-900/40',
-    badgeText: 'text-emerald-800 dark:text-emerald-300',
-    border: 'border-emerald-200 dark:border-emerald-800/60'
+    badgeText: 'text-emerald-800 dark:text-emerald-300'
   },
   3: {
     label: 'Cấp 3 • Trưởng nhóm / Tổ trưởng',
     badgeBg: 'bg-amber-100 dark:bg-amber-900/40',
-    badgeText: 'text-amber-800 dark:text-amber-300',
-    border: 'border-amber-200 dark:border-amber-800/60'
+    badgeText: 'text-amber-800 dark:text-amber-300'
   },
   4: {
     label: 'Cấp 4 • Chuyên viên / Tư vấn / KTV / NV',
     badgeBg: 'bg-gray-100 dark:bg-gray-800',
-    badgeText: 'text-gray-700 dark:text-gray-300',
-    border: 'border-gray-200 dark:border-gray-700'
+    badgeText: 'text-gray-700 dark:text-gray-300'
   }
-};
-
-// Cross-functional coordination rules by deptCode
-const COORD_LINKS: Record<string, string[]> = {
-  NVKH: ['BGD', 'KDX', 'DVPT', 'TCKT', 'HCNS', 'MKT'],
-  KDX: ['SR_KD', 'TDBH', 'MKT', 'QLCL', 'NVKH'],
-  SR_KD: ['KDX', 'TDBH', 'HTKD', 'SR_DV'],
-  DVPT: ['SR_DV', 'QTCP', 'TCHĐ', 'NVKH'],
-  SR_DV: ['DVPT', 'SR_KD', 'HTKD'],
-  TDBH: ['SR_KD', 'KDX', 'TCKT'],
-  HTKD: ['SR_KD', 'SR_DV', 'QTVP']
 };
 
 export const OrgStructureView: React.FC = () => {
   const [subTab, setSubTab] = useState<OrgSubTab>('positions');
   const [viewMode, setViewMode] = useState<PositionViewMode>('cards');
-  const [selectedDept, setSelectedDept] = useState<string>('KDX');
+  const [selectedDept, setSelectedDept] = useState<string>('ALL');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [sortMode, setSortMode] = useState<SortMode>('default');
   const [customOrderIds, setCustomOrderIds] = useState<string[]>(() =>
@@ -87,9 +94,6 @@ export const OrgStructureView: React.FC = () => {
   const [activePos, setActivePos] = useState<OrgPositionItem | null>(null);
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const [funcGroupFilter, setFuncGroupFilter] = useState<string>('ALL');
-
-  const canvasRef = useRef<HTMLDivElement | null>(null);
-  const [lines, setLines] = useState<ConnectorLine[]>([]);
 
   // Unique departments in order
   const deptList = useMemo(() => {
@@ -132,7 +136,7 @@ export const OrgStructureView: React.FC = () => {
     return list;
   }, [selectedDept, searchQuery, sortMode, customOrderIds]);
 
-  // Group filtered positions by Tier for Card & Connector view
+  // Group filtered positions by Tier for Card view
   const tierGroups = useMemo(() => {
     const tiers: Record<number, OrgPositionItem[]> = { 1: [], 2: [], 3: [], 4: [] };
     filteredPositions.forEach((p) => {
@@ -140,90 +144,6 @@ export const OrgStructureView: React.FC = () => {
     });
     return [1, 2, 3, 4].filter((t) => tiers[t].length > 0).map((t) => ({ tier: t, items: tiers[t] }));
   }, [filteredPositions]);
-
-  // Determine connected relationships for visual lines
-  const computeLines = useCallback(() => {
-    if (!canvasRef.current || viewMode !== 'cards' || subTab !== 'positions') {
-      setLines([]);
-      return;
-    }
-
-    const containerRect = canvasRef.current.getBoundingClientRect();
-    const nodeMap = new Map<string, DOMRect>();
-    const elements = canvasRef.current.querySelectorAll('[data-pos-id]');
-    elements.forEach((el) => {
-      const id = el.getAttribute('data-pos-id');
-      if (id) {
-        nodeMap.set(id, el.getBoundingClientRect());
-      }
-    });
-
-    const newLines: ConnectorLine[] = [];
-
-    // Connect adjacent tiers within same department (or from activePos)
-    const activeTiers = tierGroups.map((g) => g.tier);
-    for (let i = 0; i < activeTiers.length - 1; i++) {
-      const upperItems = tierGroups[i].items;
-      const lowerItems = tierGroups[i + 1].items;
-
-      upperItems.forEach((u) => {
-        const uRect = nodeMap.get(u.id);
-        if (!uRect) return;
-        lowerItems.forEach((l) => {
-          // Connect if same deptCode OR if one of them is activePos
-          if (u.deptCode === l.deptCode || (activePos && (u.id === activePos.id || l.id === activePos.id))) {
-            const lRect = nodeMap.get(l.id);
-            if (!lRect) return;
-            newLines.push({
-              id: `rep-${u.id}-${l.id}`,
-              fromId: u.id,
-              toId: l.id,
-              type: 'report',
-              x1: uRect.left - containerRect.left + uRect.width / 2,
-              y1: uRect.bottom - containerRect.top,
-              x2: lRect.left - containerRect.left + lRect.width / 2,
-              y2: lRect.top - containerRect.top
-            });
-          }
-        });
-      });
-    }
-
-    // If a position is active, also draw cross-functional coordination lines if visible
-    if (activePos) {
-      const aRect = nodeMap.get(activePos.id);
-      const targetDepts = COORD_LINKS[activePos.deptCode] || [];
-      if (aRect && targetDepts.length > 0) {
-        filteredPositions.forEach((other) => {
-          if (other.id !== activePos.id && targetDepts.includes(other.deptCode) && other.tier <= 2) {
-            const oRect = nodeMap.get(other.id);
-            if (!oRect) return;
-            newLines.push({
-              id: `coord-${activePos.id}-${other.id}`,
-              fromId: activePos.id,
-              toId: other.id,
-              type: 'coord',
-              x1: aRect.left - containerRect.left + aRect.width / 2,
-              y1: aRect.top - containerRect.top + aRect.height / 2,
-              x2: oRect.left - containerRect.left + oRect.width / 2,
-              y2: oRect.top - containerRect.top + oRect.height / 2
-            });
-          }
-        });
-      }
-    }
-
-    setLines(newLines);
-  }, [tierGroups, viewMode, subTab, activePos, filteredPositions]);
-
-  useEffect(() => {
-    const timer = setTimeout(computeLines, 60);
-    window.addEventListener('resize', computeLines);
-    return () => {
-      clearTimeout(timer);
-      window.removeEventListener('resize', computeLines);
-    };
-  }, [computeLines]);
 
   const copyToClipboard = (text: string, key: string) => {
     navigator.clipboard.writeText(text);
@@ -312,7 +232,7 @@ export const OrgStructureView: React.FC = () => {
               Cấu trúc & Chức năng nhiệm vụ
             </h1>
             <p className="text-xs text-[#787774] dark:text-[#9B9A97] mt-0.5">
-              Hệ thống vị trí chức danh ({orgPositionsData.length} vị trí), chức năng {deptFunctionAreas.length} mảng nghiệp vụ & liên kết tác nghiệp tại THACO AUTO Nghệ An.
+              Hệ thống vị trí chức danh ({orgPositionsData.length} vị trí) & chức năng {deptFunctionAreas.length} mảng nghiệp vụ tại THACO AUTO Nghệ An.
             </p>
           </div>
         </div>
@@ -340,8 +260,8 @@ export const OrgStructureView: React.FC = () => {
               : 'border-transparent text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200'
           }`}
         >
-          <GitBranch className="w-4 h-4" />
-          Nhiệm vụ Chức danh & Liên kết ({orgPositionsData.length})
+          <Users className="w-4 h-4" />
+          Nhiệm vụ Chức danh ({orgPositionsData.length})
         </button>
 
         <button
@@ -369,7 +289,7 @@ export const OrgStructureView: React.FC = () => {
         </button>
       </div>
 
-      {/* TAB 1: POSITIONS (CARD + CONNECTOR LINES + SORTABLE REPORT TABLE) */}
+      {/* TAB 1: POSITIONS (CARD VIEW + SORTABLE REPORT TABLE) */}
       {subTab === 'positions' && (
         <div className="space-y-4">
           {/* Toolbar */}
@@ -398,7 +318,7 @@ export const OrgStructureView: React.FC = () => {
                   }`}
                 >
                   <LayoutGrid className="w-3.5 h-3.5" />
-                  Card & Liên kết
+                  Xem dạng Card
                 </button>
                 <button
                   onClick={() => setViewMode('table')}
@@ -448,8 +368,8 @@ export const OrgStructureView: React.FC = () => {
             </div>
           </div>
 
-          {/* Department Filter Pills */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
+          {/* Department Filter Pills with exact Tag Colors */}
+          <div className="flex items-center gap-1.5 flex-wrap pb-1">
             <button
               onClick={() => {
                 setSelectedDept('ALL');
@@ -463,157 +383,117 @@ export const OrgStructureView: React.FC = () => {
             >
               Tất cả ({orgPositionsData.length})
             </button>
-            {deptList.map((d) => (
-              <button
-                key={d.code}
-                onClick={() => {
-                  setSelectedDept(d.code);
-                  setActivePos(null);
-                }}
-                className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all border ${
-                  selectedDept === d.code
-                    ? 'bg-[#004B87] text-white border-[#004B87]'
-                    : 'bg-white dark:bg-[#202020] text-gray-600 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-gray-300'
-                }`}
-              >
-                {d.name} ({d.count})
-              </button>
-            ))}
+            {deptList.map((d) => {
+              const style = getTagStyle(d.code);
+              const isActive = selectedDept === d.code;
+              return (
+                <button
+                  key={d.code}
+                  onClick={() => {
+                    setSelectedDept(d.code);
+                    setActivePos(null);
+                  }}
+                  style={
+                    isActive
+                      ? { backgroundColor: '#004B87', color: '#FFFFFF', borderColor: '#004B87' }
+                      : { backgroundColor: style.bg, color: style.text, borderColor: style.border }
+                  }
+                  className="px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all border shadow-2xs hover:opacity-90"
+                >
+                  {d.name} ({d.count})
+                </button>
+              );
+            })}
           </div>
 
-          {/* VIEW MODE 1: CARDS + SVG CONNECTOR LINES */}
+          {/* VIEW MODE 1: CARDS BY TIER (NO CONNECTOR LINES) */}
           {viewMode === 'cards' && (
             <div className="grid grid-cols-1 xl:grid-cols-12 gap-5 items-start">
-              {/* Left / Main Canvas */}
-              <div className={`${activePos ? 'xl:col-span-8' : 'xl:col-span-12'} space-y-4`}>
-                {/* Legend */}
-                <div className="flex flex-wrap items-center justify-between gap-2 px-3 py-2 rounded-lg bg-blue-50/60 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-900/40 text-[11px] text-gray-600 dark:text-gray-300">
-                  <div className="flex items-center gap-4 flex-wrap">
-                    <span className="flex items-center gap-1.5">
-                      <span className="w-5 h-0.5 bg-[#004B87] inline-block" /> Quan hệ Báo cáo / Chỉ đạo trực tiếp
-                    </span>
-                    <span className="flex items-center gap-1.5">
-                      <span className="w-5 h-0.5 border-t-2 border-dashed border-amber-500 inline-block" /> Liên kết Phối hợp tác nghiệp (khi chọn thẻ)
-                    </span>
+              {/* Main Cards Area */}
+              <div className={`${activePos ? 'xl:col-span-8' : 'xl:col-span-12'} space-y-6 p-4 rounded-2xl bg-[#F7F6F3]/70 dark:bg-[#1A1A1A] border border-[#E9E9E7] dark:border-[#2F2F2F]`}>
+                {tierGroups.length === 0 ? (
+                  <div className="py-12 text-center text-xs text-gray-500">
+                    Không tìm thấy vị trí chức danh phù hợp.
                   </div>
-                  <span className="text-gray-500 dark:text-gray-400">
-                    Nhấp vào từng thẻ để xem nhiệm vụ chi tiết & các đầu mối liên kết
-                  </span>
-                </div>
-
-                {/* Relative Canvas for Cards + SVG Lines */}
-                <div ref={canvasRef} className="relative space-y-8 p-4 rounded-2xl bg-[#F7F6F3]/70 dark:bg-[#1A1A1A] border border-[#E9E9E7] dark:border-[#2F2F2F] min-h-[360px]">
-                  {/* SVG Connector Overlay */}
-                  <svg className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-visible">
-                    {lines.map((line) => {
-                      const isHighlighted =
-                        activePos && (line.fromId === activePos.id || line.toId === activePos.id);
-                      const dy = Math.abs(line.y2 - line.y1) * 0.5;
-                      const d =
-                        line.type === 'report'
-                          ? `M ${line.x1} ${line.y1} C ${line.x1} ${line.y1 + dy}, ${line.x2} ${line.y2 - dy}, ${line.x2} ${line.y2}`
-                          : `M ${line.x1} ${line.y1} Q ${(line.x1 + line.x2) / 2} ${Math.min(line.y1, line.y2) - 35}, ${line.x2} ${line.y2}`;
-
-                      return (
-                        <path
-                          key={line.id}
-                          d={d}
-                          fill="none"
-                          stroke={line.type === 'report' ? '#004B87' : '#D97706'}
-                          strokeWidth={isHighlighted ? 2.4 : 1.4}
-                          strokeDasharray={line.type === 'coord' ? '5 4' : undefined}
-                          opacity={activePos ? (isHighlighted ? 0.95 : 0.18) : 0.4}
-                        />
-                      );
-                    })}
-                  </svg>
-
-                  {/* Tier Rows */}
-                  {tierGroups.length === 0 ? (
-                    <div className="py-12 text-center text-xs text-gray-500">
-                      Không tìm thấy vị trí chức danh phù hợp.
-                    </div>
-                  ) : (
-                    tierGroups.map((group) => {
-                      const tierMeta = TIER_LABELS[group.tier] || TIER_LABELS[4];
-                      return (
-                        <div key={group.tier} className="relative z-10 space-y-3">
-                          <div className="flex items-center gap-2">
-                            <span
-                              className={`text-[11px] font-semibold px-2.5 py-0.5 rounded-full ${tierMeta.badgeBg} ${tierMeta.badgeText}`}
-                            >
-                              {tierMeta.label}
-                            </span>
-                            <div className="h-px flex-1 bg-gray-200 dark:bg-gray-800" />
-                          </div>
-
-                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
-                            {group.items.map((pos) => {
-                              const isSelected = activePos?.id === pos.id;
-                              const isConnected =
-                                activePos &&
-                                lines.some(
-                                  (l) =>
-                                    (l.fromId === activePos.id && l.toId === pos.id) ||
-                                    (l.toId === activePos.id && l.fromId === pos.id)
-                                );
-
-                              return (
-                                <div
-                                  key={pos.id}
-                                  data-pos-id={pos.id}
-                                  onClick={() => setActivePos(isSelected ? null : pos)}
-                                  className={`group relative p-3.5 rounded-xl bg-white dark:bg-[#222222] border transition-all cursor-pointer shadow-2xs hover:shadow-md ${
-                                    isSelected
-                                      ? 'border-[#004B87] dark:border-blue-400 ring-2 ring-[#004B87]/20'
-                                      : isConnected
-                                      ? 'border-amber-400 dark:border-amber-500 bg-amber-50/30 dark:bg-amber-950/10'
-                                      : `${tierMeta.border} hover:border-gray-300 dark:hover:border-gray-600`
-                                  }`}
-                                >
-                                  <div className="flex items-start justify-between gap-2 mb-2">
-                                    <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300">
-                                      {pos.deptCode} • Slide {pos.slide}
-                                    </span>
-                                    <button
-                                      onClick={(e) => {
-                                        e.stopPropagation();
-                                        handleCopySinglePosition(pos);
-                                      }}
-                                      className="p-1 rounded text-gray-400 hover:text-[#004B87] dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-800"
-                                      title="Copy nhiệm vụ vị trí này"
-                                    >
-                                      {copiedKey === pos.id ? (
-                                        <Check className="w-3.5 h-3.5 text-emerald-600" />
-                                      ) : (
-                                        <Copy className="w-3.5 h-3.5" />
-                                      )}
-                                    </button>
-                                  </div>
-
-                                  <h4 className="text-xs font-bold text-[#111827] dark:text-white leading-snug mb-1.5">
-                                    {pos.title}
-                                  </h4>
-
-                                  <p className="text-[11px] text-gray-500 dark:text-gray-400 line-clamp-2 leading-relaxed">
-                                    {pos.duties[0]}
-                                  </p>
-
-                                  <div className="mt-2.5 pt-2 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between text-[10px] text-gray-400">
-                                    <span>{pos.duties.length} đầu mục nhiệm vụ</span>
-                                    <span className="text-[#004B87] dark:text-blue-400 font-medium flex items-center gap-0.5 group-hover:underline">
-                                      Chi tiết <ChevronRight className="w-3 h-3" />
-                                    </span>
-                                  </div>
-                                </div>
-                              );
-                            })}
-                          </div>
+                ) : (
+                  tierGroups.map((group) => {
+                    const tierMeta = TIER_LABELS[group.tier] || TIER_LABELS[4];
+                    return (
+                      <div key={group.tier} className="space-y-3">
+                        <div className="flex items-center gap-2">
+                          <span
+                            className={`text-[11px] font-semibold px-2.5 py-0.5 rounded-full ${tierMeta.badgeBg} ${tierMeta.badgeText}`}
+                          >
+                            {tierMeta.label}
+                          </span>
+                          <div className="h-px flex-1 bg-gray-200 dark:bg-gray-800" />
                         </div>
-                      );
-                    })
-                  )}
-                </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+                          {group.items.map((pos) => {
+                            const isSelected = activePos?.id === pos.id;
+                            const tagStyle = getTagStyle(pos.deptCode);
+
+                            return (
+                              <div
+                                key={pos.id}
+                                onClick={() => setActivePos(isSelected ? null : pos)}
+                                style={{ borderTopWidth: '3px', borderTopColor: tagStyle.border }}
+                                className={`group relative p-3.5 rounded-xl bg-white dark:bg-[#222222] border transition-all cursor-pointer shadow-2xs hover:shadow-md ${
+                                  isSelected
+                                    ? 'border-[#004B87] dark:border-blue-400 ring-2 ring-[#004B87]/20'
+                                    : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
+                                }`}
+                              >
+                                <div className="flex items-start justify-between gap-2 mb-2">
+                                  <span
+                                    className="text-[10px] font-bold px-2 py-0.5 rounded border"
+                                    style={{
+                                      backgroundColor: tagStyle.bg,
+                                      color: tagStyle.text,
+                                      borderColor: tagStyle.border
+                                    }}
+                                  >
+                                    {pos.deptName}
+                                  </span>
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleCopySinglePosition(pos);
+                                    }}
+                                    className="p-1 rounded text-gray-400 hover:text-[#004B87] dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-800 flex-shrink-0"
+                                    title="Copy nhiệm vụ vị trí này"
+                                  >
+                                    {copiedKey === pos.id ? (
+                                      <Check className="w-3.5 h-3.5 text-emerald-600" />
+                                    ) : (
+                                      <Copy className="w-3.5 h-3.5" />
+                                    )}
+                                  </button>
+                                </div>
+
+                                <h4 className="text-xs font-bold text-[#111827] dark:text-white leading-snug mb-1.5">
+                                  {pos.title}
+                                </h4>
+
+                                <p className="text-[11px] text-gray-500 dark:text-gray-400 line-clamp-2 leading-relaxed">
+                                  {pos.duties[0]}
+                                </p>
+
+                                <div className="mt-2.5 pt-2 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between text-[10px] text-gray-400">
+                                  <span>{pos.duties.length} đầu mục nhiệm vụ</span>
+                                  <span className="text-[#004B87] dark:text-blue-400 font-medium flex items-center gap-0.5 group-hover:underline">
+                                    Chi tiết <ChevronRight className="w-3 h-3" />
+                                  </span>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    );
+                  })
+                )}
               </div>
 
               {/* Right Detail Drawer when a Card is selected */}
@@ -621,7 +501,14 @@ export const OrgStructureView: React.FC = () => {
                 <div className="xl:col-span-4 bg-white dark:bg-[#202020] rounded-2xl border border-[#E9E9E7] dark:border-[#2F2F2F] p-5 shadow-sm sticky top-20 space-y-4">
                   <div className="flex items-start justify-between gap-2">
                     <div>
-                      <span className="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-900/40 text-[#004B87] dark:text-blue-300">
+                      <span
+                        className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border"
+                        style={{
+                          backgroundColor: getTagStyle(activePos.deptCode).bg,
+                          color: getTagStyle(activePos.deptCode).text,
+                          borderColor: getTagStyle(activePos.deptCode).border
+                        }}
+                      >
                         {activePos.deptName}
                       </span>
                       <h3 className="text-base font-bold text-[#111827] dark:text-white mt-2">
@@ -696,81 +583,91 @@ export const OrgStructureView: React.FC = () => {
                         />
                       </th>
                       <th className="py-3 px-3 w-20 text-center">Sắp xếp</th>
-                      <th className="py-3 px-4 w-56">Chức danh & Bộ phận</th>
+                      <th className="py-3 px-4 w-64">Chức danh & Bộ phận</th>
                       <th className="py-3 px-4">Nhiệm vụ vị trí chức danh</th>
                       <th className="py-3 px-3 w-20 text-center">Copy</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-[#E9E9E7] dark:divide-[#2F2F2F] text-xs">
-                    {filteredPositions.map((pos, idx) => (
-                      <tr
-                        key={pos.id}
-                        className={`hover:bg-gray-50/80 dark:hover:bg-[#262626] transition-colors ${
-                          selectedIdsForCopy.has(pos.id) ? 'bg-blue-50/40 dark:bg-blue-950/20' : ''
-                        }`}
-                      >
-                        <td className="py-3 px-3 text-center align-top">
-                          <input
-                            type="checkbox"
-                            checked={selectedIdsForCopy.has(pos.id)}
-                            onChange={() => toggleSelectForCopy(pos.id)}
-                            className="rounded border-gray-300 mt-1"
-                          />
-                        </td>
-                        <td className="py-3 px-2 align-top">
-                          <div className="flex items-center justify-center gap-1">
-                            <button
-                              onClick={() => movePositionOrder(pos.id, 'up')}
-                              disabled={idx === 0}
-                              className="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700 disabled:opacity-30"
-                              title="Đưa lên"
+                    {filteredPositions.map((pos, idx) => {
+                      const tagStyle = getTagStyle(pos.deptCode);
+                      return (
+                        <tr
+                          key={pos.id}
+                          className={`hover:bg-gray-50/80 dark:hover:bg-[#262626] transition-colors ${
+                            selectedIdsForCopy.has(pos.id) ? 'bg-blue-50/40 dark:bg-blue-950/20' : ''
+                          }`}
+                        >
+                          <td className="py-3 px-3 text-center align-top">
+                            <input
+                              type="checkbox"
+                              checked={selectedIdsForCopy.has(pos.id)}
+                              onChange={() => toggleSelectForCopy(pos.id)}
+                              className="rounded border-gray-300 mt-1"
+                            />
+                          </td>
+                          <td className="py-3 px-2 align-top">
+                            <div className="flex items-center justify-center gap-1">
+                              <button
+                                onClick={() => movePositionOrder(pos.id, 'up')}
+                                disabled={idx === 0}
+                                className="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700 disabled:opacity-30"
+                                title="Đưa lên"
+                              >
+                                <ArrowUp className="w-3.5 h-3.5" />
+                              </button>
+                              <button
+                                onClick={() => movePositionOrder(pos.id, 'down')}
+                                disabled={idx === filteredPositions.length - 1}
+                                className="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700 disabled:opacity-30"
+                                title="Đưa xuống"
+                              >
+                                <ArrowDown className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+                          </td>
+                          <td className="py-3 px-4 align-top">
+                            <div className="font-bold text-gray-900 dark:text-white">{pos.title}</div>
+                            <span
+                              className="inline-block mt-1 text-[10px] font-bold px-2 py-0.5 rounded border"
+                              style={{
+                                backgroundColor: tagStyle.bg,
+                                color: tagStyle.text,
+                                borderColor: tagStyle.border
+                              }}
                             >
-                              <ArrowUp className="w-3.5 h-3.5" />
-                            </button>
+                              {pos.deptName}
+                            </span>
+                            <div className="mt-1 text-[10px] text-gray-400">
+                              Cấp {pos.tier} • Slide {pos.slide}
+                            </div>
+                          </td>
+                          <td className="py-3 px-4 align-top">
+                            <ul className="space-y-1 text-gray-700 dark:text-gray-300 leading-relaxed">
+                              {pos.duties.map((d, i) => (
+                                <li key={i} className="flex items-start gap-1.5">
+                                  <span className="text-gray-400">•</span>
+                                  <span>{d}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </td>
+                          <td className="py-3 px-3 text-center align-top">
                             <button
-                              onClick={() => movePositionOrder(pos.id, 'down')}
-                              disabled={idx === filteredPositions.length - 1}
-                              className="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700 disabled:opacity-30"
-                              title="Đưa xuống"
+                              onClick={() => handleCopySinglePosition(pos)}
+                              className="p-1.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-[#004B87] text-gray-500 hover:text-[#004B87] dark:hover:text-blue-400 transition-colors"
+                              title="Copy vị trí này"
                             >
-                              <ArrowDown className="w-3.5 h-3.5" />
+                              {copiedKey === pos.id ? (
+                                <Check className="w-3.5 h-3.5 text-emerald-600" />
+                              ) : (
+                                <Copy className="w-3.5 h-3.5" />
+                              )}
                             </button>
-                          </div>
-                        </td>
-                        <td className="py-3 px-4 align-top">
-                          <div className="font-bold text-gray-900 dark:text-white">{pos.title}</div>
-                          <div className="text-[11px] text-[#004B87] dark:text-blue-400 mt-0.5">
-                            {pos.deptName}
-                          </div>
-                          <span className="inline-block mt-1 text-[10px] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500">
-                            Cấp {pos.tier} • Slide {pos.slide}
-                          </span>
-                        </td>
-                        <td className="py-3 px-4 align-top">
-                          <ul className="space-y-1 text-gray-700 dark:text-gray-300 leading-relaxed">
-                            {pos.duties.map((d, i) => (
-                              <li key={i} className="flex items-start gap-1.5">
-                                <span className="text-gray-400">•</span>
-                                <span>{d}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </td>
-                        <td className="py-3 px-3 text-center align-top">
-                          <button
-                            onClick={() => handleCopySinglePosition(pos)}
-                            className="p-1.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-[#004B87] text-gray-500 hover:text-[#004B87] dark:hover:text-blue-400 transition-colors"
-                            title="Copy vị trí này"
-                          >
-                            {copiedKey === pos.id ? (
-                              <Check className="w-3.5 h-3.5 text-emerald-600" />
-                            ) : (
-                              <Copy className="w-3.5 h-3.5" />
-                            )}
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>
@@ -799,68 +696,79 @@ export const OrgStructureView: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {filteredFunctions.map((area) => (
-              <div
-                key={area.id}
-                className="p-5 rounded-2xl bg-white dark:bg-[#202020] border border-[#E9E9E7] dark:border-[#2F2F2F] shadow-2xs flex flex-col justify-between space-y-3"
-              >
-                <div className="space-y-3">
-                  <div className="flex items-start justify-between gap-2">
-                    <div>
-                      <span className="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-900/30 text-[#004B87] dark:text-blue-300">
-                        {area.group} • {area.deptCode}
-                      </span>
-                      <h3 className="text-base font-bold text-[#111827] dark:text-white mt-1.5">
-                        {area.title}
-                      </h3>
-                    </div>
-                    <button
-                      onClick={() => {
-                        const text =
-                          `${area.title.toUpperCase()} (${area.group})\n` +
-                          area.sections
-                            .map(
-                              (s) =>
-                                `[${s.level} - ${s.scope}]\n` +
-                                s.items.map((it) => `  - ${it}`).join('\n')
-                            )
-                            .join('\n\n');
-                        copyToClipboard(text, area.id);
-                      }}
-                      className="p-1.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-[#004B87] text-gray-500 hover:text-[#004B87] transition-colors flex-shrink-0"
-                      title="Copy chức năng mảng này"
-                    >
-                      {copiedKey === area.id ? (
-                        <Check className="w-3.5 h-3.5 text-emerald-600" />
-                      ) : (
-                        <Copy className="w-3.5 h-3.5" />
-                      )}
-                    </button>
-                  </div>
-
-                  <div className="space-y-2.5 max-h-80 overflow-y-auto pr-1">
-                    {area.sections.map((sec, idx) => (
-                      <div
-                        key={idx}
-                        className="p-3 rounded-xl bg-[#F7F6F3] dark:bg-[#262626] border border-gray-200/70 dark:border-gray-800 text-xs space-y-1.5"
-                      >
-                        <div className="font-semibold text-[#004B87] dark:text-blue-400">
-                          {sec.level} {sec.scope && sec.scope !== 'Phạm vi 1' ? `• ${sec.scope}` : ''}
-                        </div>
-                        <ul className="space-y-1 text-gray-700 dark:text-gray-300 leading-relaxed">
-                          {sec.items.map((it, i) => (
-                            <li key={i} className="flex items-start gap-1.5">
-                              <span className="text-gray-400">•</span>
-                              <span>{it}</span>
-                            </li>
-                          ))}
-                        </ul>
+            {filteredFunctions.map((area) => {
+              const tagStyle = getTagStyle(area.deptCode);
+              return (
+                <div
+                  key={area.id}
+                  style={{ borderTopWidth: '3px', borderTopColor: tagStyle.border }}
+                  className="p-5 rounded-2xl bg-white dark:bg-[#202020] border border-[#E9E9E7] dark:border-[#2F2F2F] shadow-2xs flex flex-col justify-between space-y-3"
+                >
+                  <div className="space-y-3">
+                    <div className="flex items-start justify-between gap-2">
+                      <div>
+                        <span
+                          className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border"
+                          style={{
+                            backgroundColor: tagStyle.bg,
+                            color: tagStyle.text,
+                            borderColor: tagStyle.border
+                          }}
+                        >
+                          {area.group} • {area.deptCode}
+                        </span>
+                        <h3 className="text-base font-bold text-[#111827] dark:text-white mt-1.5">
+                          {area.title}
+                        </h3>
                       </div>
-                    ))}
+                      <button
+                        onClick={() => {
+                          const text =
+                            `${area.title.toUpperCase()} (${area.group})\n` +
+                            area.sections
+                              .map(
+                                (s) =>
+                                  `[${s.level} - ${s.scope}]\n` +
+                                  s.items.map((it) => `  - ${it}`).join('\n')
+                              )
+                              .join('\n\n');
+                          copyToClipboard(text, area.id);
+                        }}
+                        className="p-1.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-[#004B87] text-gray-500 hover:text-[#004B87] transition-colors flex-shrink-0"
+                        title="Copy chức năng mảng này"
+                      >
+                        {copiedKey === area.id ? (
+                          <Check className="w-3.5 h-3.5 text-emerald-600" />
+                        ) : (
+                          <Copy className="w-3.5 h-3.5" />
+                        )}
+                      </button>
+                    </div>
+
+                    <div className="space-y-2.5 max-h-80 overflow-y-auto pr-1">
+                      {area.sections.map((sec, idx) => (
+                        <div
+                          key={idx}
+                          className="p-3 rounded-xl bg-[#F7F6F3] dark:bg-[#262626] border border-gray-200/70 dark:border-gray-800 text-xs space-y-1.5"
+                        >
+                          <div className="font-semibold text-[#004B87] dark:text-blue-400">
+                            {sec.level} {sec.scope && sec.scope !== 'Phạm vi 1' ? `• ${sec.scope}` : ''}
+                          </div>
+                          <ul className="space-y-1 text-gray-700 dark:text-gray-300 leading-relaxed">
+                            {sec.items.map((it, i) => (
+                              <li key={i} className="flex items-start gap-1.5">
+                                <span className="text-gray-400">•</span>
+                                <span>{it}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}
