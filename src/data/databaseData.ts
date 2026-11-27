@@ -199,5 +199,105 @@ export const SYSTEM_DATABASE_FILES: DatabaseFileItem[] = [
     updatedAt: '15/12/2025',
     downloadUrl: './files/layout-csvc/layout-cai-tao-srtb-xdv-hung-nguyen.pdf',
     isSystemFile: true
+  },
+
+  // Hồ sơ pháp lý -> Đăng ký kinh doanh (2 PDF)
+  {
+    id: 'sys-dkkd-thna-11',
+    folderId: 'ho-so-phap-ly',
+    subFolderId: 'dang-ky-kinh-doanh',
+    name: 'Giấy Đăng ký kinh doanh THACO AUTO Nghệ An — Lần thứ 11',
+    description: 'Giấy chứng nhận đăng ký doanh nghiệp Công ty TNHH THACO AUTO Nghệ An (thay đổi lần thứ 11, ngày 19/10/2026).',
+    format: 'pdf',
+    size: '2.33 MB',
+    updatedAt: '19/10/2026',
+    downloadUrl: './files/ho-so-phap-ly/dkkd-thaco-auto-nghe-an-lan-11.pdf',
+    isSystemFile: true
+  },
+  {
+    id: 'sys-dkkd-ckot-13',
+    folderId: 'ho-so-phap-ly',
+    subFolderId: 'dang-ky-kinh-doanh',
+    name: 'Giấy Đăng ký kinh doanh Công ty CP Cơ khí Ô tô Nghệ An — Lần thứ 13',
+    description: 'Giấy chứng nhận đăng ký doanh nghiệp Công ty CP Cơ khí Ô tô Nghệ An (thay đổi lần thứ 13, ngày 25/09/2025).',
+    format: 'pdf',
+    size: '977 KB',
+    updatedAt: '25/09/2025',
+    downloadUrl: './files/ho-so-phap-ly/dkkd-co-khi-o-to-nghe-an-lan-13.pdf',
+    isSystemFile: true
+  },
+
+  // Hồ sơ pháp lý -> Giấy ủy quyền (6 PDF)
+  {
+    id: 'sys-guq-09-tuong',
+    folderId: 'ho-so-phap-ly',
+    subFolderId: 'giay-uy-quyen',
+    name: 'Giấy ủy quyền số 09 — Ông Mai Trường Tương (PGĐ SR Diễn Châu)',
+    description: 'Giấy ủy quyền của THACO AUTO Nghệ An cho Ông Mai Trường Tương — Phó Giám đốc Showroom Diễn Châu.',
+    format: 'pdf',
+    size: '2.24 MB',
+    updatedAt: '07/04/2026',
+    downloadUrl: './files/ho-so-phap-ly/guq09-mai-truong-tuong.pdf',
+    isSystemFile: true
+  },
+  {
+    id: 'sys-guq-06-trong-thna',
+    folderId: 'ho-so-phap-ly',
+    subFolderId: 'giay-uy-quyen',
+    name: 'Giấy ủy quyền số 06 — Ông Hoàng Nghĩa Trọng (THACO AUTO Nghệ An)',
+    description: 'Giấy ủy quyền của Công ty THACO AUTO Nghệ An cho Ông Hoàng Nghĩa Trọng.',
+    format: 'pdf',
+    size: '2.77 MB',
+    updatedAt: '07/04/2026',
+    downloadUrl: './files/ho-so-phap-ly/guq06-hoang-nghia-trong-thna.pdf',
+    isSystemFile: true
+  },
+  {
+    id: 'sys-guq-413-trong-ckot',
+    folderId: 'ho-so-phap-ly',
+    subFolderId: 'giay-uy-quyen',
+    name: 'Giấy ủy quyền số 413 — Ông Hoàng Nghĩa Trọng (Cơ khí Ô tô)',
+    description: 'Giấy ủy quyền của Công ty CP Cơ khí Ô tô Nghệ An cho Ông Hoàng Nghĩa Trọng.',
+    format: 'pdf',
+    size: '2.86 MB',
+    updatedAt: '26/09/2025',
+    downloadUrl: './files/ho-so-phap-ly/guq413-hoang-nghia-trong-ckot.pdf',
+    isSystemFile: true
+  },
+  {
+    id: 'sys-guq-07-hiep',
+    folderId: 'ho-so-phap-ly',
+    subFolderId: 'giay-uy-quyen',
+    name: 'Giấy ủy quyền số 07 — Ông Phan Đình Hiệp (P.TGĐ Công ty)',
+    description: 'Giấy ủy quyền của THACO AUTO Nghệ An cho Ông Phan Đình Hiệp — Phó Tổng Giám đốc Công ty.',
+    format: 'pdf',
+    size: '2.21 MB',
+    updatedAt: '07/04/2026',
+    downloadUrl: './files/ho-so-phap-ly/guq07-phan-dinh-hiep.pdf',
+    isSystemFile: true
+  },
+  {
+    id: 'sys-guq-08-anh',
+    folderId: 'ho-so-phap-ly',
+    subFolderId: 'giay-uy-quyen',
+    name: 'Giấy ủy quyền số 08 — Ông Võ Như Anh (GĐ SR Hưng Nguyên)',
+    description: 'Giấy ủy quyền của THACO AUTO Nghệ An cho Ông Võ Như Anh — Giám đốc Showroom Hưng Nguyên.',
+    format: 'pdf',
+    size: '2.21 MB',
+    updatedAt: '07/04/2026',
+    downloadUrl: './files/ho-so-phap-ly/guq08-vo-nhu-anh.pdf',
+    isSystemFile: true
+  },
+  {
+    id: 'sys-guq-linh',
+    folderId: 'ho-so-phap-ly',
+    subFolderId: 'giay-uy-quyen',
+    name: 'Giấy ủy quyền — Ông Lê Quang Linh (GĐ SR Lê Lợi)',
+    description: 'Giấy ủy quyền của THACO AUTO Nghệ An cho Ông Lê Quang Linh — Giám đốc Showroom Lê Lợi.',
+    format: 'pdf',
+    size: '2.34 MB',
+    updatedAt: '01/01/2026',
+    downloadUrl: './files/ho-so-phap-ly/guq-le-quang-linh.pdf',
+    isSystemFile: true
   }
 ];
