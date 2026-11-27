@@ -82,11 +82,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
       <div className="flex items-center justify-between p-3 border-b border-[#E9E9E7] dark:border-[#2F2F2F]">
         {!isCollapsed ? (
           <div className="flex items-center space-x-2.5 overflow-hidden">
-            <div className="w-8 h-8 rounded-lg overflow-hidden flex-shrink-0 shadow-xs border border-amber-400/40">
+            <div className="w-8 h-8 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center bg-white/90 dark:bg-[#2A2A2A] shadow-xs border border-gray-200 dark:border-gray-700 p-0.5">
               <img
-                src="./logo-thaco-na.png"
+                src="./increase.png"
                 alt="THACO AUTO Nghệ An"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain"
               />
             </div>
             <div className="truncate">
@@ -99,11 +99,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
             </div>
           </div>
         ) : (
-          <div className="mx-auto w-8 h-8 rounded-lg overflow-hidden flex-shrink-0 shadow-xs border border-amber-400/40">
+          <div className="mx-auto w-8 h-8 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center bg-white/90 dark:bg-[#2A2A2A] shadow-xs border border-gray-200 dark:border-gray-700 p-0.5">
             <img
-              src="./logo-thaco-na.png"
+              src="./increase.png"
               alt="THACO AUTO Nghệ An"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain"
             />
           </div>
         )}
