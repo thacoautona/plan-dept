@@ -30,7 +30,7 @@ export const Header: React.FC<HeaderProps> = ({
       case 'governance':
         return 'Hệ thống Quy trình Quy định';
       case 'org':
-        return 'Cơ cấu Tổ chức & Ma trận Phân quyền RACI';
+        return 'Cấu trúc & Chức năng nhiệm vụ';
       case 'digital':
         return 'Chuyển đổi số & Sáng kiến Cải tiến Vận hành';
       default:

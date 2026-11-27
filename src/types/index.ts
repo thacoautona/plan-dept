@@ -37,7 +37,7 @@ export interface GovernanceDoc {
   title: string; // Tên quy trình / quy định
   sourceLevel: DocSourceLevel; // VPDH hoặc NOI_BO
   sourceLabel: string; // Văn phòng Điều hành (VPĐH) hoặc THACO AUTO Nghệ An
-  department: string; // KDDL, KDTB, DVD, DVTB, QSD, TCKT, HCNS, NVKH, MKT, NVCN, VPDH
+  department: string; // KDDL, KDTB, DVDL, DVTB, QSD, TCKT, HCNS, NVKH, MKT, NVCN, VPDH
   departmentName: string; // Tên đầy đủ
   approvedBy: string; // Người phê duyệt (TGĐ Cty, PCT TT...)
   effectiveDate: string; // Ngày ban hành

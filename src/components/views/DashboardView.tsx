@@ -12,7 +12,7 @@ import { AppIcon } from '../AppIcon';
 const DEPT_COLORS: Record<string, { bg: string; text: string; border: string }> = {
   KDDL: { bg: '#FFC5C5', text: '#801A1A', border: '#FCA5A5' },
   KDTB: { bg: '#FFC5C5', text: '#801A1A', border: '#FCA5A5' },
-  DVD: { bg: '#BFBFBF', text: '#2D3748', border: '#A0AEC0' },
+  DVDL: { bg: '#BFBFBF', text: '#2D3748', border: '#A0AEC0' },
   DVTB: { bg: '#BFBFBF', text: '#2D3748', border: '#A0AEC0' },
   QSD: { bg: '#BFBFBF', text: '#2D3748', border: '#A0AEC0' },
   TCKT: { bg: '#FFFCD5', text: '#744210', border: '#F6E05E' },

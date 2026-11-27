@@ -13,10 +13,9 @@ import { CreateItemModal } from './components/CreateItemModal';
 import {
   mockPlanGoals,
   mockGovernanceDocs,
-  mockOrgDepartments,
-  mockRACIMatrix,
   mockDigitalInitiatives
 } from './data/mockData';
+import { orgPositionsData } from './data/orgData';
 import { PlanGoal, GovernanceDoc, PlanStatus } from './types';
 
 export function App() {
@@ -27,9 +26,7 @@ export function App() {
   // Core Data State
   const [plans, setPlans] = useState<PlanGoal[]>(mockPlanGoals);
   const [docs, setDocs] = useState<GovernanceDoc[]>(mockGovernanceDocs);
-  const [departments] = useState(mockOrgDepartments);
-  const [raciMatrix] = useState(mockRACIMatrix);
-  const [digitalList, setDigitalList] = useState(mockDigitalInitiatives);
+  const [digitalList] = useState(mockDigitalInitiatives);
 
   // Modals & Drawers
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -186,7 +183,7 @@ ${digitalList
           )}
 
           {activeTab === 'org' && (
-            <OrgStructureView departments={departments} raciMatrix={raciMatrix} />
+            <OrgStructureView />
           )}
 
           {activeTab === 'digital' && (
@@ -204,7 +201,7 @@ ${digitalList
         onClose={() => setIsSearchOpen(false)}
         plans={plans}
         docs={docs}
-        departments={departments}
+        positions={orgPositionsData}
         digitalProjects={digitalList}
         onSelectTab={setActiveTab}
         onSelectItem={(type, item) => {

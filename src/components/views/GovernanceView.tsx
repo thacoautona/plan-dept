@@ -25,7 +25,7 @@ interface GovernanceViewProps {
 export const DEPT_COLOR_MAP: Record<string, { bg: string; text: string; label: string; group: string }> = {
   KDDL: { bg: '#FFC5C5', text: '#881337', label: 'Kinh doanh xe du lịch', group: 'Xe mới' },
   KDTB: { bg: '#FFC5C5', text: '#881337', label: 'Kinh doanh xe Tải bus', group: 'Xe mới' },
-  DVD: { bg: '#BFBFBF', text: '#1F2937', label: 'Dịch vụ phụ tùng du lịch', group: 'DV & Xe cũ' },
+  DVDL: { bg: '#BFBFBF', text: '#1F2937', label: 'Dịch vụ phụ tùng du lịch', group: 'DV & Xe cũ' },
   DVTB: { bg: '#BFBFBF', text: '#1F2937', label: 'Dịch vụ phụ tùng tải bus', group: 'DV & Xe cũ' },
   QSD: { bg: '#BFBFBF', text: '#1F2937', label: 'Xe du lịch đã qua sử dụng', group: 'DV & Xe cũ' },
   TCKT: { bg: '#FFFCD5', text: '#78350F', label: 'Tài chính kế toán', group: 'Nghiệp vụ quản trị' },
@@ -49,7 +49,7 @@ export const GovernanceView: React.FC<GovernanceViewProps> = ({
   const departmentsList = [
     { code: 'KDDL', name: 'KD xe du lịch' },
     { code: 'KDTB', name: 'KD xe Tải bus' },
-    { code: 'DVD', name: 'Dịch vụ PT du lịch' },
+    { code: 'DVDL', name: 'Dịch vụ PT du lịch' },
     { code: 'DVTB', name: 'Dịch vụ PT tải bus' },
     { code: 'QSD', name: 'Xe đã qua sử dụng' },
     { code: 'TCKT', name: 'Tài chính kế toán' },

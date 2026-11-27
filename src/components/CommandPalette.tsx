@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Search, X, ArrowRight } from 'lucide-react';
-import { PlanGoal, GovernanceDoc, OrgDepartment, DigitalInitiative } from '../types';
+import { PlanGoal, GovernanceDoc, DigitalInitiative } from '../types';
+import { OrgPositionItem } from '../data/orgData';
 import { ActiveTab } from './Sidebar';
 import { AppIcon } from './AppIcon';
 
@@ -9,7 +10,7 @@ interface CommandPaletteProps {
   onClose: () => void;
   plans: PlanGoal[];
   docs: GovernanceDoc[];
-  departments: OrgDepartment[];
+  positions: OrgPositionItem[];
   digitalProjects: DigitalInitiative[];
   onSelectTab: (tab: ActiveTab) => void;
   onSelectItem: (type: 'plan' | 'doc' | 'dept' | 'digital', item: any) => void;
@@ -20,7 +21,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
   onClose,
   plans,
   docs,
-  departments,
+  positions,
   digitalProjects,
   onSelectTab,
   onSelectItem
@@ -59,11 +60,11 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
       d.summary.toLowerCase().includes(query.toLowerCase())
   );
 
-  const filteredDepts = departments.filter(
-    (dept) =>
-      dept.name.toLowerCase().includes(query.toLowerCase()) ||
-      dept.code.toLowerCase().includes(query.toLowerCase()) ||
-      dept.headName.toLowerCase().includes(query.toLowerCase())
+  const filteredPositions = positions.filter(
+    (pos) =>
+      pos.title.toLowerCase().includes(query.toLowerCase()) ||
+      pos.deptName.toLowerCase().includes(query.toLowerCase()) ||
+      pos.deptCode.toLowerCase().includes(query.toLowerCase())
   );
 
   const filteredDigital = digitalProjects.filter(
@@ -73,7 +74,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
   );
 
   const totalResults =
-    filteredPlans.length + filteredDocs.length + filteredDepts.length + filteredDigital.length;
+    filteredPlans.length + filteredDocs.length + filteredPositions.length + filteredDigital.length;
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 bg-black/40 backdrop-blur-xs transition-opacity animate-in fade-in duration-150">
@@ -175,30 +176,30 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                 </div>
               )}
 
-              {/* Departments Section */}
-              {filteredDepts.length > 0 && (
+              {/* Positions Section */}
+              {filteredPositions.length > 0 && (
                 <div>
                   <p className="px-3 py-1 text-[11px] font-semibold text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
-                    <AppIcon name="team_people" className="w-3.5 h-3.5" /> Phòng ban & Nhân sự ({filteredDepts.length})
+                    <AppIcon name="team_people" className="w-3.5 h-3.5" /> Chức danh & Nhiệm vụ ({filteredPositions.length})
                   </p>
                   <div className="mt-1 space-y-0.5">
-                    {filteredDepts.map((dept) => (
+                    {filteredPositions.slice(0, 12).map((pos) => (
                       <button
-                        key={dept.id}
+                        key={pos.id}
                         onClick={() => {
                           onSelectTab('org');
-                          onSelectItem('dept', dept);
+                          onSelectItem('dept', pos);
                           onClose();
                         }}
                         className="w-full text-left px-3 py-2 rounded-lg text-xs hover:bg-gray-100 dark:hover:bg-[#2A2A2A] flex items-center justify-between group transition-colors"
                       >
                         <div className="flex items-center gap-2 truncate">
-                          <span className="font-semibold text-gray-800 dark:text-gray-100">
-                            {dept.name}
+                          <span className="font-semibold text-gray-800 dark:text-gray-100 truncate">
+                            {pos.title}
                           </span>
-                          <span className="text-gray-400 text-[11px]">({dept.headName})</span>
+                          <span className="text-gray-400 text-[11px] truncate">({pos.deptName})</span>
                         </div>
-                        <span className="text-[11px] text-gray-400">{dept.personnelCount} nhân sự</span>
+                        <span className="text-[11px] text-gray-400 flex-shrink-0">{pos.duties.length} nhiệm vụ</span>
                       </button>
                     ))}
                   </div>

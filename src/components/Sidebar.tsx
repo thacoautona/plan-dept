@@ -57,10 +57,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
     },
     {
       id: 'org' as ActiveTab,
-      label: 'Cơ cấu & Ma trận RACI',
+      label: 'Cấu trúc & Chức năng nhiệm vụ',
       iconName: 'org_chart' as AppIconName,
       badge: undefined,
-      desc: 'Sơ đồ tổ chức & Phân nhiệm'
+      desc: 'Sơ đồ cấu trúc & Nhiệm vụ chức danh'
     },
     {
       id: 'digital' as ActiveTab,

@@ -15,9 +15,9 @@ def unwrap_google_link(href):
     return href
 
 # Dept Mapping Rule from user:
-# DVPT DL -> DVD, DV HTKD -> HCNS, PNS -> HCNS, KD xe DL -> KDDL, KD xe TB -> KDTB, PKH -> NVKH, KD xe QSD -> QSD, DVPT TB -> DVTB
+# DVPT DL -> DVDL, DV HTKD -> HCNS, PNS -> HCNS, KD xe DL -> KDDL, KD xe TB -> KDTB, PKH -> NVKH, KD xe QSD -> QSD, DVPT TB -> DVTB
 DEPT_STANDARDIZATION = {
-    "DVPT DL": "DVD",
+    "DVPT DL": "DVDL",
     "DVHTKD": "HCNS",
     "DV HTKD": "HCNS",
     "PNS": "HCNS",
@@ -37,7 +37,7 @@ DEPT_STANDARDIZATION = {
 DEPT_NAMES = {
     "KDDL": "Kinh doanh xe du lịch",
     "KDTB": "Kinh doanh xe Tải bus",
-    "DVD": "Kinh doanh Dịch vụ phụ tùng du lịch",
+    "DVDL": "Kinh doanh Dịch vụ phụ tùng du lịch",
     "DVTB": "Kinh doanh dịch vụ phụ tùng tải bus",
     "QSD": "Kinh doanh xe du lịch đã qua sử dụng",
     "TCKT": "Tài chính kế toán",
