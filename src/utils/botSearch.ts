@@ -35,7 +35,7 @@ function scoreMatch(text: string, tokens: string[]): number {
 const STOP_WORDS = new Set([
   'nhiem', 'vu', 'cua', 'la', 'gi', 'cho', 'toi', 'tim', 'tom', 'tat',
   've', 'va', 'cac', 'tai', 'nhung', 'nay', 'do', 'duoc', 'trong', 'theo',
-  'quy', 'trinh', 'dinh', 'chuc', 'danh', 'ban', 'phong', 'bo', 'phan'
+  'quy', 'trinh', 'dinh', 'chuc', 'danh', 'ban', 'phong', 'bo', 'phan', 'nang', 'truong'
 ]);
 
 /**
@@ -52,8 +52,9 @@ export function retrieveCompactContext(query: string): MiniRagResult {
 
   // 1. Search Governance Docs (223 docs)
   for (const doc of mockGovernanceDocs) {
-    const hay = `${doc.code} ${doc.title} ${doc.department} ${doc.departmentName} ${doc.summary}`;
-    const s = scoreMatch(hay, tokens);
+    const titleScore = scoreMatch(doc.title, tokens) * 2.5;
+    const bodyScore = scoreMatch(`${doc.code} ${doc.department} ${doc.departmentName} ${doc.summary}`, tokens);
+    const s = titleScore + bodyScore;
     if (s > 0) {
       candidates.push({
         score: s + (normQuery.includes(normalizeText(doc.department)) ? 2 : 0),
@@ -69,9 +70,10 @@ export function retrieveCompactContext(query: string): MiniRagResult {
 
   // 2. Search Org Positions (85 positions)
   for (const pos of orgPositionsData) {
+    const titleScore = scoreMatch(`${pos.title} ${pos.deptName}`, tokens) * 3;
     const dutiesSnippet = pos.duties.slice(0, 4).join('; ');
-    const hay = `${pos.title} ${pos.deptCode} ${pos.deptName} ${dutiesSnippet}`;
-    const s = scoreMatch(hay, tokens);
+    const bodyScore = scoreMatch(`${pos.deptCode} ${dutiesSnippet}`, tokens);
+    const s = titleScore + bodyScore;
     if (s > 0) {
       candidates.push({
         score: s + 0.5,
