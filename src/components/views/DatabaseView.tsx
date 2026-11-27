@@ -14,10 +14,12 @@ import {
   Trash2,
   X,
   Upload,
-  Lock
+  Lock,
+  Eye
 } from 'lucide-react';
 import {
   DATABASE_FOLDERS,
+  SYSTEM_DATABASE_FILES,
   DatabaseFileItem,
   DbFileFormat
 } from '../../data/databaseData';
@@ -66,7 +68,7 @@ export const DatabaseView: React.FC<DatabaseViewProps> = ({ isAdmin }) => {
   const [selectedFolderId, setSelectedFolderId] = useState<string>('he-thong-bao-cao');
   const [selectedSubFolderId, setSelectedSubFolderId] = useState<string>('vpdh-mien');
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [files, setFiles] = useState<DatabaseFileItem[]>(() => {
+  const [userFiles, setUserFiles] = useState<DatabaseFileItem[]>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       return saved ? JSON.parse(saved) : [];
@@ -74,6 +76,9 @@ export const DatabaseView: React.FC<DatabaseViewProps> = ({ isAdmin }) => {
       return [];
     }
   });
+  const [previewPdfFile, setPreviewPdfFile] = useState<DatabaseFileItem | null>(null);
+
+  const files = useMemo(() => [...SYSTEM_DATABASE_FILES, ...userFiles], [userFiles]);
 
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [uploadMode, setUploadMode] = useState<'file' | 'link'>('file');
@@ -86,11 +91,11 @@ export const DatabaseView: React.FC<DatabaseViewProps> = ({ isAdmin }) => {
 
   useEffect(() => {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(files));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(userFiles));
     } catch {
       // ignore storage quota errors
     }
-  }, [files]);
+  }, [userFiles]);
 
   const currentFolder = useMemo(
     () => DATABASE_FOLDERS.find((f) => f.id === selectedFolderId) || DATABASE_FOLDERS[0],
@@ -172,7 +177,7 @@ export const DatabaseView: React.FC<DatabaseViewProps> = ({ isAdmin }) => {
       downloadUrl: newUrl.trim()
     };
 
-    setFiles((prev) => [item, ...prev]);
+    setUserFiles((prev) => [item, ...prev]);
     setNewName('');
     setNewDesc('');
     setNewUrl('');
@@ -183,7 +188,7 @@ export const DatabaseView: React.FC<DatabaseViewProps> = ({ isAdmin }) => {
 
   const handleDeleteFile = (id: string) => {
     if (!isAdmin) return;
-    setFiles((prev) => prev.filter((f) => f.id !== id));
+    setUserFiles((prev) => prev.filter((f) => f.id !== id));
   };
 
   return (
@@ -380,12 +385,23 @@ export const DatabaseView: React.FC<DatabaseViewProps> = ({ isAdmin }) => {
                             </span>
                           </div>
                           <p className="text-[11px] text-gray-500 dark:text-gray-400">
-                            {file.description} • Cập nhật: {file.updatedAt}
+                            {file.description} • Cập nhật: <strong>{file.updatedAt}</strong>
+                            {file.size ? ` • ${file.size}` : ''}
                           </p>
                         </div>
                       </div>
 
                       <div className="flex items-center gap-2 self-end sm:self-center flex-shrink-0">
+                        {file.format === 'pdf' && (
+                          <button
+                            onClick={() => setPreviewPdfFile(file)}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-rose-50 hover:bg-rose-100 text-rose-700 dark:bg-rose-950/40 dark:hover:bg-rose-950/60 dark:text-rose-300 border border-rose-200 dark:border-rose-800 transition-colors"
+                            title="Xem PDF trực tiếp trên trình duyệt"
+                          >
+                            <Eye className="w-3.5 h-3.5" />
+                            Xem online
+                          </button>
+                        )}
                         <a
                           href={file.downloadUrl}
                           target="_blank"
@@ -395,9 +411,8 @@ export const DatabaseView: React.FC<DatabaseViewProps> = ({ isAdmin }) => {
                         >
                           <Download className="w-3.5 h-3.5" />
                           Tải xuống
-                          <ExternalLink className="w-3 h-3 opacity-75" />
                         </a>
-                        {isAdmin && (
+                        {isAdmin && !file.isSystemFile && (
                           <button
                             onClick={() => handleDeleteFile(file.id)}
                             className="p-1.5 rounded-lg text-gray-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors"
@@ -556,6 +571,54 @@ export const DatabaseView: React.FC<DatabaseViewProps> = ({ isAdmin }) => {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* PDF Online Viewer Modal */}
+      {previewPdfFile && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/60 backdrop-blur-xs">
+          <div className="w-full max-w-5xl h-[88vh] bg-white dark:bg-[#202020] rounded-2xl border border-gray-200 dark:border-[#333] shadow-2xl flex flex-col overflow-hidden">
+            <div className="px-5 py-3 border-b border-gray-200 dark:border-[#333] flex items-center justify-between gap-3 bg-[#F7F6F3] dark:bg-[#1A1A1A]">
+              <div className="min-w-0">
+                <h3 className="text-sm font-bold text-[#111827] dark:text-white truncate">
+                  {previewPdfFile.name}
+                </h3>
+                <p className="text-[11px] text-gray-500 dark:text-gray-400 truncate">
+                  {previewPdfFile.description} • Cập nhật: {previewPdfFile.updatedAt} {previewPdfFile.size ? `• ${previewPdfFile.size}` : ''}
+                </p>
+              </div>
+              <div className="flex items-center gap-2 flex-shrink-0">
+                <a
+                  href={previewPdfFile.downloadUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-white dark:bg-[#2A2A2A] border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" /> Mở tab mới
+                </a>
+                <a
+                  href={previewPdfFile.downloadUrl}
+                  download={previewPdfFile.name}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#004B87] hover:bg-[#003A69] text-white"
+                >
+                  <Download className="w-3.5 h-3.5" /> Tải xuống
+                </a>
+                <button
+                  onClick={() => setPreviewPdfFile(null)}
+                  className="p-1.5 rounded-lg text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-800"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+            <div className="flex-1 bg-gray-100 dark:bg-[#141414]">
+              <iframe
+                src={previewPdfFile.downloadUrl}
+                title={previewPdfFile.name}
+                className="w-full h-full border-0"
+              />
+            </div>
           </div>
         </div>
       )}
