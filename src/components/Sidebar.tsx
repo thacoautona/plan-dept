@@ -80,10 +80,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
     >
       {/* Top Workspace Identity */}
       <div className="flex items-center justify-between p-3 border-b border-[#E9E9E7] dark:border-[#2F2F2F]">
-        {!isCollapsed && (
+        {!isCollapsed ? (
           <div className="flex items-center space-x-2.5 overflow-hidden">
-            <div className="w-8 h-8 rounded-md bg-[#004B87] text-white flex items-center justify-center font-bold text-sm shadow-sm flex-shrink-0">
-              NA
+            <div className="w-8 h-8 rounded-lg overflow-hidden flex-shrink-0 shadow-xs border border-amber-400/40">
+              <img
+                src="./logo-thaco-na.png"
+                alt="THACO AUTO Nghệ An"
+                className="w-full h-full object-cover"
+              />
             </div>
             <div className="truncate">
               <h1 className="font-semibold text-sm leading-tight text-[#111827] dark:text-white truncate">
@@ -93,6 +97,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <ShieldCheck className="w-3 h-3 text-emerald-600" /> Nghiệp vụ Kế hoạch
               </span>
             </div>
+          </div>
+        ) : (
+          <div className="mx-auto w-8 h-8 rounded-lg overflow-hidden flex-shrink-0 shadow-xs border border-amber-400/40">
+            <img
+              src="./logo-thaco-na.png"
+              alt="THACO AUTO Nghệ An"
+              className="w-full h-full object-cover"
+            />
           </div>
         )}
 
