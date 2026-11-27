@@ -51,7 +51,7 @@ export function App() {
 
   // If user logs out or is not admin and is on an admin-only tab, redirect to governance
   useEffect(() => {
-    if (!isAdmin && (activeTab === 'dashboard' || activeTab === 'planning')) {
+    if (!isAdmin && (activeTab === 'dashboard' || activeTab === 'planning' || activeTab === 'digital')) {
       setActiveTab('governance');
     }
   }, [isAdmin, activeTab]);
@@ -303,7 +303,7 @@ ${digitalList
         plans={isAdmin ? plans : []}
         docs={docs}
         positions={orgPositionsData}
-        digitalProjects={digitalList}
+        digitalProjects={isAdmin ? digitalList : []}
         onSelectTab={setActiveTab}
         onSelectItem={(type, item) => {
           if (type === 'plan') setSelectedPlanForDetail(item);

@@ -1,14 +1,59 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
-  Sparkles,
   X,
   Send,
   ExternalLink,
-  Bot,
   Trash2,
   Copy,
   Check
 } from 'lucide-react';
+
+function RobotBubbleIcon({ className = 'w-5 h-5' }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 32 32"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      {/* Speech bubble top-left */}
+      <path
+        d="M3 9.5C3 6.46 5.46 4 8.5 4H11.5C14.54 4 17 6.46 17 9.5V15H8.5C5.46 15 3 12.54 3 9.5Z"
+        stroke="currentColor"
+        strokeWidth="2.1"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      {/* 3 dots in bubble */}
+      <line x1="7" y1="9.5" x2="7" y2="9.6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+      <line x1="10" y1="9.5" x2="10" y2="9.6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+      <line x1="13" y1="9.5" x2="13" y2="9.6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+      {/* Antenna */}
+      <line x1="21" y1="9" x2="21" y2="12.5" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" />
+      <circle cx="21" cy="7" r="2" fill="currentColor" />
+      {/* Robot head outer */}
+      <path
+        d="M17 12.5H23.5C26.81 12.5 29.5 15.19 29.5 18.5V21.5C29.5 24.81 26.81 27.5 23.5 27.5H14.5C11.19 27.5 8.5 24.81 8.5 21.5V18"
+        stroke="currentColor"
+        strokeWidth="2.1"
+        strokeLinecap="round"
+      />
+      {/* Inner visor */}
+      <rect
+        x="14"
+        y="16"
+        width="12"
+        height="8"
+        rx="3.5"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+      {/* Eyes */}
+      <circle cx="17.8" cy="20" r="1.4" fill="currentColor" />
+      <circle cx="22.2" cy="20" r="1.4" fill="currentColor" />
+    </svg>
+  );
+}
 import { BOT_CONFIG } from '../config/botConfig';
 import { retrieveCompactContext, BotSourceLink } from '../utils/botSearch';
 import { AuthUser } from '../config/authConfig';
@@ -225,10 +270,10 @@ export const AiAssistantBot: React.FC<AiAssistantBotProps> = ({ authUser }) => {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-5 right-5 z-40 flex items-center gap-2 px-4 py-3 rounded-2xl bg-[#004B87] hover:bg-[#003A69] text-white shadow-xl hover:shadow-2xl transition-all text-xs font-semibold border border-blue-400/30"
+          className="fixed bottom-5 right-5 z-40 flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-[#004B87] hover:bg-[#003A69] text-white shadow-xl hover:shadow-2xl transition-all text-xs font-semibold border border-blue-400/30"
           title="Mở Trợ lý AI tìm kiếm & tóm tắt tài liệu"
         >
-          <Sparkles className="w-4 h-4 text-amber-300" />
+          <RobotBubbleIcon className="w-5 h-5 text-white" />
           <span>Trợ lý AI</span>
         </button>
       )}
@@ -240,7 +285,7 @@ export const AiAssistantBot: React.FC<AiAssistantBotProps> = ({ authUser }) => {
           <div className="px-4 py-3 bg-[#004B87] text-white flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="p-1.5 rounded-lg bg-white/15">
-                <Bot className="w-4 h-4" />
+                <RobotBubbleIcon className="w-5 h-5 text-white" />
               </div>
               <div>
                 <h3 className="text-xs font-bold leading-tight">{BOT_CONFIG.BOT_NAME}</h3>

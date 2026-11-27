@@ -82,7 +82,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       iconName: 'cloud_upload' as AppIconName,
       badge: stats.digitalCount,
       desc: 'Sáng kiến & Tự động hóa',
-      adminOnly: false
+      adminOnly: true
     }
   ];
 
