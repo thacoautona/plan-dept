@@ -1,13 +1,13 @@
-# THACO - Hệ thống Quản trị Kế hoạch & Vận hành Đơn vị Tỉnh thành
+# THACO AUTO Nghệ An - Hệ thống Quản trị Kế hoạch & Vận hành
 > *Giao diện trực quan, tinh tế phong cách Notion — Chuyên biệt hóa cho nghiệp vụ Trợ lý Kế hoạch.*
 
 ---
 
 ## 🎯 1. Giới thiệu Dự án
-Hệ thống được thiết kế theo đúng phạm vi nghiệp vụ cốt lõi của **Trợ lý Kế hoạch tại Công ty Tỉnh thành**:
+Hệ thống được thiết kế theo đúng phạm vi nghiệp vụ cốt lõi của **Trợ lý Kế hoạch tại THACO AUTO Nghệ An**:
 1. **Quản trị Kế hoạch & Mục tiêu**: Triển khai kế hoạch, tổng hợp số liệu tiến độ KPI, phân tích nguyên nhân sai lệch và chủ động tham mưu các giải pháp nâng cao tỷ lệ hoàn thành mục tiêu chung.
 2. **Hệ thống Quy trình, Quy định & Tuân thủ**: Chuẩn hóa thư viện tài liệu quản trị (Quy chế, Quy định, SOP, Biểu mẫu); tổ chức thực thi và giám sát kiểm soát tuân thủ (Checklist & Kế hoạch hành động CAPA).
-3. **Cơ cấu Tổ chức & Ma trận RACI**: Trực quan hóa sơ đồ cây bộ máy đơn vị tỉnh thành, mô tả chức năng nhiệm vụ và bảng phân nhiệm RACI liên phòng ban.
+3. **Cơ cấu Tổ chức & Ma trận RACI**: Trực quan hóa sơ đồ cây bộ máy đơn vị, mô tả chức năng nhiệm vụ và bảng phân nhiệm RACI liên phòng ban.
 4. **Chuyển đổi số & Cải tiến Vận hành**: Theo dõi các dự án số hóa (Dashboard BI Realtime, Tra cứu quy trình trực tuyến, Mobile Checklist 5S) và đo lường hiệu quả định lượng.
 
 ---

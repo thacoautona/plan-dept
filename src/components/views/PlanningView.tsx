@@ -1,20 +1,13 @@
 import React, { useState } from 'react';
 import {
-  Table,
-  Kanban,
-  Filter,
   Plus,
-  ArrowUpDown,
   Search,
-  CheckCircle2,
   Clock,
   AlertCircle,
-  FileSpreadsheet,
-  ChevronRight,
-  Sparkles,
-  MessageSquare
+  CheckCircle2
 } from 'lucide-react';
 import { PlanGoal, PlanStatus } from '../../types';
+import { AppIcon } from '../AppIcon';
 
 interface PlanningViewProps {
   plans: PlanGoal[];
@@ -26,8 +19,7 @@ interface PlanningViewProps {
 export const PlanningView: React.FC<PlanningViewProps> = ({
   plans,
   onSelectPlan,
-  onOpenCreatePlan,
-  onUpdatePlanStatus
+  onOpenCreatePlan
 }) => {
   const [viewMode, setViewMode] = useState<'table' | 'kanban'>('table');
   const [searchQuery, setSearchQuery] = useState('');
@@ -51,16 +43,16 @@ export const PlanningView: React.FC<PlanningViewProps> = ({
       {/* Header Notion-style */}
       <div className="pt-6 pb-2 border-b border-[#E9E9E7] dark:border-[#2F2F2F]">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <span className="p-2 rounded-xl bg-blue-50 dark:bg-blue-900/30 border border-blue-100 dark:border-blue-800 text-2xl">
-              🎯
-            </span>
+          <div className="flex items-center gap-3.5">
+            <div className="p-2.5 rounded-2xl bg-blue-50/80 dark:bg-blue-950/40 border border-blue-100 dark:border-blue-900/50 shadow-2xs">
+              <AppIcon name="target_goal" className="w-8 h-8" alt="Kế hoạch" />
+            </div>
             <div>
               <h1 className="text-2xl font-bold tracking-tight text-[#111827] dark:text-white">
                 Quản trị Kế hoạch & Tiến độ Mục tiêu
               </h1>
               <p className="text-xs text-[#787774] dark:text-[#9B9A97] mt-0.5">
-                Triển khai, tổng hợp, theo dõi, đánh giá kết quả thực hiện và tham mưu giải pháp nâng cao tỷ lệ hoàn thành.
+                Triển khai kế hoạch, tổng hợp, theo dõi, đánh giá kết quả thực hiện tại THACO AUTO Nghệ An và chủ động tham mưu các giải pháp.
               </p>
             </div>
           </div>
@@ -78,23 +70,23 @@ export const PlanningView: React.FC<PlanningViewProps> = ({
           <div className="flex items-center bg-[#EFEFEF] dark:bg-[#252525] p-1 rounded-lg border border-[#E0E0DE] dark:border-[#333]">
             <button
               onClick={() => setViewMode('table')}
-              className={`flex items-center gap-1.5 px-3 py-1 rounded-md font-medium transition-all ${
+              className={`flex items-center gap-2 px-3 py-1 rounded-md font-medium transition-all ${
                 viewMode === 'table'
                   ? 'bg-white dark:bg-[#303030] text-gray-900 dark:text-white shadow-2xs'
                   : 'text-gray-500 hover:text-gray-900 dark:hover:text-gray-200'
               }`}
             >
-              <Table className="w-3.5 h-3.5" /> Bảng chi tiết
+              <AppIcon name="task_schedule" className="w-3.5 h-3.5" /> Bảng chi tiết
             </button>
             <button
               onClick={() => setViewMode('kanban')}
-              className={`flex items-center gap-1.5 px-3 py-1 rounded-md font-medium transition-all ${
+              className={`flex items-center gap-2 px-3 py-1 rounded-md font-medium transition-all ${
                 viewMode === 'kanban'
                   ? 'bg-white dark:bg-[#303030] text-gray-900 dark:text-white shadow-2xs'
                   : 'text-gray-500 hover:text-gray-900 dark:hover:text-gray-200'
               }`}
             >
-              <Kanban className="w-3.5 h-3.5" /> Bảng Kanban
+              <AppIcon name="deadline_hourglass" className="w-3.5 h-3.5" /> Bảng Kanban
             </button>
           </div>
 

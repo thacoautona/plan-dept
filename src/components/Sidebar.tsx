@@ -1,20 +1,12 @@
 import React from 'react';
 import {
-  LayoutDashboard,
-  Target,
-  FileText,
-  Network,
-  Cpu,
   ChevronLeft,
   ChevronRight,
   Sun,
   Moon,
-  Building2,
-  ShieldCheck,
-  CheckCircle2,
-  FolderKanban,
-  Sparkles
+  ShieldCheck
 } from 'lucide-react';
+import { AppIcon, AppIconName } from './AppIcon';
 
 export type ActiveTab = 'dashboard' | 'planning' | 'governance' | 'org' | 'digital';
 
@@ -46,35 +38,35 @@ export const Sidebar: React.FC<SidebarProps> = ({
     {
       id: 'dashboard' as ActiveTab,
       label: 'Tổng quan Điều hành',
-      icon: LayoutDashboard,
+      iconName: 'presentation_chart' as AppIconName,
       badge: undefined,
       desc: 'Báo cáo tóm tắt & Tham mưu'
     },
     {
       id: 'planning' as ActiveTab,
       label: 'Quản trị Kế hoạch',
-      icon: Target,
+      iconName: 'target_goal' as AppIconName,
       badge: stats.plansCount,
       desc: 'Mục tiêu, Tiến độ & KPI'
     },
     {
       id: 'governance' as ActiveTab,
       label: 'Quy trình & Tuân thủ',
-      icon: FileText,
+      iconName: 'folder_archive' as AppIconName,
       badge: stats.docsCount,
       desc: 'Tài liệu quản trị & CAPA'
     },
     {
       id: 'org' as ActiveTab,
       label: 'Cơ cấu & Ma trận RACI',
-      icon: Network,
+      iconName: 'org_chart' as AppIconName,
       badge: undefined,
       desc: 'Sơ đồ tổ chức & Phân nhiệm'
     },
     {
       id: 'digital' as ActiveTab,
       label: 'Chuyển đổi số & Cải tiến',
-      icon: Cpu,
+      iconName: 'cloud_upload' as AppIconName,
       badge: stats.digitalCount,
       desc: 'Sáng kiến & Tự động hóa'
     }
@@ -91,11 +83,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
         {!isCollapsed && (
           <div className="flex items-center space-x-2.5 overflow-hidden">
             <div className="w-8 h-8 rounded-md bg-[#004B87] text-white flex items-center justify-center font-bold text-sm shadow-sm flex-shrink-0">
-              T
+              NA
             </div>
             <div className="truncate">
               <h1 className="font-semibold text-sm leading-tight text-[#111827] dark:text-white truncate">
-                THACO Tỉnh Thành
+                THACO AUTO Nghệ An
               </h1>
               <span className="text-[11px] text-[#787774] dark:text-[#9B9A97] flex items-center gap-1">
                 <ShieldCheck className="w-3 h-3 text-emerald-600" /> Nghiệp vụ Kế hoạch
@@ -123,7 +115,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
           )}
           <nav className="space-y-1">
             {navItems.map((item) => {
-              const Icon = item.icon;
               const isActive = activeTab === item.id;
               return (
                 <button
@@ -135,10 +126,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
                       : 'text-[#5A5852] dark:text-[#A5A5A5] hover:bg-[#EFEFEF] dark:hover:bg-[#262626] hover:text-[#111827] dark:hover:text-white'
                     }`}
                 >
-                  <Icon
-                    className={`w-4 h-4 flex-shrink-0 transition-colors ${
-                      isActive ? 'text-[#004B87] dark:text-blue-400' : 'text-[#787774] group-hover:text-[#37352F] dark:group-hover:text-white'
-                    }`}
+                  <AppIcon
+                    name={item.iconName}
+                    className="w-4 h-4 flex-shrink-0"
+                    alt={item.label}
                   />
                   {!isCollapsed && (
                     <div className="flex-1 text-left truncate flex items-center justify-between">
@@ -170,12 +161,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
         {/* Quick Reference Notes */}
         {!isCollapsed && (
           <div className="px-2 pt-2 border-t border-[#E9E9E7] dark:border-[#2F2F2F]">
-            <p className="pb-2 text-[10px] font-semibold tracking-wider text-[#9B9A97] uppercase flex items-center gap-1">
-              <Sparkles className="w-3 h-3 text-amber-500" /> Tiêu chuẩn Vận hành
+            <p className="pb-2 text-[10px] font-semibold tracking-wider text-[#9B9A97] uppercase flex items-center gap-1.5">
+              <AppIcon name="pdca_cycle" className="w-3.5 h-3.5" /> Tiêu chuẩn Vận hành
             </p>
             <div className="bg-[#EFEFEF]/70 dark:bg-[#272727] p-2.5 rounded-lg border border-[#E5E5E3] dark:border-[#353535] text-[12px] space-y-1.5 text-[#5A5852] dark:text-[#A5A5A5]">
-              <div className="flex items-center gap-1.5 font-medium text-[#2E2D29] dark:text-[#DDD]">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> Chu trình PDCA
+              <div className="flex items-center gap-2 font-medium text-[#2E2D29] dark:text-[#DDD]">
+                <AppIcon name="pdca_cycle" className="w-4 h-4" /> Chu trình PDCA
               </div>
               <p className="text-[11px] leading-relaxed">
                 Lập KH &rarr; Thực thi &rarr; Kiểm soát tuân thủ &rarr; Tham mưu cải tiến liên tục.
@@ -197,7 +188,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 Trợ lý Kế hoạch
               </p>
               <span className="text-[10px] text-[#787774] dark:text-[#9B9A97]">
-                Công ty Tỉnh thành
+                THACO AUTO Nghệ An
               </span>
             </div>
           </div>

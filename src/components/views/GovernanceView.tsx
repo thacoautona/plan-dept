@@ -1,21 +1,13 @@
 import React, { useState } from 'react';
 import {
-  FileText,
   Search,
-  Filter,
   Plus,
   Download,
-  ExternalLink,
-  ShieldAlert,
-  CheckCircle2,
-  Clock,
   AlertTriangle,
-  FolderOpen,
-  Tag,
-  ChevronRight,
   Eye
 } from 'lucide-react';
-import { GovernanceDoc, ComplianceChecklistItem, DocCategory } from '../../types';
+import { GovernanceDoc, ComplianceChecklistItem } from '../../types';
+import { AppIcon } from '../AppIcon';
 
 interface GovernanceViewProps {
   docs: GovernanceDoc[];
@@ -59,16 +51,16 @@ export const GovernanceView: React.FC<GovernanceViewProps> = ({
       {/* Header Notion-style */}
       <div className="pt-6 pb-2 border-b border-[#E9E9E7] dark:border-[#2F2F2F]">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <span className="p-2 rounded-xl bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-100 dark:border-emerald-800 text-2xl">
-              📜
-            </span>
+          <div className="flex items-center gap-3.5">
+            <div className="p-2.5 rounded-2xl bg-emerald-50/80 dark:bg-emerald-950/40 border border-emerald-100 dark:border-emerald-900/50 shadow-2xs">
+              <AppIcon name="workflow_process" className="w-8 h-8" alt="Quy trình" />
+            </div>
             <div>
               <h1 className="text-2xl font-bold tracking-tight text-[#111827] dark:text-white">
                 Hệ thống Quy trình, Quy định & Tuân thủ
               </h1>
               <p className="text-xs text-[#787774] dark:text-[#9B9A97] mt-0.5">
-                Biên soạn, chuẩn hóa tài liệu quản trị nội bộ; tổ chức thực thi và kiểm soát việc tuân thủ tại đơn vị.
+                Biên soạn, cập nhật chi tiết hệ thống tài liệu quản trị tại THACO AUTO Nghệ An; thực thi và kiểm soát việc tuân thủ.
               </p>
             </div>
           </div>
@@ -102,7 +94,7 @@ export const GovernanceView: React.FC<GovernanceViewProps> = ({
                 : 'border-transparent text-gray-500 hover:text-gray-900 dark:hover:text-gray-200'
             }`}
           >
-            <FolderOpen className="w-4 h-4" /> Thư viện Tài liệu Quản trị ({docs.length})
+            <AppIcon name="folder_archive" className="w-4 h-4" /> Thư viện Tài liệu Quản trị ({docs.length})
           </button>
           <button
             onClick={() => setActiveSubTab('compliance')}
@@ -112,7 +104,7 @@ export const GovernanceView: React.FC<GovernanceViewProps> = ({
                 : 'border-transparent text-gray-500 hover:text-gray-900 dark:hover:text-gray-200'
             }`}
           >
-            <ShieldAlert className="w-4 h-4" /> Giám sát Tuân thủ & Kế hoạch CAPA (
+            <AppIcon name="compliance_shield" className="w-4 h-4" /> Giám sát Tuân thủ & Kế hoạch CAPA (
             {complianceList.length})
           </button>
         </div>
@@ -207,7 +199,7 @@ export const GovernanceView: React.FC<GovernanceViewProps> = ({
             <div>
               <h4 className="font-bold">Quy trình Kiểm soát Tuân thủ & Kế hoạch Khắc phục (CAPA)</h4>
               <p className="mt-0.5 text-rose-700 dark:text-rose-300 leading-relaxed">
-                Đầu mối Kế hoạch thực hiện kiểm tra ngẫu nhiên việc tuân thủ các quy định, quy trình tại các bộ phận. Mọi điểm không phù hợp phải lập kế hoạch CAPA có người chịu trách nhiệm và hạn hoàn thành cụ thể.
+                Đầu mối Kế hoạch thực hiện kiểm tra ngẫu nhiên việc tuân thủ các quy định, quy trình tại các bộ phận THACO AUTO Nghệ An. Mọi điểm không phù hợp phải lập kế hoạch CAPA có người chịu trách nhiệm và hạn hoàn thành cụ thể.
               </p>
             </div>
           </div>

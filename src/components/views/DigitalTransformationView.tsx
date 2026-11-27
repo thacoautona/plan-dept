@@ -1,17 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
-  Cpu,
-  Sparkles,
-  Rocket,
-  CheckCircle2,
-  Clock,
-  TrendingUp,
-  Plus,
-  ArrowRight,
-  Layers,
-  Zap
+  Plus
 } from 'lucide-react';
 import { DigitalInitiative } from '../../types';
+import { AppIcon } from '../AppIcon';
 
 interface DigitalTransformationViewProps {
   initiatives: DigitalInitiative[];
@@ -40,16 +32,16 @@ export const DigitalTransformationView: React.FC<DigitalTransformationViewProps>
       {/* Header Notion-style */}
       <div className="pt-6 pb-2 border-b border-[#E9E9E7] dark:border-[#2F2F2F]">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <span className="p-2 rounded-xl bg-cyan-50 dark:bg-cyan-900/30 border border-cyan-100 dark:border-cyan-800 text-2xl">
-              ⚡
-            </span>
+          <div className="flex items-center gap-3.5">
+            <div className="p-2.5 rounded-2xl bg-cyan-50/80 dark:bg-cyan-950/40 border border-cyan-100 dark:border-cyan-900/50 shadow-2xs">
+              <AppIcon name="cloud_upload" className="w-8 h-8" alt="Chuyển đổi số" />
+            </div>
             <div>
               <h1 className="text-2xl font-bold tracking-tight text-[#111827] dark:text-white">
                 Chuyển đổi số & Sáng kiến Cải tiến Vận hành
               </h1>
               <p className="text-xs text-[#787774] dark:text-[#9B9A97] mt-0.5">
-                Đầu mối tham gia triển khai các giải pháp số hóa, tối ưu năng suất làm việc và hiện đại hóa quản trị tại đơn vị.
+                Đầu mối tham gia triển khai công tác chuyển đổi số tại THACO AUTO Nghệ An, tối ưu năng suất làm việc và hiện đại hóa quản trị.
               </p>
             </div>
           </div>
@@ -67,9 +59,9 @@ export const DigitalTransformationView: React.FC<DigitalTransformationViewProps>
       <div className="p-5 rounded-2xl bg-gradient-to-r from-cyan-900/10 via-blue-900/10 to-indigo-900/10 dark:from-cyan-950/40 dark:via-blue-950/40 dark:to-indigo-950/40 border border-cyan-200 dark:border-cyan-900/50 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <Zap className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
+            <AppIcon name="idea_bulb" className="w-5 h-5" />
             <h3 className="text-xs font-bold uppercase tracking-wider text-cyan-900 dark:text-cyan-300">
-              Chiến lược Số hóa Đơn vị Tỉnh Thành (THACO DX 2026)
+              Chiến lược Số hóa THACO AUTO Nghệ An (DX 2026)
             </h3>
           </div>
           <p className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed max-w-2xl">

@@ -83,7 +83,7 @@ export function App() {
       plans.reduce((acc, p) => acc + p.progressPct * p.weight, 0) / (totalWeight || 1);
 
     const reportContent = `# BÁO CÁO TỔNG HỢP KẾ HOẠCH & QUẢN TRỊ ĐIỀU HÀNH
-Đơn vị: THACO Tỉnh Thành | Kỳ báo cáo: Tháng 11/2026
+Đơn vị: THACO AUTO Nghệ An | Kỳ báo cáo: Tháng 11/2026
 Người lập: Trợ lý Kế hoạch | Ngày xuất: ${new Date().toLocaleDateString('vi-VN')}
 
 ---

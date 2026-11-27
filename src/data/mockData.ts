@@ -23,10 +23,10 @@ export const mockPlanGoals: PlanGoal[] = [
     status: 'at_risk',
     priority: 'urgent',
     deadline: '2026-11-30',
-    advisoryNote: 'Đề xuất tăng cường chương trình lái thử cuối tuần tại các huyện vệ tinh, phối hợp phòng Marketing đẩy mạnh ưu đãi lãi suất vay qua ngân hàng đối tác; rà soát lại 25 khách hàng hot trong phễu chốt cọc trước ngày 28/11.',
+    advisoryNote: 'Đề xuất tăng cường chương trình lái thử cuối tuần tại các huyện vệ tinh Nghệ An (Diễn Châu, Đô Lương, Hoàng Mai), phối hợp phòng Marketing đẩy mạnh ưu đãi lãi suất vay qua ngân hàng đối tác; rà soát lại 25 khách hàng hot trong phễu chốt cọc trước ngày 28/11.',
     lastUpdated: '2026-11-26',
     actionItems: [
-      { id: 'act-1', task: 'Tổ chức sự kiện lái thử tại Showroom Trung tâm', assignee: 'Đội bán hàng PC', isDone: true, dueDate: '2026-11-22' },
+      { id: 'act-1', task: 'Tổ chức sự kiện lái thử tại Showroom Trung tâm TP. Vinh', assignee: 'Đội bán hàng PC', isDone: true, dueDate: '2026-11-22' },
       { id: 'act-2', task: 'Đôn đốc giải ngân hồ sơ vay của 15 khách hàng đã ký hợp đồng', assignee: 'Admin Bán hàng', isDone: false, dueDate: '2026-11-28' },
       { id: 'act-3', task: 'Báo cáo hàng ngày lượng hợp đồng ký mới lên Ban Giám đốc', assignee: 'Trợ lý Kế hoạch', isDone: false, dueDate: '2026-11-30' }
     ]
@@ -46,10 +46,10 @@ export const mockPlanGoals: PlanGoal[] = [
     status: 'in_progress',
     priority: 'high',
     deadline: '2026-11-30',
-    advisoryNote: 'Tiến độ rất khả quan. Đề xuất chuẩn bị sẵn hồ sơ đăng ký biển số và kiểm tra PDI trước giao xe để tránh ùn ứ ngày 29-30/11.',
+    advisoryNote: 'Tiến độ rất khả quan tại thị trường Nghệ An. Đề xuất chuẩn bị sẵn hồ sơ đăng ký biển số và kiểm tra PDI trước giao xe để tránh ùn ứ ngày 29-30/11.',
     lastUpdated: '2026-11-27',
     actionItems: [
-      { id: 'act-4', task: 'Nghiệm thu lô 10 xe Towner cho khách hàng dự án logistic', assignee: 'Tổ dự án CV', isDone: true, dueDate: '2026-11-25' },
+      { id: 'act-4', task: 'Nghiệm thu lô 10 xe Towner cho khách hàng dự án logistic KCN VSIP Nghệ An', assignee: 'Tổ dự án CV', isDone: true, dueDate: '2026-11-25' },
       { id: 'act-5', task: 'Kiểm tra tiến độ đóng thùng xe chuyên dụng tại nhà máy Chu Lai', assignee: 'Phòng Kế hoạch', isDone: true, dueDate: '2026-11-26' }
     ]
   },
@@ -124,17 +124,17 @@ export const mockGovernanceDocs: GovernanceDoc[] = [
   {
     id: 'doc-1',
     code: 'QC-TH-01/2026',
-    title: 'Quy chế Tổ chức và Hoạt động của Công ty Tỉnh thành',
+    title: 'Quy chế Tổ chức và Hoạt động của THACO AUTO Nghệ An',
     category: 'quy_che',
     department: 'BGD',
     version: 'V3.2',
     effectiveDate: '2026-01-01',
     status: 'active',
-    scope: 'Toàn bộ các phòng ban tại đơn vị',
+    scope: 'Toàn bộ các phòng ban tại THACO AUTO Nghệ An',
     summary: 'Quy định chức năng, quyền hạn, nguyên tắc điều hành và mối quan hệ công tác giữa Ban Giám đốc với các trưởng phòng nghiệp vụ.',
     fileFormat: 'pdf',
     fileSize: '1.8 MB',
-    tags: ['Tổ chức', 'Phân quyền', 'Ban Giám đốc']
+    tags: ['Tổ chức', 'Phân quyền', 'Ban Giám đốc', 'Nghệ An']
   },
   {
     id: 'doc-2',
@@ -160,7 +160,7 @@ export const mockGovernanceDocs: GovernanceDoc[] = [
     version: 'V4.1',
     effectiveDate: '2026-06-01',
     status: 'active',
-    scope: 'Tư vấn bán hàng, Admin kinh doanh, PDI',
+    scope: 'Tư vấn bán hàng, Admin kinh doanh, PDI Showroom TP. Vinh',
     summary: 'Quy chuẩn 7 bước đón tiếp khách hàng, lập báo giá, ký hợp đồng, thu cọc, thủ tục đăng kiểm và lễ giao xe trang trọng theo tiêu chuẩn hãng.',
     fileFormat: 'pdf',
     fileSize: '3.2 MB',
@@ -190,7 +190,7 @@ export const mockGovernanceDocs: GovernanceDoc[] = [
     version: 'V1.3',
     effectiveDate: '2026-04-01',
     status: 'active',
-    scope: 'Toàn thể CB-CNV đơn vị',
+    scope: 'Toàn thể CB-CNV THACO AUTO Nghệ An',
     summary: 'Bộ tiêu chí chấm điểm 5S hàng tuần, các biện pháp PCCC và quy tắc an toàn bảo hộ lao động cho kỹ thuật viên.',
     fileFormat: 'pdf',
     fileSize: '1.2 MB',
@@ -222,7 +222,7 @@ export const mockComplianceChecklist: ComplianceChecklistItem[] = [
     checkContent: '100% hồ sơ bàn giao xe có đầy đủ biên bản nghiệm thu PDI và chữ ký xác nhận của khách hàng trước khi xuất hóa đơn GTGT',
     standard: 'Quy trình QT-BH-05 mục 4.3',
     result: 'compliant',
-    findingNote: 'Kiểm tra ngẫu nhiên 20 bộ hồ sơ tháng 11: Toàn bộ đều đạt chuẩn, đầy đủ chứng từ.',
+    findingNote: 'Kiểm tra ngẫu nhiên 20 bộ hồ sơ tháng 11 tại Showroom TP. Vinh: Toàn bộ đều đạt chuẩn, đầy đủ chứng từ.',
     status: 'verified'
   },
   {
@@ -245,7 +245,7 @@ export const mockComplianceChecklist: ComplianceChecklistItem[] = [
     processName: 'Duy trì tiêu chuẩn 5S khu vực tiếp khách và kho vật tư',
     department: 'PNV',
     checkContent: 'Khu vực trưng bày xe demo sạch sẽ, sàn không có vết dầu mỡ, kho vật tư dán nhãn định danh vị trí đầy đủ',
-    standard: 'Tiêu chuẩn Showroom chuẩn nhận diện',
+    standard: 'Tiêu chuẩn Showroom chuẩn nhận diện THACO AUTO',
     result: 'compliant',
     findingNote: 'Đạt điểm kiểm tra 96/100 tại đợt kiểm tra ngày 22/11/2026.',
     status: 'verified'
@@ -272,10 +272,10 @@ export const mockOrgDepartments: OrgDepartment[] = [
     code: 'BGD',
     name: 'Ban Giám Đốc Công Ty',
     headName: 'Đặng Thế Hoàng',
-    headTitle: 'Giám đốc Đơn vị Tỉnh thành',
+    headTitle: 'Giám đốc THACO AUTO Nghệ An',
     headEmail: 'hoang.dangthe@thaco.com.vn',
     personnelCount: 3,
-    mainFunction: 'Lãnh đạo, điều hành toàn diện hoạt động sản xuất kinh doanh, dịch vụ và quản trị tuân thủ tại địa bàn tỉnh thành theo ủy quyền của Tập đoàn.',
+    mainFunction: 'Lãnh đạo, điều hành toàn diện hoạt động sản xuất kinh doanh, dịch vụ và quản trị tuân thủ tại địa bàn Nghệ An theo ủy quyền của Tập đoàn.',
     keyDuties: [
       'Phê duyệt kế hoạch SXKD tháng, quý, năm và chiến lược phân bổ nguồn lực',
       'Chỉ đạo công tác đối ngoại, chính quyền địa phương và quan hệ đối tác',
@@ -291,7 +291,7 @@ export const mockOrgDepartments: OrgDepartment[] = [
     headTitle: 'Trưởng phòng Kế hoạch (Trợ lý điều hành)',
     headEmail: 'khanh.vuquoc@thaco.com.vn',
     personnelCount: 5,
-    mainFunction: 'Đầu mối tham mưu chiến lược, lập kế hoạch, tổng hợp số liệu điều hành, chuẩn hóa hệ thống quy trình quy định, kiểm soát tuân thủ và chuyển đổi số.',
+    mainFunction: 'Đầu mối tham mưu chiến lược, lập kế hoạch, tổng hợp số liệu điều hành, chuẩn hóa hệ thống quy trình quy định, kiểm soát tuân thủ và chuyển đổi số tại THACO AUTO Nghệ An.',
     keyDuties: [
       'Tổng hợp, theo dõi và đánh giá tỷ lệ hoàn thành mục tiêu SXKD của đơn vị',
       'Chủ động đề xuất các giải pháp tháo gỡ khó khăn, nâng cao năng suất vận hành',
@@ -308,10 +308,10 @@ export const mockOrgDepartments: OrgDepartment[] = [
     headTitle: 'Trưởng phòng Kinh doanh PC',
     headEmail: 'minh.nguyenvan@thaco.com.vn',
     personnelCount: 28,
-    mainFunction: 'Tổ chức bán hàng, phát triển thị phần xe du lịch các thương hiệu Kia, Mazda, Peugeot, BMW tại tỉnh.',
+    mainFunction: 'Tổ chức bán hàng, phát triển thị phần xe du lịch các thương hiệu Kia, Mazda, Peugeot, BMW tại Nghệ An.',
     keyDuties: [
       'Thực hiện chỉ tiêu doanh số bán lẻ xe du lịch hàng tháng',
-      'Quản lý đội ngũ Tư vấn bán hàng và hoạt động tiếp thị tại showroom',
+      'Quản lý đội ngũ Tư vấn bán hàng và hoạt động tiếp thị tại showroom TP. Vinh',
       'Theo dõi tiến độ ký hợp đồng, thu tiền và chăm sóc khách hàng mới'
     ]
   },
@@ -326,7 +326,7 @@ export const mockOrgDepartments: OrgDepartment[] = [
     personnelCount: 16,
     mainFunction: 'Phát triển thị trường xe thương mại, xe tải nhẹ, xe tải nặng và xe buýt, phục vụ khách hàng cá nhân và doanh nghiệp vận tải.',
     keyDuties: [
-      'Khai thác khách hàng doanh nghiệp vận tải, logistics, dự án đầu tư công',
+      'Khai thác khách hàng doanh nghiệp vận tải, logistics, dự án đầu tư công tại Nghệ An & Hà Tĩnh',
       'Tư vấn quy cách thùng xe chuyên dụng phù hợp yêu cầu đăng kiểm',
       'Đạt chỉ tiêu doanh số và thu hồi công nợ xe thương mại'
     ]
@@ -430,7 +430,7 @@ export const mockDigitalInitiatives: DigitalInitiative[] = [
     progressPct: 80,
     startDate: '2026-10-01',
     targetDate: '2026-12-15',
-    benefits: 'Cập nhật trực quan tiến độ kinh doanh và các chỉ tiêu trọng yếu, tự động hóa cảnh báo chỉ tiêu trễ hạn.',
+    benefits: 'Cập nhật trực quan tiến độ kinh doanh và các chỉ tiêu trọng yếu tại Nghệ An, tự động hóa cảnh báo chỉ tiêu trễ hạn.',
     metrics: [
       { label: 'Thời gian tổng hợp báo cáo', val: 'Giảm từ 4h xuống 15 phút' },
       { label: 'Độ trễ số liệu', val: 'Từ 1 ngày thành Cập nhật mỗi 2 giờ' }

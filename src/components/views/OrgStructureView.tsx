@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
 import {
-  Network,
   Users,
-  Building,
   Mail,
-  ShieldCheck,
   CheckCircle2,
-  HelpCircle,
   ChevronRight
 } from 'lucide-react';
 import { OrgDepartment, RACIMatrixItem } from '../../types';
+import { AppIcon } from '../AppIcon';
 
 interface OrgStructureViewProps {
   departments: OrgDepartment[];
@@ -45,22 +42,22 @@ export const OrgStructureView: React.FC<OrgStructureViewProps> = ({
       {/* Header Notion-style */}
       <div className="pt-6 pb-2 border-b border-[#E9E9E7] dark:border-[#2F2F2F]">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <span className="p-2 rounded-xl bg-purple-50 dark:bg-purple-900/30 border border-purple-100 dark:border-purple-800 text-2xl">
-              🏛️
-            </span>
+          <div className="flex items-center gap-3.5">
+            <div className="p-2.5 rounded-2xl bg-purple-50/80 dark:bg-purple-950/40 border border-purple-100 dark:border-purple-900/50 shadow-2xs">
+              <AppIcon name="org_chart" className="w-8 h-8" alt="Cơ cấu" />
+            </div>
             <div>
               <h1 className="text-2xl font-bold tracking-tight text-[#111827] dark:text-white">
                 Cơ cấu Tổ chức & Ma trận Phân quyền RACI
               </h1>
               <p className="text-xs text-[#787774] dark:text-[#9B9A97] mt-0.5">
-                Chuẩn hóa cấu trúc bộ máy, chức năng nhiệm vụ các phòng ban và phân định rõ ràng trách nhiệm liên bộ phận.
+                Cấu trúc - chức năng nhiệm vụ các bộ phận tại THACO AUTO Nghệ An và chuẩn hóa ma trận phân nhiệm RACI liên phòng ban.
               </p>
             </div>
           </div>
 
           <div className="flex items-center gap-2 text-xs font-medium px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-[#252525] text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-[#383838]">
-            <Users className="w-4 h-4 text-purple-500" /> Tổng nhân sự đơn vị: <strong>{totalHeadcount} nhân sự</strong>
+            <Users className="w-4 h-4 text-purple-500" /> Tổng nhân sự THACO AUTO Nghệ An: <strong>{totalHeadcount} nhân sự</strong>
           </div>
         </div>
 
@@ -74,7 +71,7 @@ export const OrgStructureView: React.FC<OrgStructureViewProps> = ({
                 : 'border-transparent text-gray-500 hover:text-gray-900 dark:hover:text-gray-200'
             }`}
           >
-            <Network className="w-4 h-4" /> Sơ đồ Cây Tổ chức ({departments.length} bộ phận)
+            <AppIcon name="team_people" className="w-4 h-4" /> Sơ đồ Cây Tổ chức ({departments.length} bộ phận)
           </button>
           <button
             onClick={() => setSubTab('raci')}
@@ -84,7 +81,7 @@ export const OrgStructureView: React.FC<OrgStructureViewProps> = ({
                 : 'border-transparent text-gray-500 hover:text-gray-900 dark:hover:text-gray-200'
             }`}
           >
-            <ShieldCheck className="w-4 h-4" /> Ma trận Phân quyền RACI
+            <AppIcon name="raci_network" className="w-4 h-4" /> Ma trận Phân quyền RACI
           </button>
         </div>
       </div>

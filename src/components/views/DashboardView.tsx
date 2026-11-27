@@ -1,20 +1,11 @@
 import React from 'react';
 import {
-  TrendingUp,
-  AlertTriangle,
-  CheckCircle,
-  FileCheck2,
-  Clock,
-  Sparkles,
-  ArrowUpRight,
-  ShieldAlert,
-  BarChart3,
   Calendar,
-  Layers,
   ChevronRight
 } from 'lucide-react';
 import { PlanGoal, GovernanceDoc, ComplianceChecklistItem, DigitalInitiative } from '../../types';
 import { ActiveTab } from '../Sidebar';
+import { AppIcon } from '../AppIcon';
 
 interface DashboardViewProps {
   plans: PlanGoal[];
@@ -44,16 +35,16 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
     <div className="space-y-8 animate-in fade-in duration-200">
       {/* Notion-style Page Cover Header */}
       <div className="relative pt-6 pb-4 border-b border-[#E9E9E7] dark:border-[#2F2F2F]">
-        <div className="flex items-center gap-3 text-3xl mb-2">
-          <span className="p-2 rounded-xl bg-blue-50 dark:bg-blue-900/30 border border-blue-100 dark:border-blue-800">
-            📊
-          </span>
+        <div className="flex items-center gap-3.5 mb-2">
+          <div className="p-2.5 rounded-2xl bg-blue-50/80 dark:bg-blue-950/40 border border-blue-100 dark:border-blue-900/50 shadow-2xs">
+            <AppIcon name="presentation_chart" className="w-8 h-8" alt="Dashboard" />
+          </div>
           <div>
             <h1 className="text-2xl font-bold tracking-tight text-[#111827] dark:text-white">
               Tổng quan Quản trị & Điều hành Kế hoạch
             </h1>
             <p className="text-xs text-[#787774] dark:text-[#9B9A97] mt-0.5 flex items-center gap-2">
-              <Calendar className="w-3.5 h-3.5" /> Kỳ đánh giá: <strong className="text-gray-700 dark:text-gray-300">Tháng 11/2026</strong> • Cập nhật lúc 08:30 hôm nay
+              <Calendar className="w-3.5 h-3.5" /> Kỳ đánh giá: <strong className="text-gray-700 dark:text-gray-300">Tháng 11/2026</strong> • Đơn vị: <strong className="text-[#004B87] dark:text-blue-400">THACO AUTO Nghệ An</strong>
             </p>
           </div>
         </div>
@@ -65,9 +56,9 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         <div className="p-4 rounded-xl bg-white dark:bg-[#202020] border border-[#E9E9E7] dark:border-[#2F2F2F] shadow-2xs hover:border-gray-300 dark:hover:border-gray-700 transition-all">
           <div className="flex items-center justify-between text-xs text-[#787774] dark:text-[#9B9A97]">
             <span>Tỷ lệ hoàn thành mục tiêu</span>
-            <span className="p-1.5 rounded-md bg-blue-50 dark:bg-blue-900/30 text-[#004B87] dark:text-blue-400">
-              <TrendingUp className="w-3.5 h-3.5" />
-            </span>
+            <div className="p-1 rounded-md bg-blue-50 dark:bg-blue-900/30">
+              <AppIcon name="growth_chart" className="w-4 h-4" />
+            </div>
           </div>
           <div className="mt-2 flex items-baseline gap-2">
             <span className="text-2xl font-bold text-[#111827] dark:text-white">
@@ -89,9 +80,9 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         <div className="p-4 rounded-xl bg-white dark:bg-[#202020] border border-[#E9E9E7] dark:border-[#2F2F2F] shadow-2xs hover:border-gray-300 dark:hover:border-gray-700 transition-all">
           <div className="flex items-center justify-between text-xs text-[#787774] dark:text-[#9B9A97]">
             <span>Mục tiêu đang giám sát</span>
-            <span className="p-1.5 rounded-md bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400">
-              <AlertTriangle className="w-3.5 h-3.5" />
-            </span>
+            <div className="p-1 rounded-md bg-amber-50 dark:bg-amber-900/30">
+              <AppIcon name="target_goal" className="w-4 h-4" />
+            </div>
           </div>
           <div className="mt-2 flex items-baseline gap-2">
             <span className="text-2xl font-bold text-[#111827] dark:text-white">
@@ -110,9 +101,9 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         <div className="p-4 rounded-xl bg-white dark:bg-[#202020] border border-[#E9E9E7] dark:border-[#2F2F2F] shadow-2xs hover:border-gray-300 dark:hover:border-gray-700 transition-all">
           <div className="flex items-center justify-between text-xs text-[#787774] dark:text-[#9B9A97]">
             <span>Tài liệu & Chuẩn hóa SOP</span>
-            <span className="p-1.5 rounded-md bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400">
-              <FileCheck2 className="w-3.5 h-3.5" />
-            </span>
+            <div className="p-1 rounded-md bg-emerald-50 dark:bg-emerald-900/30">
+              <AppIcon name="binder_archive" className="w-4 h-4" />
+            </div>
           </div>
           <div className="mt-2 flex items-baseline gap-2">
             <span className="text-2xl font-bold text-[#111827] dark:text-white">
@@ -131,9 +122,9 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         <div className="p-4 rounded-xl bg-white dark:bg-[#202020] border border-[#E9E9E7] dark:border-[#2F2F2F] shadow-2xs hover:border-gray-300 dark:hover:border-gray-700 transition-all">
           <div className="flex items-center justify-between text-xs text-[#787774] dark:text-[#9B9A97]">
             <span>Kiểm soát tuân thủ & CAPA</span>
-            <span className="p-1.5 rounded-md bg-rose-50 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400">
-              <ShieldAlert className="w-3.5 h-3.5" />
-            </span>
+            <div className="p-1 rounded-md bg-rose-50 dark:bg-rose-900/30">
+              <AppIcon name="compliance_shield" className="w-4 h-4" />
+            </div>
           </div>
           <div className="mt-2 flex items-baseline gap-2">
             <span className="text-2xl font-bold text-[#111827] dark:text-white">
@@ -153,9 +144,9 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       <div className="p-5 rounded-2xl bg-gradient-to-br from-blue-50/70 via-white to-amber-50/50 dark:from-[#1E2633] dark:via-[#1E1E1E] dark:to-[#2B2317] border border-blue-100 dark:border-blue-900/40 shadow-xs">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-amber-500" />
+            <AppIcon name="strategy_knight" className="w-5 h-5" />
             <h2 className="text-sm font-bold uppercase tracking-wider text-[#004B87] dark:text-blue-300">
-              Trọng tâm Tham mưu Ban Giám Đốc (Kỳ họp Giao ban tuần)
+              Trọng tâm Tham mưu Ban Giám Đốc THACO AUTO Nghệ An
             </h2>
           </div>
           <span className="text-[11px] px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/50 text-[#004B87] dark:text-blue-300 font-medium">
@@ -172,7 +163,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               </span>
             </div>
             <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
-              Doanh số xe PC hiện đạt 102/120 xe (85%). Tham mưu chỉ đạo đội kinh doanh dồn lực chốt cọc 25 khách hàng hot trước 28/11 và làm việc với ngân hàng để giải ngân đúng hạn.
+              Doanh số xe PC hiện đạt 102/120 xe (85%). Tham mưu chỉ đạo đội kinh doanh dồn lực chốt cọc 25 khách hàng hot tại TP. Vinh, Diễn Châu trước 28/11 và làm việc với ngân hàng để giải ngân đúng hạn.
             </p>
           </div>
 
@@ -196,7 +187,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               </span>
             </div>
             <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
-              Tỷ lệ khách hàng quay lại bảo dưỡng đạt 78% (chưa đạt mốc 82%). Đề xuất nghiệm thu giai đoạn 1 giải pháp gửi tin Zalo thông báo kỳ bảo dưỡng tự động cho 1.200 chủ xe.
+              Tỷ lệ khách hàng quay lại bảo dưỡng đạt 78% (chưa đạt mốc 82%). Đề xuất nghiệm thu giai đoạn 1 giải pháp gửi tin Zalo thông báo kỳ bảo dưỡng tự động cho 1.200 chủ xe tại Nghệ An.
             </p>
           </div>
         </div>
@@ -206,7 +197,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <h2 className="text-base font-semibold text-[#111827] dark:text-white flex items-center gap-2">
-            <BarChart3 className="w-4 h-4 text-[#004B87] dark:text-blue-400" />
+            <AppIcon name="data_analytics" className="w-5 h-5" />
             Tiến độ Mục tiêu Trọng điểm (Tháng 11/2026)
           </h2>
           <button
@@ -282,7 +273,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         <div className="p-4 rounded-xl bg-white dark:bg-[#202020] border border-[#E9E9E7] dark:border-[#2F2F2F] shadow-2xs">
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300 flex items-center gap-2">
-              <ShieldAlert className="w-4 h-4 text-rose-500" />
+              <AppIcon name="compliance_shield" className="w-4 h-4" />
               Điểm kiểm soát tuân thủ & CAPA đang mở
             </h3>
             <button
@@ -323,8 +314,8 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         <div className="p-4 rounded-xl bg-white dark:bg-[#202020] border border-[#E9E9E7] dark:border-[#2F2F2F] shadow-2xs">
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300 flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-purple-500" />
-              Chuyển đổi số & Tự động hóa tại Đơn vị
+              <AppIcon name="idea_bulb" className="w-4 h-4" />
+              Chuyển đổi số & Tự động hóa tại THACO AUTO Nghệ An
             </h3>
             <button
               onClick={() => onNavigateTab('digital')}

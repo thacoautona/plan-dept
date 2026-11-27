@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Search, X, Target, FileText, Building2, Cpu, ArrowRight } from 'lucide-react';
+import { Search, X, ArrowRight } from 'lucide-react';
 import { PlanGoal, GovernanceDoc, OrgDepartment, DigitalInitiative } from '../types';
 import { ActiveTab } from './Sidebar';
+import { AppIcon } from './AppIcon';
 
 interface CommandPaletteProps {
   isOpen: boolean;
@@ -110,7 +111,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
               {filteredPlans.length > 0 && (
                 <div>
                   <p className="px-3 py-1 text-[11px] font-semibold text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
-                    <Target className="w-3 h-3 text-blue-500" /> Kế hoạch & Mục tiêu ({filteredPlans.length})
+                    <AppIcon name="target_goal" className="w-3.5 h-3.5" /> Kế hoạch & Mục tiêu ({filteredPlans.length})
                   </p>
                   <div className="mt-1 space-y-0.5">
                     {filteredPlans.map((plan) => (
@@ -145,7 +146,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
               {filteredDocs.length > 0 && (
                 <div>
                   <p className="px-3 py-1 text-[11px] font-semibold text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
-                    <FileText className="w-3 h-3 text-emerald-500" /> Tài liệu & Quy trình ({filteredDocs.length})
+                    <AppIcon name="edit_document" className="w-3.5 h-3.5" /> Tài liệu & Quy trình ({filteredDocs.length})
                   </p>
                   <div className="mt-1 space-y-0.5">
                     {filteredDocs.map((doc) => (
@@ -177,7 +178,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
               {filteredDepts.length > 0 && (
                 <div>
                   <p className="px-3 py-1 text-[11px] font-semibold text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
-                    <Building2 className="w-3 h-3 text-purple-500" /> Phòng ban & Nhân sự ({filteredDepts.length})
+                    <AppIcon name="team_people" className="w-3.5 h-3.5" /> Phòng ban & Nhân sự ({filteredDepts.length})
                   </p>
                   <div className="mt-1 space-y-0.5">
                     {filteredDepts.map((dept) => (
@@ -207,7 +208,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
               {filteredDigital.length > 0 && (
                 <div>
                   <p className="px-3 py-1 text-[11px] font-semibold text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
-                    <Cpu className="w-3 h-3 text-cyan-500" /> Sáng kiến Chuyển đổi số ({filteredDigital.length})
+                    <AppIcon name="cloud_upload" className="w-3.5 h-3.5" /> Sáng kiến Chuyển đổi số ({filteredDigital.length})
                   </p>
                   <div className="mt-1 space-y-0.5">
                     {filteredDigital.map((dp) => (

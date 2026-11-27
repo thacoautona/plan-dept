@@ -3,12 +3,10 @@ import {
   Search,
   Plus,
   Download,
-  Share2,
-  ChevronRight,
-  SlidersHorizontal,
-  Home
+  ChevronRight
 } from 'lucide-react';
 import { ActiveTab } from './Sidebar';
+import { AppIcon } from './AppIcon';
 
 interface HeaderProps {
   activeTab: ActiveTab;
@@ -44,8 +42,8 @@ export const Header: React.FC<HeaderProps> = ({
     <header className="sticky top-0 z-20 flex items-center justify-between px-6 py-3 bg-[#FBFBFA]/90 dark:bg-[#191919]/90 backdrop-blur-md border-b border-[#E9E9E7] dark:border-[#2F2F2F]">
       {/* Breadcrumb Navigation */}
       <div className="flex items-center space-x-2 text-xs text-[#787774] dark:text-[#9B9A97]">
-        <span className="flex items-center gap-1 font-medium hover:text-[#37352F] dark:hover:text-white cursor-pointer transition-colors">
-          <Home className="w-3.5 h-3.5" /> THACO Tỉnh Thành
+        <span className="flex items-center gap-1.5 font-medium hover:text-[#37352F] dark:hover:text-white cursor-pointer transition-colors">
+          <AppIcon name="strategy_knight" className="w-4 h-4" /> THACO AUTO Nghệ An
         </span>
         <ChevronRight className="w-3.5 h-3.5 text-[#B0B0AE] dark:text-[#555]" />
         <span className="font-semibold text-[#37352F] dark:text-[#E3E2E0] truncate max-w-[280px] md:max-w-md">
