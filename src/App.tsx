@@ -13,7 +13,6 @@ import { CreateItemModal } from './components/CreateItemModal';
 import {
   mockPlanGoals,
   mockGovernanceDocs,
-  mockComplianceChecklist,
   mockOrgDepartments,
   mockRACIMatrix,
   mockDigitalInitiatives
@@ -28,7 +27,6 @@ export function App() {
   // Core Data State
   const [plans, setPlans] = useState<PlanGoal[]>(mockPlanGoals);
   const [docs, setDocs] = useState<GovernanceDoc[]>(mockGovernanceDocs);
-  const [complianceList, setComplianceList] = useState(mockComplianceChecklist);
   const [departments] = useState(mockOrgDepartments);
   const [raciMatrix] = useState(mockRACIMatrix);
   const [digitalList, setDigitalList] = useState(mockDigitalInitiatives);
@@ -105,10 +103,10 @@ ${plans
 
 ---
 
-## II. CÔNG TÁC QUẢN TRỊ & KIỂM SOÁT TUÂN THỦ
-* Tổng số văn bản quản trị đã ban hành: ${docs.length} (Quy chế, Quy định, SOP, Biểu mẫu)
-* Số hạng mục kiểm soát tuân thủ trong kỳ: ${complianceList.length}
-* Số điểm tồn tại phát hiện (CAPA): ${complianceList.filter((c) => c.status !== 'verified').length} điểm.
+## II. HỆ THỐNG QUY TRÌNH QUY ĐỊNH
+* Tổng số văn bản quy trình, quy định áp dụng: ${docs.length} văn bản
+  - Văn bản Quản trị Khung từ VPĐH: ${docs.filter((d) => d.sourceLevel === 'VPDH').length} văn bản
+  - Văn bản Ban hành nội bộ THACO AUTO Nghệ An: ${docs.filter((d) => d.sourceLevel === 'NOI_BO').length} văn bản (từ 10 bộ phận nghiệp vụ)
 
 ---
 
@@ -145,7 +143,6 @@ ${digitalList
         stats={{
           plansCount: plans.length,
           docsCount: docs.length,
-          complianceCount: complianceList.length,
           digitalCount: digitalList.length
         }}
       />
@@ -166,7 +163,6 @@ ${digitalList
             <DashboardView
               plans={plans}
               docs={docs}
-              complianceList={complianceList}
               digitalList={digitalList}
               onNavigateTab={setActiveTab}
               onSelectPlan={setSelectedPlanForDetail}
@@ -185,9 +181,7 @@ ${digitalList
           {activeTab === 'governance' && (
             <GovernanceView
               docs={docs}
-              complianceList={complianceList}
               onOpenCreateDoc={() => setIsCreateModalOpen(true)}
-              onOpenCreateCompliance={() => setIsCreateModalOpen(true)}
             />
           )}
 

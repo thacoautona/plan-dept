@@ -27,38 +27,27 @@ export interface PlanGoal {
   }[];
 }
 
-export type DocCategory = 'quy_che' | 'quy_dinh' | 'quy_trinh' | 'huong_dan' | 'bieu_mau';
-export type DocStatus = 'active' | 'under_review' | 'draft' | 'archived';
+export type DocCategory = 'quy_che' | 'quy_dinh' | 'quy_trinh' | 'huong_dan' | 'thong_bao' | 'bieu_mau';
+export type DocSourceLevel = 'VPDH' | 'NOI_BO';
 
 export interface GovernanceDoc {
   id: string;
-  code: string;
-  title: string;
+  stt: number;
+  code: string; // Số hiệu (VD: 02/2023)
+  title: string; // Tên quy trình / quy định
+  sourceLevel: DocSourceLevel; // VPDH hoặc NOI_BO
+  sourceLabel: string; // Văn phòng Điều hành (VPĐH) hoặc THACO AUTO Nghệ An
+  department: string; // KDDL, KDTB, DVD, DVTB, QSD, TCKT, HCNS, NVKH, MKT, NVCN, VPDH
+  departmentName: string; // Tên đầy đủ
+  approvedBy: string; // Người phê duyệt (TGĐ Cty, PCT TT...)
+  effectiveDate: string; // Ngày ban hành
   category: DocCategory;
-  department: string;
-  version: string;
-  effectiveDate: string;
-  status: DocStatus;
-  scope: string;
-  summary: string;
-  fileFormat: 'pdf' | 'docx' | 'xlsx' | 'link';
-  fileSize?: string;
-  tags: string[];
-}
-
-export interface ComplianceChecklistItem {
-  id: string;
-  processCode: string;
-  processName: string;
-  department: string;
-  checkContent: string;
-  standard: string;
-  result: 'compliant' | 'non_compliant' | 'minor_issue';
-  findingNote: string;
-  capaAction?: string; // Corrective & Preventive Action
-  deadline?: string;
-  responsiblePerson?: string;
-  status: 'open' | 'in_progress' | 'verified';
+  categoryLabel: string; // Thông báo, Quy định, Hướng dẫn...
+  coordination?: string; // Phối hợp thực hiện
+  issueType?: string; // Ban hành mới theo thực tế...
+  notes?: string;
+  driveLink: string; // Link xem nội dung trên Google Drive (Cột M)
+  summary: string; // Tóm tắt 1-2 câu nội dung văn bản
 }
 
 export interface OrgDepartment {

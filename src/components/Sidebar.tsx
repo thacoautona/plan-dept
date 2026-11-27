@@ -20,7 +20,6 @@ interface SidebarProps {
   stats: {
     plansCount: number;
     docsCount: number;
-    complianceCount: number;
     digitalCount: number;
   };
 }
@@ -51,10 +50,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
     },
     {
       id: 'governance' as ActiveTab,
-      label: 'Quy trình & Tuân thủ',
+      label: 'Quy trình Quy định',
       iconName: 'folder_archive' as AppIconName,
       badge: stats.docsCount,
-      desc: 'Tài liệu quản trị & CAPA'
+      desc: 'VPĐH & THACO AUTO Nghệ An'
     },
     {
       id: 'org' as ActiveTab,

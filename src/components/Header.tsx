@@ -28,7 +28,7 @@ export const Header: React.FC<HeaderProps> = ({
       case 'planning':
         return 'Quản trị Kế hoạch & Tiến độ Mục tiêu';
       case 'governance':
-        return 'Hệ thống Quy trình, Quy định & Kiểm soát Tuân thủ';
+        return 'Hệ thống Quy trình Quy định';
       case 'org':
         return 'Cơ cấu Tổ chức & Ma trận Phân quyền RACI';
       case 'digital':

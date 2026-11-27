@@ -1,16 +1,31 @@
 import React from 'react';
 import {
   Calendar,
-  ChevronRight
+  ChevronRight,
+  ExternalLink
 } from 'lucide-react';
-import { PlanGoal, GovernanceDoc, ComplianceChecklistItem, DigitalInitiative } from '../../types';
+import { PlanGoal, GovernanceDoc, DigitalInitiative } from '../../types';
 import { ActiveTab } from '../Sidebar';
 import { AppIcon } from '../AppIcon';
+
+// Department color map
+const DEPT_COLORS: Record<string, { bg: string; text: string; border: string }> = {
+  KDDL: { bg: '#FFC5C5', text: '#801A1A', border: '#FCA5A5' },
+  KDTB: { bg: '#FFC5C5', text: '#801A1A', border: '#FCA5A5' },
+  DVD: { bg: '#BFBFBF', text: '#2D3748', border: '#A0AEC0' },
+  DVTB: { bg: '#BFBFBF', text: '#2D3748', border: '#A0AEC0' },
+  QSD: { bg: '#BFBFBF', text: '#2D3748', border: '#A0AEC0' },
+  TCKT: { bg: '#FFFCD5', text: '#744210', border: '#F6E05E' },
+  HCNS: { bg: '#FFFCD5', text: '#744210', border: '#F6E05E' },
+  NVKH: { bg: '#FFFCD5', text: '#744210', border: '#F6E05E' },
+  MKT: { bg: '#FFFCD5', text: '#744210', border: '#F6E05E' },
+  NVCN: { bg: '#E1FFFF', text: '#234E52', border: '#81E6D9' },
+  VPDH: { bg: '#DBEAFE', text: '#1E40AF', border: '#93C5FD' },
+};
 
 interface DashboardViewProps {
   plans: PlanGoal[];
   docs: GovernanceDoc[];
-  complianceList: ComplianceChecklistItem[];
   digitalList: DigitalInitiative[];
   onNavigateTab: (tab: ActiveTab) => void;
   onSelectPlan: (plan: PlanGoal) => void;
@@ -19,7 +34,6 @@ interface DashboardViewProps {
 export const DashboardView: React.FC<DashboardViewProps> = ({
   plans,
   docs,
-  complianceList,
   digitalList,
   onNavigateTab,
   onSelectPlan
@@ -29,7 +43,9 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   const weightedProgress = plans.reduce((acc, p) => acc + (p.progressPct * p.weight), 0) / (totalWeight || 1);
   const atRiskPlans = plans.filter((p) => p.status === 'at_risk');
   const completedPlans = plans.filter((p) => p.status === 'completed');
-  const openCapas = complianceList.filter((c) => c.status !== 'verified');
+
+  const vpdhDocs = docs.filter((d) => d.sourceLevel === 'VPDH');
+  const noiBoDocs = docs.filter((d) => d.sourceLevel === 'NOI_BO');
 
   return (
     <div className="space-y-8 animate-in fade-in duration-200">
@@ -97,45 +113,51 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           </p>
         </div>
 
-        {/* Metric 3 */}
-        <div className="p-4 rounded-xl bg-white dark:bg-[#202020] border border-[#E9E9E7] dark:border-[#2F2F2F] shadow-2xs hover:border-gray-300 dark:hover:border-gray-700 transition-all">
+        {/* Metric 3: VPĐH */}
+        <div
+          onClick={() => onNavigateTab('governance')}
+          className="p-4 rounded-xl bg-white dark:bg-[#202020] border border-[#E9E9E7] dark:border-[#2F2F2F] shadow-2xs hover:border-blue-300 dark:hover:border-blue-700 transition-all cursor-pointer group"
+        >
           <div className="flex items-center justify-between text-xs text-[#787774] dark:text-[#9B9A97]">
-            <span>Tài liệu & Chuẩn hóa SOP</span>
-            <div className="p-1 rounded-md bg-emerald-50 dark:bg-emerald-900/30">
+            <span>VBQT Văn phòng Điều hành</span>
+            <div className="p-1 rounded-md bg-blue-50 dark:bg-blue-900/30">
               <AppIcon name="binder_archive" className="w-4 h-4" />
             </div>
           </div>
           <div className="mt-2 flex items-baseline gap-2">
-            <span className="text-2xl font-bold text-[#111827] dark:text-white">
-              {docs.filter((d) => d.status === 'active').length}
+            <span className="text-2xl font-bold text-[#004B87] dark:text-blue-400">
+              {vpdhDocs.length}
             </span>
             <span className="text-[11px] text-[#787774] dark:text-[#9B9A97]">
-              / {docs.length} văn bản ban hành
+              văn bản khung ban hành
             </span>
           </div>
-          <p className="mt-2.5 text-[11px] text-purple-600 dark:text-purple-400 font-medium">
-            1 quy trình đang lấy ý kiến sửa đổi
+          <p className="mt-2.5 text-[11px] text-blue-600 dark:text-blue-400 font-medium group-hover:underline flex items-center gap-1">
+            Quy định, Quy chế & Hướng dẫn Khung <ChevronRight className="w-3 h-3" />
           </p>
         </div>
 
-        {/* Metric 4 */}
-        <div className="p-4 rounded-xl bg-white dark:bg-[#202020] border border-[#E9E9E7] dark:border-[#2F2F2F] shadow-2xs hover:border-gray-300 dark:hover:border-gray-700 transition-all">
+        {/* Metric 4: THACO AUTO Nghệ An */}
+        <div
+          onClick={() => onNavigateTab('governance')}
+          className="p-4 rounded-xl bg-white dark:bg-[#202020] border border-[#E9E9E7] dark:border-[#2F2F2F] shadow-2xs hover:border-emerald-300 dark:hover:border-emerald-700 transition-all cursor-pointer group"
+        >
           <div className="flex items-center justify-between text-xs text-[#787774] dark:text-[#9B9A97]">
-            <span>Kiểm soát tuân thủ & CAPA</span>
-            <div className="p-1 rounded-md bg-rose-50 dark:bg-rose-900/30">
+            <span>VBQT THACO AUTO Nghệ An</span>
+            <div className="p-1 rounded-md bg-emerald-50 dark:bg-emerald-900/30">
               <AppIcon name="compliance_shield" className="w-4 h-4" />
             </div>
           </div>
           <div className="mt-2 flex items-baseline gap-2">
-            <span className="text-2xl font-bold text-[#111827] dark:text-white">
-              {complianceList.filter((c) => c.result === 'compliant').length}
+            <span className="text-2xl font-bold text-emerald-700 dark:text-emerald-400">
+              {noiBoDocs.length}
             </span>
             <span className="text-[11px] text-[#787774] dark:text-[#9B9A97]">
-              / {complianceList.length} hạng mục đạt chuẩn
+              văn bản nội bộ áp dụng
             </span>
           </div>
-          <p className="mt-2.5 text-[11px] text-rose-600 dark:text-rose-400 font-medium">
-            {openCapas.length} điểm tồn tại cần khắc phục
+          <p className="mt-2.5 text-[11px] text-emerald-600 dark:text-emerald-400 font-medium group-hover:underline flex items-center gap-1">
+            10 bộ phận nghiệp vụ địa phương <ChevronRight className="w-3 h-3" />
           </p>
         </div>
       </div>
@@ -169,13 +191,13 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
 
           <div className="p-3.5 rounded-xl bg-white/90 dark:bg-[#252525]/90 border border-gray-200/80 dark:border-[#383838] shadow-2xs">
             <div className="flex items-center justify-between text-xs mb-1.5">
-              <span className="font-semibold text-amber-600 dark:text-amber-400">2. Chấn chỉnh kỷ luật Báo cáo</span>
+              <span className="font-semibold text-amber-600 dark:text-amber-400">2. Rà soát & Chuẩn hóa Quy trình</span>
               <span className="text-[10px] px-1.5 py-0.2 bg-amber-50 dark:bg-amber-950 text-amber-700 dark:text-amber-300 rounded font-mono">
                 Tuân thủ
               </span>
             </div>
             <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
-              Khắc phục tình trạng nộp báo cáo tuần trễ hạn tại phòng KD Xe thương mại (QĐ-KH-02). Hướng dẫn Admin sử dụng mẫu tự động trích xuất dữ liệu, cam kết nộp đúng 15h00 thứ Sáu.
+              Hệ thống đã cập nhật đầy đủ {docs.length} văn bản (72 VBQT Khung từ VPĐH và 151 văn bản nội bộ từ 10 bộ phận). Đề xuất Ban Giám Đốc chỉ đạo các Trưởng phòng kiểm tra áp dụng đúng biểu mẫu và báo cáo đúng thời hạn.
             </p>
           </div>
 
@@ -267,46 +289,62 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         </div>
       </div>
 
-      {/* TWO COLUMN SUMMARY: COMPLIANCE & DIGITAL ROADMAP */}
+      {/* TWO COLUMN SUMMARY: GOVERNANCE DOCS & DIGITAL ROADMAP */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Compliance Checklist Summary */}
+        {/* Governance Docs Recent */}
         <div className="p-4 rounded-xl bg-white dark:bg-[#202020] border border-[#E9E9E7] dark:border-[#2F2F2F] shadow-2xs">
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300 flex items-center gap-2">
-              <AppIcon name="compliance_shield" className="w-4 h-4" />
-              Điểm kiểm soát tuân thủ & CAPA đang mở
+              <AppIcon name="folder_archive" className="w-4 h-4" />
+              Quy trình Quy định mới nhất ({docs.length} văn bản)
             </h3>
             <button
               onClick={() => onNavigateTab('governance')}
-              className="text-[11px] text-blue-600 dark:text-blue-400 hover:underline"
+              className="text-[11px] text-[#004B87] dark:text-blue-400 hover:underline flex items-center gap-1 font-medium"
             >
-              Chi tiết
+              Xem tất cả <ChevronRight className="w-3 h-3" />
             </button>
           </div>
           <div className="space-y-2.5">
-            {complianceList.filter((c) => c.status !== 'verified').map((item) => (
-              <div
-                key={item.id}
-                className="p-2.5 rounded-lg bg-gray-50 dark:bg-[#282828] border border-gray-200 dark:border-[#383838] text-xs space-y-1"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="font-semibold text-rose-700 dark:text-rose-400">
-                    [{item.department}] {item.processName}
-                  </span>
-                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-rose-100 dark:bg-rose-900/50 text-rose-700 dark:text-rose-300">
-                    Hạn: {item.deadline || 'Trong tuần'}
-                  </span>
-                </div>
-                <p className="text-gray-600 dark:text-gray-300 text-[11px]">
-                  <strong>Tồn tại:</strong> {item.findingNote}
-                </p>
-                {item.capaAction && (
-                  <p className="text-emerald-700 dark:text-emerald-400 text-[11px]">
-                    <strong>Hành động CAPA:</strong> {item.capaAction}
+            {docs.slice(0, 4).map((item) => {
+              const deptStyle = DEPT_COLORS[item.department] || { bg: '#E2E8F0', text: '#2D3748', border: '#CBD5E0' };
+              return (
+                <div
+                  key={item.id}
+                  className="p-2.5 rounded-lg bg-gray-50 dark:bg-[#282828] border border-gray-200 dark:border-[#383838] text-xs space-y-1 hover:border-blue-300 dark:hover:border-blue-700 transition-colors"
+                >
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      <span
+                        className="text-[10px] font-bold px-1.5 py-0.5 rounded border"
+                        style={{ backgroundColor: deptStyle.bg, color: deptStyle.text, borderColor: deptStyle.border }}
+                      >
+                        {item.department}
+                      </span>
+                      <span className="font-mono text-[11px] text-gray-500 dark:text-gray-400">
+                        {item.code}
+                      </span>
+                    </div>
+                    {item.driveLink && (
+                      <a
+                        href={item.driveLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[10px] text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-0.5 flex-shrink-0"
+                      >
+                        Mở file <ExternalLink className="w-2.5 h-2.5" />
+                      </a>
+                    )}
+                  </div>
+                  <h4 className="font-semibold text-gray-800 dark:text-gray-100 line-clamp-1">
+                    {item.title}
+                  </h4>
+                  <p className="text-gray-500 dark:text-gray-400 text-[11px] line-clamp-1">
+                    {item.summary}
                   </p>
-                )}
-              </div>
-            ))}
+                </div>
+              );
+            })}
           </div>
         </div>
 

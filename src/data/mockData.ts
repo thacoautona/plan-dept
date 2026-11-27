@@ -1,11 +1,11 @@
 import {
   PlanGoal,
-  GovernanceDoc,
-  ComplianceChecklistItem,
   OrgDepartment,
   RACIMatrixItem,
   DigitalInitiative
 } from '../types';
+
+export { mockGovernanceDocs } from './governanceData';
 
 export const mockPlanGoals: PlanGoal[] = [
   {
@@ -120,152 +120,6 @@ export const mockPlanGoals: PlanGoal[] = [
   }
 ];
 
-export const mockGovernanceDocs: GovernanceDoc[] = [
-  {
-    id: 'doc-1',
-    code: 'QC-TH-01/2026',
-    title: 'Quy chế Tổ chức và Hoạt động của THACO AUTO Nghệ An',
-    category: 'quy_che',
-    department: 'BGD',
-    version: 'V3.2',
-    effectiveDate: '2026-01-01',
-    status: 'active',
-    scope: 'Toàn bộ các phòng ban tại THACO AUTO Nghệ An',
-    summary: 'Quy định chức năng, quyền hạn, nguyên tắc điều hành và mối quan hệ công tác giữa Ban Giám đốc với các trưởng phòng nghiệp vụ.',
-    fileFormat: 'pdf',
-    fileSize: '1.8 MB',
-    tags: ['Tổ chức', 'Phân quyền', 'Ban Giám đốc', 'Nghệ An']
-  },
-  {
-    id: 'doc-2',
-    code: 'QĐ-KH-02/2026',
-    title: 'Quy định về Công tác Lập, Theo dõi & Đánh giá Kế hoạch Sản xuất Kinh doanh',
-    category: 'quy_dinh',
-    department: 'PKH',
-    version: 'V2.0',
-    effectiveDate: '2026-03-15',
-    status: 'active',
-    scope: 'Tất cả các phòng nghiệp vụ có chỉ tiêu KPI',
-    summary: 'Chi tiết biểu mẫu, mốc thời gian báo cáo tuần/tháng/quý, quy tắc chấm điểm hoàn thành kế hoạch và thẩm quyền tham mưu điều chỉnh chỉ tiêu.',
-    fileFormat: 'docx',
-    fileSize: '650 KB',
-    tags: ['Kế hoạch', 'KPI', 'Báo cáo', 'Nghiệp vụ cốt lõi']
-  },
-  {
-    id: 'doc-3',
-    code: 'QT-BH-05/2026',
-    title: 'Quy trình Tiếp nhận Khách hàng, Báo giá & Bàn giao Xe Du lịch mới (SOP Bán hàng)',
-    category: 'quy_trinh',
-    department: 'PKD-PC',
-    version: 'V4.1',
-    effectiveDate: '2026-06-01',
-    status: 'active',
-    scope: 'Tư vấn bán hàng, Admin kinh doanh, PDI Showroom TP. Vinh',
-    summary: 'Quy chuẩn 7 bước đón tiếp khách hàng, lập báo giá, ký hợp đồng, thu cọc, thủ tục đăng kiểm và lễ giao xe trang trọng theo tiêu chuẩn hãng.',
-    fileFormat: 'pdf',
-    fileSize: '3.2 MB',
-    tags: ['Bán hàng', 'Giao xe', 'Khách hàng', 'SOP']
-  },
-  {
-    id: 'doc-4',
-    code: 'QT-DV-03/2026',
-    title: 'Quy trình Tiếp nhận Dịch vụ, Báo giá Sửa chữa & Kiểm soát Chất lượng Xưởng (QC)',
-    category: 'quy_trinh',
-    department: 'PDV',
-    version: 'V2.5',
-    effectiveDate: '2026-07-10',
-    status: 'under_review',
-    scope: 'Cố vấn dịch vụ, Quản đốc xưởng, KTV sửa chữa',
-    summary: 'Quy trình kiểm tra xe vào xưởng, lập phiếu yêu cầu vật tư, giám sát tiến độ sửa chữa và nghiệm thu xuất xưởng an toàn.',
-    fileFormat: 'pdf',
-    fileSize: '2.4 MB',
-    tags: ['Dịch vụ', 'Bảo dưỡng', 'Xưởng 3S', 'QC']
-  },
-  {
-    id: 'doc-5',
-    code: 'HD-KS-01/2026',
-    title: 'Hướng dẫn Kiểm tra Tuân thủ 5S và An toàn Lao động tại Khu vực Showroom & Xưởng',
-    category: 'huong_dan',
-    department: 'PKH',
-    version: 'V1.3',
-    effectiveDate: '2026-04-01',
-    status: 'active',
-    scope: 'Toàn thể CB-CNV THACO AUTO Nghệ An',
-    summary: 'Bộ tiêu chí chấm điểm 5S hàng tuần, các biện pháp PCCC và quy tắc an toàn bảo hộ lao động cho kỹ thuật viên.',
-    fileFormat: 'pdf',
-    fileSize: '1.2 MB',
-    tags: ['5S', 'An toàn lao động', 'Kiểm soát tuân thủ']
-  },
-  {
-    id: 'doc-6',
-    code: 'BM-KH-08/2026',
-    title: 'Biểu mẫu Báo cáo Đánh giá Kết quả Thực hiện Mục tiêu Tháng & Đề xuất Giải pháp',
-    category: 'bieu_mau',
-    department: 'PKH',
-    version: 'V2.1',
-    effectiveDate: '2026-05-15',
-    status: 'active',
-    scope: 'Trưởng các phòng ban gửi Phòng Kế hoạch',
-    summary: 'Mẫu bảng tổng hợp số liệu thực hiện so với kế hoạch, phân tích khoảng cách sai lệch và cam kết hành động cải tiến.',
-    fileFormat: 'xlsx',
-    fileSize: '240 KB',
-    tags: ['Biểu mẫu', 'Kế hoạch', 'Báo cáo tháng']
-  }
-];
-
-export const mockComplianceChecklist: ComplianceChecklistItem[] = [
-  {
-    id: 'chk-1',
-    processCode: 'QT-BH-05',
-    processName: 'Bàn giao xe và lưu trữ hồ sơ thanh toán',
-    department: 'PKD-PC',
-    checkContent: '100% hồ sơ bàn giao xe có đầy đủ biên bản nghiệm thu PDI và chữ ký xác nhận của khách hàng trước khi xuất hóa đơn GTGT',
-    standard: 'Quy trình QT-BH-05 mục 4.3',
-    result: 'compliant',
-    findingNote: 'Kiểm tra ngẫu nhiên 20 bộ hồ sơ tháng 11 tại Showroom TP. Vinh: Toàn bộ đều đạt chuẩn, đầy đủ chứng từ.',
-    status: 'verified'
-  },
-  {
-    id: 'chk-2',
-    processCode: 'QT-DV-03',
-    processName: 'Báo giá phụ tùng thay thế cho khách hàng',
-    department: 'PDV',
-    checkContent: 'Cố vấn dịch vụ phải giải thích rõ mã phụ tùng, đơn giá và có sự đồng ý của khách hàng trước khi xuất kho lệnh sửa chữa',
-    standard: 'Quy chuẩn tiêu chuẩn dịch vụ Kia/Mazda',
-    result: 'minor_issue',
-    findingNote: 'Có 2 trường hợp xuất bổ sung phụ gia vệ sinh kim phun nhưng chưa giải thích trước cho khách, khách phản ánh khi thanh toán.',
-    capaAction: 'Họp chấn chỉnh đội ngũ Cố vấn dịch vụ, yêu cầu ký duyệt bổ sung trước khi kỹ thuật viên mở lệnh xuất kho.',
-    deadline: '2026-11-28',
-    responsiblePerson: 'Lê Hoàng Nam (Trưởng phòng DV)',
-    status: 'in_progress'
-  },
-  {
-    id: 'chk-3',
-    processCode: 'HD-KS-01',
-    processName: 'Duy trì tiêu chuẩn 5S khu vực tiếp khách và kho vật tư',
-    department: 'PNV',
-    checkContent: 'Khu vực trưng bày xe demo sạch sẽ, sàn không có vết dầu mỡ, kho vật tư dán nhãn định danh vị trí đầy đủ',
-    standard: 'Tiêu chuẩn Showroom chuẩn nhận diện THACO AUTO',
-    result: 'compliant',
-    findingNote: 'Đạt điểm kiểm tra 96/100 tại đợt kiểm tra ngày 22/11/2026.',
-    status: 'verified'
-  },
-  {
-    id: 'chk-4',
-    processCode: 'QĐ-KH-02',
-    processName: 'Gửi báo cáo số liệu kế hoạch định kỳ',
-    department: 'PKD-CV',
-    checkContent: 'Báo cáo tổng hợp số liệu tuần gửi về Phòng Kế hoạch trước 15h00 thứ Sáu hàng tuần',
-    standard: 'Quy định QĐ-KH-02 Điều 8',
-    result: 'non_compliant',
-    findingNote: 'Tuần 46 và 47 phòng nộp báo cáo chậm nửa ngày, gây chậm trễ tổng hợp báo cáo chung gửi Ban Giám đốc.',
-    capaAction: 'Phòng Kế hoạch cử Trợ lý Kế hoạch làm việc trực tiếp với Admin KD xe thương mại để chuẩn hóa file template tự động kéo số liệu.',
-    deadline: '2026-11-29',
-    responsiblePerson: 'Trần Đình Trọng (Trưởng phòng KD CV)',
-    status: 'open'
-  }
-];
-
 export const mockOrgDepartments: OrgDepartment[] = [
   {
     id: 'bgd',
@@ -284,7 +138,7 @@ export const mockOrgDepartments: OrgDepartment[] = [
   },
   {
     id: 'pkh',
-    code: 'PKH',
+    code: 'NVKH',
     name: 'Phòng Kế Hoạch & Quản Trị',
     parentDeptId: 'bgd',
     headName: 'Vũ Quốc Khánh',
@@ -301,8 +155,8 @@ export const mockOrgDepartments: OrgDepartment[] = [
   },
   {
     id: 'pkd-pc',
-    code: 'PKD-PC',
-    name: 'Phòng Kinh Doanh Xe Du Lịch',
+    code: 'KDDL',
+    name: 'Kinh Doanh Xe Du Lịch',
     parentDeptId: 'bgd',
     headName: 'Nguyễn Văn Minh',
     headTitle: 'Trưởng phòng Kinh doanh PC',
@@ -317,8 +171,8 @@ export const mockOrgDepartments: OrgDepartment[] = [
   },
   {
     id: 'pkd-cv',
-    code: 'PKD-CV',
-    name: 'Phòng Kinh Doanh Xe Tải & Bus',
+    code: 'KDTB',
+    name: 'Kinh Doanh Xe Tải & Bus',
     parentDeptId: 'bgd',
     headName: 'Trần Đình Trọng',
     headTitle: 'Trưởng phòng Kinh doanh CV',
@@ -333,14 +187,14 @@ export const mockOrgDepartments: OrgDepartment[] = [
   },
   {
     id: 'pdv',
-    code: 'PDV',
-    name: 'Phòng Dịch Vụ & Phụ Tùng',
+    code: 'DVD',
+    name: 'Kinh Doanh Dịch Vụ Phụ Tùng Du Lịch',
     parentDeptId: 'bgd',
     headName: 'Lê Hoàng Nam',
-    headTitle: 'Trưởng phòng Dịch vụ',
+    headTitle: 'Trưởng phòng Dịch vụ DL',
     headEmail: 'nam.lehoang@thaco.com.vn',
     personnelCount: 35,
-    mainFunction: 'Vận hành xưởng dịch vụ sửa chữa, bảo dưỡng định kỳ và cung ứng phụ tùng chính phẩm.',
+    mainFunction: 'Vận hành xưởng dịch vụ sửa chữa, bảo dưỡng định kỳ và cung ứng phụ tùng chính phẩm xe du lịch.',
     keyDuties: [
       'Đạt doanh thu dịch vụ và tỷ lệ hài lòng khách hàng sau dịch vụ (CSI > 95%)',
       'Đảm bảo an toàn lao động, tiêu chuẩn kỹ thuật tay nghề thợ sửa chữa',
@@ -349,7 +203,7 @@ export const mockOrgDepartments: OrgDepartment[] = [
   },
   {
     id: 'ptc',
-    code: 'PTC',
+    code: 'TCKT',
     name: 'Phòng Tài Chính - Kế Toán',
     parentDeptId: 'bgd',
     headName: 'Phạm Thị Thảo',
@@ -365,14 +219,14 @@ export const mockOrgDepartments: OrgDepartment[] = [
   },
   {
     id: 'pnv',
-    code: 'PNV',
-    name: 'Phòng Nhân Sự & Hành Chính',
+    code: 'HCNS',
+    name: 'Nhân Sự & Quản Trị Văn Phòng',
     parentDeptId: 'bgd',
     headName: 'Đỗ Thị Mai',
     headTitle: 'Trưởng phòng NS-HC',
     headEmail: 'mai.dothi@thaco.com.vn',
     personnelCount: 9,
-    mainFunction: 'Quản trị nhân sự, tiền lương, đào tạo nội bộ, hậu cần cơ sở vật chất và an ninh trật tự.',
+    mainFunction: 'Quản trị nhân sự, tiền lương, đào tạo nội bộ, an sinh và môi trường làm việc.',
     keyDuties: [
       'Tuyển dụng và điều phối nhân sự đáp ứng kế hoạch kinh doanh',
       'Tổ chức đào tạo nghiệp vụ và kiểm tra đánh giá tay nghề định kỳ',
@@ -385,37 +239,37 @@ export const mockRACIMatrix: RACIMatrixItem[] = [
   {
     processName: 'Xây dựng kế hoạch SXKD tháng / quý',
     category: 'Quản trị kế hoạch',
-    roles: { BGD: 'A', PKH: 'R', 'PKD-PC': 'C', 'PKD-CV': 'C', PDV: 'C', PTC: 'C', PNV: 'I' }
+    roles: { BGD: 'A', NVKH: 'R', KDDL: 'C', KDTB: 'C', DVD: 'C', TCKT: 'C', HCNS: 'I' }
   },
   {
     processName: 'Theo dõi, đánh giá & báo cáo tiến độ KPI tuần',
     category: 'Quản trị kế hoạch',
-    roles: { BGD: 'I', PKH: 'R', 'PKD-PC': 'C', 'PKD-CV': 'C', PDV: 'C', PTC: 'C', PNV: 'I' }
+    roles: { BGD: 'I', NVKH: 'R', KDDL: 'C', KDTB: 'C', DVD: 'C', TCKT: 'C', HCNS: 'I' }
   },
   {
     processName: 'Tham mưu giải pháp nâng cao tỷ lệ hoàn thành',
     category: 'Quản trị kế hoạch',
-    roles: { BGD: 'A', PKH: 'R', 'PKD-PC': 'C', 'PKD-CV': 'C', PDV: 'C', PTC: 'I', PNV: 'I' }
+    roles: { BGD: 'A', NVKH: 'R', KDDL: 'C', KDTB: 'C', DVD: 'C', TCKT: 'I', HCNS: 'I' }
   },
   {
     processName: 'Biên soạn, sửa đổi Quy trình tác nghiệp (SOP)',
     category: 'Tài liệu quản trị',
-    roles: { BGD: 'A', PKH: 'R', 'PKD-PC': 'C', 'PKD-CV': 'C', PDV: 'C', PTC: 'C', PNV: 'C' }
+    roles: { BGD: 'A', NVKH: 'R', KDDL: 'C', KDTB: 'C', DVD: 'C', TCKT: 'C', HCNS: 'C' }
   },
   {
     processName: 'Tổ chức đào tạo & phổ biến quy trình mới',
     category: 'Tài liệu quản trị',
-    roles: { BGD: 'I', PKH: 'A', 'PKD-PC': 'I', 'PKD-CV': 'I', PDV: 'I', PTC: 'I', PNV: 'R' }
+    roles: { BGD: 'I', NVKH: 'A', KDDL: 'I', KDTB: 'I', DVD: 'I', TCKT: 'I', HCNS: 'R' }
   },
   {
     processName: 'Kiểm tra tuân thủ quy trình & lập báo cáo CAPA',
     category: 'Kiểm soát tuân thủ',
-    roles: { BGD: 'A', PKH: 'R', 'PKD-PC': 'I', 'PKD-CV': 'I', PDV: 'I', PTC: 'I', PNV: 'I' }
+    roles: { BGD: 'A', NVKH: 'R', KDDL: 'I', KDTB: 'I', DVD: 'I', TCKT: 'I', HCNS: 'I' }
   },
   {
     processName: 'Triển khai dự án Số hóa & Công cụ phần mềm mới',
     category: 'Chuyển đổi số',
-    roles: { BGD: 'A', PKH: 'R', 'PKD-PC': 'C', 'PKD-CV': 'C', PDV: 'C', PTC: 'C', PNV: 'C' }
+    roles: { BGD: 'A', NVKH: 'R', KDDL: 'C', KDTB: 'C', DVD: 'C', TCKT: 'C', HCNS: 'C' }
   }
 ];
 

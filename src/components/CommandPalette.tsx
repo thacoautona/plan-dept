@@ -55,7 +55,8 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
     (d) =>
       d.title.toLowerCase().includes(query.toLowerCase()) ||
       d.code.toLowerCase().includes(query.toLowerCase()) ||
-      d.tags.some((t) => t.toLowerCase().includes(query.toLowerCase()))
+      d.department.toLowerCase().includes(query.toLowerCase()) ||
+      d.summary.toLowerCase().includes(query.toLowerCase())
   );
 
   const filteredDepts = departments.filter(

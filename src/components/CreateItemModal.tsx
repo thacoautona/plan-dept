@@ -71,18 +71,19 @@ export const CreateItemModal: React.FC<CreateItemModalProps> = ({
 
     const newDoc: GovernanceDoc = {
       id: `doc-${Date.now()}`,
+      stt: Date.now(),
       code: docCode,
       title: docTitle.trim(),
       category: docCategory,
+      categoryLabel: docCategory === 'quy_dinh' ? 'Quy định' : docCategory === 'quy_trinh' ? 'Quy trình' : 'Thông báo',
+      sourceLevel: 'NOI_BO',
+      sourceLabel: 'THACO AUTO Nghệ An',
       department: docDept,
-      version: 'V1.0',
+      departmentName: docDept,
+      approvedBy: 'TGĐ Cty',
       effectiveDate: new Date().toISOString().split('T')[0],
-      status: 'active',
-      scope: docScope,
-      summary: docSummary || 'Văn bản quản trị nội bộ đơn vị.',
-      fileFormat: 'pdf',
-      fileSize: '500 KB',
-      tags: [docCategory, docDept]
+      summary: docSummary || 'Văn bản quy định tác nghiệp nội bộ.',
+      driveLink: ''
     };
 
     onAddDoc(newDoc);
