@@ -37,11 +37,41 @@ interface DashboardViewProps {
   onNavigateTab: (tab: ActiveTab) => void;
 }
 
+function parseVnDate(dateStr?: string): number {
+  if (!dateStr) return 0;
+  const m = dateStr.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if (m) {
+    return new Date(Number(m[3]), Number(m[2]) - 1, Number(m[1])).getTime();
+  }
+  const y = dateStr.match(/(\d{4})/);
+  return y ? new Date(Number(y[1]), 0, 1).getTime() : 0;
+}
+
 export const DashboardView: React.FC<DashboardViewProps> = ({
   weeklyReport,
   docs,
   onNavigateTab
 }) => {
+  const latestDocs = React.useMemo(
+    () =>
+      [...docs]
+        .sort((a, b) => parseVnDate(b.effectiveDate) - parseVnDate(a.effectiveDate))
+        .slice(0, 4),
+    [docs]
+  );
+
+  const latestDatabaseFiles = React.useMemo(() => {
+    let userFiles: typeof SYSTEM_DATABASE_FILES = [];
+    try {
+      const saved = localStorage.getItem('thaco_na_database_files_v1');
+      if (saved) userFiles = JSON.parse(saved);
+    } catch {
+      // ignore
+    }
+    return [...userFiles, ...SYSTEM_DATABASE_FILES]
+      .sort((a, b) => parseVnDate(b.updatedAt) - parseVnDate(a.updatedAt))
+      .slice(0, 4);
+  }, []);
   const pcTotal = sumVehicleSegment(weeklyReport.vehicles, 'PC');
   const cvTotal = sumVehicleSegment(weeklyReport.vehicles, 'CV');
   const dvptDl = sumServicePlan(weeklyReport.services[0]);
@@ -352,7 +382,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             </button>
           </div>
           <div className="space-y-2.5">
-            {docs.slice(0, 4).map((item) => {
+            {latestDocs.map((item) => {
               const deptStyle = DEPT_COLORS[item.department] || { bg: '#E2E8F0', text: '#2D3748', border: '#CBD5E0' };
               return (
                 <div
@@ -370,6 +400,9 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                       <span className="font-mono text-[11px] text-gray-500 dark:text-gray-400">
                         {item.code}
                       </span>
+                      {item.effectiveDate && (
+                        <span className="text-[10px] text-gray-400">• {item.effectiveDate}</span>
+                      )}
                     </div>
                     {item.driveLink && (
                       <a
@@ -409,7 +442,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             </button>
           </div>
           <div className="space-y-2.5">
-            {SYSTEM_DATABASE_FILES.slice(0, 4).map((file) => (
+            {latestDatabaseFiles.map((file) => (
               <div
                 key={file.id}
                 className="p-2.5 rounded-lg bg-gray-50 dark:bg-[#282828] border border-gray-200 dark:border-[#383838] text-xs space-y-1"

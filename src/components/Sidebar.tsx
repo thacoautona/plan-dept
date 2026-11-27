@@ -41,7 +41,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       iconName: 'presentation_chart' as AppIconName,
       badge: undefined,
       desc: 'Báo cáo tóm tắt & Tham mưu',
-      adminOnly: true
+      adminOnly: false
     },
     {
       id: 'planning' as ActiveTab,

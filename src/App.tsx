@@ -73,18 +73,9 @@ export function App() {
     }
   });
   const isAdmin = isAdminUser(authUser);
-  const [activeTab, setActiveTab] = useState<ActiveTab>(() =>
-    isAdminUser(authUser) ? 'dashboard' : 'governance'
-  );
+  const [activeTab, setActiveTab] = useState<ActiveTab>('dashboard');
   const [isAuthPreview, setIsAuthPreview] = useState(false);
   const [isAdminSecretOpen, setIsAdminSecretOpen] = useState(false);
-
-  // If user logs out or is not admin and is on an admin-only tab, redirect to governance
-  useEffect(() => {
-    if (!isAdmin && activeTab === 'dashboard') {
-      setActiveTab('governance');
-    }
-  }, [isAdmin, activeTab]);
 
   const handleLogin = (user: AuthUser) => {
     setAuthUser(user);
