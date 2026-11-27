@@ -135,6 +135,51 @@ for slide_num in range(24, 52):
             })
             pos_counter += 1
 
+            # Bổ sung 3 vị trí Ban Lãnh đạo còn thiếu ngay sau P.TGĐ Cty PT Kinh doanh xe Du Lịch
+            if slide_num == 24 and "P.TGĐ" in raw_title:
+                extra_bgd = [
+                    (
+                        "P.TGĐ Cty PT KD DVPT xe Du Lịch",
+                        [
+                            "Chịu trách nhiệm quản trị và điều hành toàn diện hoạt động Kinh doanh Dịch vụ Phụ tùng xe Du lịch tại Công ty và các Xưởng dịch vụ/Showroom theo chỉ đạo của TGĐ Công ty.",
+                            "Chỉ đạo xây dựng và kiểm soát thực hiện chỉ tiêu doanh thu DVPT, lượt xe dịch vụ, chỉ số hài lòng khách hàng (CSI) và hiệu quả vận hành xưởng.",
+                            "Quản trị định biên, phát triển đội ngũ nhân sự DVPT, kiểm soát tuân thủ tiêu chuẩn kỹ thuật, layout xưởng và quy trình bảo hành - sửa chữa.",
+                            "Phối hợp chặt chẽ với các khối nghiệp vụ quản trị cơ bản, chuyên ngành và VPĐH để tối ưu chi phí, tồn kho phụ tùng và chất lượng dịch vụ."
+                        ]
+                    ),
+                    (
+                        "GĐ KD xe Tải, Bus",
+                        [
+                            "Chịu trách nhiệm quản trị, điều hành và kiểm soát toàn bộ hoạt động Kinh doanh xe Tải, Bus tại Công ty và các Showroom/Đại lý trực thuộc.",
+                            "Tổ chức nghiên cứu thị trường, hoạch định kế hoạch doanh số, thị phần, chính sách bán hàng, đặt hàng - điều phối và quản trị tồn kho xe Tải, Bus.",
+                            "Chỉ đạo phát triển khách hàng doanh nghiệp, vận tải, dự án tại địa bàn; kiểm soát tiến độ hợp đồng, giải ngân và thu hồi công nợ.",
+                            "Xây dựng, đào tạo đội ngũ bán hàng xe thương mại và đảm bảo tuân thủ các quy định, quy trình kinh doanh của THACO AUTO."
+                        ]
+                    ),
+                    (
+                        "GĐ KD DVPT xe Tải, Bus",
+                        [
+                            "Chịu trách nhiệm quản trị, điều hành và kiểm soát hoạt động Kinh doanh Dịch vụ Phụ tùng xe Tải, Bus tại Công ty và các Điểm xưởng.",
+                            "Tổ chức thực hiện chỉ tiêu doanh thu DVPT, lượt xe sửa chữa/bảo dưỡng, dịch vụ lưu động (Mobile Service) và chăm sóc khách hàng vận tải.",
+                            "Quản trị công tác cung ứng phụ tùng, vật tư, trang thiết bị xưởng, quy trình bảo hành và tiêu chuẩn kỹ thuật sửa chữa xe Tải, Bus.",
+                            "Phối hợp triển khai đào tạo nâng cao tay nghề kỹ thuật viên và kiểm soát tuân thủ an toàn lao động, 5S tại xưởng dịch vụ."
+                        ]
+                    )
+                ]
+                for ex_title, ex_duties in extra_bgd:
+                    positions.append({
+                        "id": f"pos-{pos_counter}",
+                        "order": pos_counter,
+                        "slide": slide_num,
+                        "deptCode": dept_code,
+                        "deptName": dept_name,
+                        "category": category,
+                        "title": ex_title,
+                        "tier": 1,
+                        "duties": ex_duties
+                    })
+                    pos_counter += 1
+
 print(f"Extracted {len(dept_functions)} functional areas and {len(positions)} positions.")
 
 ts_content = f"""export interface DeptFunctionSection {{

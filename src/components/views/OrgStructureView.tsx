@@ -26,15 +26,17 @@ type PositionViewMode = 'cards' | 'table';
 type SortMode = 'default' | 'tier' | 'dept' | 'title';
 
 const DEPT_TAG_STYLES: Record<string, { bg: string; text: string; border: string }> = {
-  // Kinh doanh xe (#FFC5C5)
+  // Kinh doanh xe, Xe QSD, Showroom & Hỗ trợ KD (#FFC5C5)
   KDX: { bg: '#FFC5C5', text: '#7F1D1D', border: '#FCA5A5' },
   SR_KD: { bg: '#FFC5C5', text: '#7F1D1D', border: '#FCA5A5' },
   KDDL: { bg: '#FFC5C5', text: '#7F1D1D', border: '#FCA5A5' },
   KDTB: { bg: '#FFC5C5', text: '#7F1D1D', border: '#FCA5A5' },
-  // Dịch vụ phụ tùng & Xe đã QSD (#BFBFBF)
+  QSD: { bg: '#FFC5C5', text: '#7F1D1D', border: '#FCA5A5' },
+  HTKD: { bg: '#FFC5C5', text: '#7F1D1D', border: '#FCA5A5' },
+  BGD: { bg: '#FFC5C5', text: '#7F1D1D', border: '#FCA5A5' },
+  // Dịch vụ phụ tùng DL & Tải Bus (#BFBFBF)
   DVPT: { bg: '#BFBFBF', text: '#1F2937', border: '#9CA3AF' },
   SR_DV: { bg: '#BFBFBF', text: '#1F2937', border: '#9CA3AF' },
-  QSD: { bg: '#BFBFBF', text: '#1F2937', border: '#9CA3AF' },
   DVDL: { bg: '#BFBFBF', text: '#1F2937', border: '#9CA3AF' },
   DVTB: { bg: '#BFBFBF', text: '#1F2937', border: '#9CA3AF' },
   'DVDL / DVTB': { bg: '#BFBFBF', text: '#1F2937', border: '#9CA3AF' },
@@ -44,19 +46,20 @@ const DEPT_TAG_STYLES: Record<string, { bg: string; text: string; border: string
   QTVP: { bg: '#FFFCD5', text: '#713F12', border: '#FDE047' },
   NVKH: { bg: '#FFFCD5', text: '#713F12', border: '#FDE047' },
   MKT: { bg: '#FFFCD5', text: '#713F12', border: '#FDE047' },
-  // Tiêu chuẩn hoạt động, CSVC, QLCL & Kho xe (#E1FFFF)
+  // NVCN: TCHĐ & CSVC, QLCL & Kho xe, Quản trị Chi phí Giá thành, Tín dụng Bảo hiểm (#E1FFFF)
   TCHĐ: { bg: '#E1FFFF', text: '#134E4A', border: '#5EEAD4' },
   QLCL: { bg: '#E1FFFF', text: '#134E4A', border: '#5EEAD4' },
-  NVCN: { bg: '#E1FFFF', text: '#134E4A', border: '#5EEAD4' },
-  // Các nhóm chờ xác nhận thêm màu (tạm dùng màu trung tính)
-  BGD: { bg: '#DBEAFE', text: '#1E3A8A', border: '#93C5FD' },
-  QTCP: { bg: '#F3F4F6', text: '#374151', border: '#D1D5DB' },
-  TDBH: { bg: '#F3F4F6', text: '#374151', border: '#D1D5DB' },
-  HTKD: { bg: '#F3F4F6', text: '#374151', border: '#D1D5DB' }
+  QTCP: { bg: '#E1FFFF', text: '#134E4A', border: '#5EEAD4' },
+  TDBH: { bg: '#E1FFFF', text: '#134E4A', border: '#5EEAD4' },
+  NVCN: { bg: '#E1FFFF', text: '#134E4A', border: '#5EEAD4' }
 };
 
-const getTagStyle = (deptCode: string) =>
-  DEPT_TAG_STYLES[deptCode] || { bg: '#F3F4F6', text: '#374151', border: '#D1D5DB' };
+const getTagStyle = (deptCode: string, title?: string) => {
+  if (title && title.trim() === 'TGĐ Công ty') {
+    return { bg: '#BFBFBF', text: '#1F2937', border: '#9CA3AF' };
+  }
+  return DEPT_TAG_STYLES[deptCode] || { bg: '#F3F4F6', text: '#374151', border: '#D1D5DB' };
+};
 
 const TIER_LABELS: Record<number, { label: string; badgeBg: string; badgeText: string }> = {
   1: {
@@ -432,7 +435,7 @@ export const OrgStructureView: React.FC = () => {
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
                           {group.items.map((pos) => {
                             const isSelected = activePos?.id === pos.id;
-                            const tagStyle = getTagStyle(pos.deptCode);
+                            const tagStyle = getTagStyle(pos.deptCode, pos.title);
 
                             return (
                               <div
@@ -504,9 +507,9 @@ export const OrgStructureView: React.FC = () => {
                       <span
                         className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border"
                         style={{
-                          backgroundColor: getTagStyle(activePos.deptCode).bg,
-                          color: getTagStyle(activePos.deptCode).text,
-                          borderColor: getTagStyle(activePos.deptCode).border
+                          backgroundColor: getTagStyle(activePos.deptCode, activePos.title).bg,
+                          color: getTagStyle(activePos.deptCode, activePos.title).text,
+                          borderColor: getTagStyle(activePos.deptCode, activePos.title).border
                         }}
                       >
                         {activePos.deptName}
@@ -590,7 +593,7 @@ export const OrgStructureView: React.FC = () => {
                   </thead>
                   <tbody className="divide-y divide-[#E9E9E7] dark:divide-[#2F2F2F] text-xs">
                     {filteredPositions.map((pos, idx) => {
-                      const tagStyle = getTagStyle(pos.deptCode);
+                      const tagStyle = getTagStyle(pos.deptCode, pos.title);
                       return (
                         <tr
                           key={pos.id}

@@ -745,6 +745,54 @@ export const orgPositionsData: OrgPositionItem[] = [
     "deptCode": "BGD",
     "deptName": "Ban Lãnh đạo Công ty",
     "category": "Lãnh đạo",
+    "title": "P.TGĐ Cty PT KD DVPT xe Du Lịch",
+    "tier": 1,
+    "duties": [
+      "Chịu trách nhiệm quản trị và điều hành toàn diện hoạt động Kinh doanh Dịch vụ Phụ tùng xe Du lịch tại Công ty và các Xưởng dịch vụ/Showroom theo chỉ đạo của TGĐ Công ty.",
+      "Chỉ đạo xây dựng và kiểm soát thực hiện chỉ tiêu doanh thu DVPT, lượt xe dịch vụ, chỉ số hài lòng khách hàng (CSI) và hiệu quả vận hành xưởng.",
+      "Quản trị định biên, phát triển đội ngũ nhân sự DVPT, kiểm soát tuân thủ tiêu chuẩn kỹ thuật, layout xưởng và quy trình bảo hành - sửa chữa.",
+      "Phối hợp chặt chẽ với các khối nghiệp vụ quản trị cơ bản, chuyên ngành và VPĐH để tối ưu chi phí, tồn kho phụ tùng và chất lượng dịch vụ."
+    ]
+  },
+  {
+    "id": "pos-4",
+    "order": 4,
+    "slide": 24,
+    "deptCode": "BGD",
+    "deptName": "Ban Lãnh đạo Công ty",
+    "category": "Lãnh đạo",
+    "title": "GĐ KD xe Tải, Bus",
+    "tier": 1,
+    "duties": [
+      "Chịu trách nhiệm quản trị, điều hành và kiểm soát toàn bộ hoạt động Kinh doanh xe Tải, Bus tại Công ty và các Showroom/Đại lý trực thuộc.",
+      "Tổ chức nghiên cứu thị trường, hoạch định kế hoạch doanh số, thị phần, chính sách bán hàng, đặt hàng - điều phối và quản trị tồn kho xe Tải, Bus.",
+      "Chỉ đạo phát triển khách hàng doanh nghiệp, vận tải, dự án tại địa bàn; kiểm soát tiến độ hợp đồng, giải ngân và thu hồi công nợ.",
+      "Xây dựng, đào tạo đội ngũ bán hàng xe thương mại và đảm bảo tuân thủ các quy định, quy trình kinh doanh của THACO AUTO."
+    ]
+  },
+  {
+    "id": "pos-5",
+    "order": 5,
+    "slide": 24,
+    "deptCode": "BGD",
+    "deptName": "Ban Lãnh đạo Công ty",
+    "category": "Lãnh đạo",
+    "title": "GĐ KD DVPT xe Tải, Bus",
+    "tier": 1,
+    "duties": [
+      "Chịu trách nhiệm quản trị, điều hành và kiểm soát hoạt động Kinh doanh Dịch vụ Phụ tùng xe Tải, Bus tại Công ty và các Điểm xưởng.",
+      "Tổ chức thực hiện chỉ tiêu doanh thu DVPT, lượt xe sửa chữa/bảo dưỡng, dịch vụ lưu động (Mobile Service) và chăm sóc khách hàng vận tải.",
+      "Quản trị công tác cung ứng phụ tùng, vật tư, trang thiết bị xưởng, quy trình bảo hành và tiêu chuẩn kỹ thuật sửa chữa xe Tải, Bus.",
+      "Phối hợp triển khai đào tạo nâng cao tay nghề kỹ thuật viên và kiểm soát tuân thủ an toàn lao động, 5S tại xưởng dịch vụ."
+    ]
+  },
+  {
+    "id": "pos-6",
+    "order": 6,
+    "slide": 24,
+    "deptCode": "BGD",
+    "deptName": "Ban Lãnh đạo Công ty",
+    "category": "Lãnh đạo",
     "title": "GĐ Showroom",
     "tier": 1,
     "duties": [
@@ -761,8 +809,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-4",
-    "order": 4,
+    "id": "pos-7",
+    "order": 7,
     "slide": 25,
     "deptCode": "KDX",
     "deptName": "Kinh doanh Xe (VP Công ty)",
@@ -782,8 +830,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-5",
-    "order": 5,
+    "id": "pos-8",
+    "order": 8,
     "slide": 25,
     "deptCode": "KDX",
     "deptName": "Kinh doanh Xe (VP Công ty)",
@@ -802,8 +850,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-6",
-    "order": 6,
+    "id": "pos-9",
+    "order": 9,
     "slide": 25,
     "deptCode": "KDX",
     "deptName": "Kinh doanh Xe (VP Công ty)",
@@ -822,8 +870,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-7",
-    "order": 7,
+    "id": "pos-10",
+    "order": 10,
     "slide": 26,
     "deptCode": "KDX",
     "deptName": "Kinh doanh Xe (VP Công ty)",
@@ -841,8 +889,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-8",
-    "order": 8,
+    "id": "pos-11",
+    "order": 11,
     "slide": 26,
     "deptCode": "KDX",
     "deptName": "Kinh doanh Xe (VP Công ty)",
@@ -860,8 +908,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-9",
-    "order": 9,
+    "id": "pos-12",
+    "order": 12,
     "slide": 26,
     "deptCode": "KDX",
     "deptName": "Kinh doanh Xe (VP Công ty)",
@@ -880,8 +928,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-10",
-    "order": 10,
+    "id": "pos-13",
+    "order": 13,
     "slide": 26,
     "deptCode": "KDX",
     "deptName": "Kinh doanh Xe (VP Công ty)",
@@ -899,8 +947,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-11",
-    "order": 11,
+    "id": "pos-14",
+    "order": 14,
     "slide": 27,
     "deptCode": "KDX",
     "deptName": "Kinh doanh Xe (VP Công ty)",
@@ -918,8 +966,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-12",
-    "order": 12,
+    "id": "pos-15",
+    "order": 15,
     "slide": 27,
     "deptCode": "KDX",
     "deptName": "Kinh doanh Xe (VP Công ty)",
@@ -937,8 +985,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-13",
-    "order": 13,
+    "id": "pos-16",
+    "order": 16,
     "slide": 27,
     "deptCode": "KDX",
     "deptName": "Kinh doanh Xe (VP Công ty)",
@@ -956,8 +1004,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-14",
-    "order": 14,
+    "id": "pos-17",
+    "order": 17,
     "slide": 27,
     "deptCode": "KDX",
     "deptName": "Kinh doanh Xe (VP Công ty)",
@@ -975,8 +1023,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-15",
-    "order": 15,
+    "id": "pos-18",
+    "order": 18,
     "slide": 28,
     "deptCode": "QSD",
     "deptName": "Kinh doanh Xe Du lịch đã QSD",
@@ -997,8 +1045,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-16",
-    "order": 16,
+    "id": "pos-19",
+    "order": 19,
     "slide": 28,
     "deptCode": "QSD",
     "deptName": "Kinh doanh Xe Du lịch đã QSD",
@@ -1016,8 +1064,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-17",
-    "order": 17,
+    "id": "pos-20",
+    "order": 20,
     "slide": 28,
     "deptCode": "QSD",
     "deptName": "Kinh doanh Xe Du lịch đã QSD",
@@ -1039,8 +1087,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-18",
-    "order": 18,
+    "id": "pos-21",
+    "order": 21,
     "slide": 29,
     "deptCode": "SR_KD",
     "deptName": "Bán hàng Xe - Showroom",
@@ -1062,8 +1110,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-19",
-    "order": 19,
+    "id": "pos-22",
+    "order": 22,
     "slide": 29,
     "deptCode": "SR_KD",
     "deptName": "Bán hàng Xe - Showroom",
@@ -1083,8 +1131,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-20",
-    "order": 20,
+    "id": "pos-23",
+    "order": 23,
     "slide": 30,
     "deptCode": "SR_KD",
     "deptName": "Bán hàng Xe - Showroom",
@@ -1102,8 +1150,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-21",
-    "order": 21,
+    "id": "pos-24",
+    "order": 24,
     "slide": 30,
     "deptCode": "SR_KD",
     "deptName": "Bán hàng Xe - Showroom",
@@ -1120,8 +1168,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-22",
-    "order": 22,
+    "id": "pos-25",
+    "order": 25,
     "slide": 31,
     "deptCode": "DVPT",
     "deptName": "Kinh doanh Dịch vụ Phụ tùng (VP Công ty)",
@@ -1141,8 +1189,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-23",
-    "order": 23,
+    "id": "pos-26",
+    "order": 26,
     "slide": 31,
     "deptCode": "DVPT",
     "deptName": "Kinh doanh Dịch vụ Phụ tùng (VP Công ty)",
@@ -1161,8 +1209,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-24",
-    "order": 24,
+    "id": "pos-27",
+    "order": 27,
     "slide": 31,
     "deptCode": "DVPT",
     "deptName": "Kinh doanh Dịch vụ Phụ tùng (VP Công ty)",
@@ -1181,8 +1229,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-25",
-    "order": 25,
+    "id": "pos-28",
+    "order": 28,
     "slide": 32,
     "deptCode": "DVPT",
     "deptName": "Kinh doanh Dịch vụ Phụ tùng (VP Công ty)",
@@ -1199,8 +1247,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-26",
-    "order": 26,
+    "id": "pos-29",
+    "order": 29,
     "slide": 32,
     "deptCode": "DVPT",
     "deptName": "Kinh doanh Dịch vụ Phụ tùng (VP Công ty)",
@@ -1218,8 +1266,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-27",
-    "order": 27,
+    "id": "pos-30",
+    "order": 30,
     "slide": 32,
     "deptCode": "DVPT",
     "deptName": "Kinh doanh Dịch vụ Phụ tùng (VP Công ty)",
@@ -1238,8 +1286,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-28",
-    "order": 28,
+    "id": "pos-31",
+    "order": 31,
     "slide": 32,
     "deptCode": "DVPT",
     "deptName": "Kinh doanh Dịch vụ Phụ tùng (VP Công ty)",
@@ -1256,8 +1304,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-29",
-    "order": 29,
+    "id": "pos-32",
+    "order": 32,
     "slide": 32,
     "deptCode": "DVPT",
     "deptName": "Kinh doanh Dịch vụ Phụ tùng (VP Công ty)",
@@ -1273,8 +1321,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-30",
-    "order": 30,
+    "id": "pos-33",
+    "order": 33,
     "slide": 33,
     "deptCode": "DVPT",
     "deptName": "Kinh doanh Dịch vụ Phụ tùng (VP Công ty)",
@@ -1292,8 +1340,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-31",
-    "order": 31,
+    "id": "pos-34",
+    "order": 34,
     "slide": 33,
     "deptCode": "DVPT",
     "deptName": "Kinh doanh Dịch vụ Phụ tùng (VP Công ty)",
@@ -1310,8 +1358,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-32",
-    "order": 32,
+    "id": "pos-35",
+    "order": 35,
     "slide": 33,
     "deptCode": "DVPT",
     "deptName": "Kinh doanh Dịch vụ Phụ tùng (VP Công ty)",
@@ -1327,8 +1375,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-33",
-    "order": 33,
+    "id": "pos-36",
+    "order": 36,
     "slide": 34,
     "deptCode": "DVPT",
     "deptName": "Kinh doanh Dịch vụ Phụ tùng (VP Công ty)",
@@ -1347,8 +1395,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-34",
-    "order": 34,
+    "id": "pos-37",
+    "order": 37,
     "slide": 34,
     "deptCode": "DVPT",
     "deptName": "Kinh doanh Dịch vụ Phụ tùng (VP Công ty)",
@@ -1364,8 +1412,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-35",
-    "order": 35,
+    "id": "pos-38",
+    "order": 38,
     "slide": 34,
     "deptCode": "DVPT",
     "deptName": "Kinh doanh Dịch vụ Phụ tùng (VP Công ty)",
@@ -1381,8 +1429,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-36",
-    "order": 36,
+    "id": "pos-39",
+    "order": 39,
     "slide": 34,
     "deptCode": "DVPT",
     "deptName": "Kinh doanh Dịch vụ Phụ tùng (VP Công ty)",
@@ -1398,8 +1446,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-37",
-    "order": 37,
+    "id": "pos-40",
+    "order": 40,
     "slide": 34,
     "deptCode": "DVPT",
     "deptName": "Kinh doanh Dịch vụ Phụ tùng (VP Công ty)",
@@ -1415,8 +1463,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-38",
-    "order": 38,
+    "id": "pos-41",
+    "order": 41,
     "slide": 35,
     "deptCode": "SR_DV",
     "deptName": "Dịch vụ Phụ tùng - Showroom",
@@ -1436,8 +1484,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-39",
-    "order": 39,
+    "id": "pos-42",
+    "order": 42,
     "slide": 35,
     "deptCode": "SR_DV",
     "deptName": "Dịch vụ Phụ tùng - Showroom",
@@ -1457,8 +1505,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-40",
-    "order": 40,
+    "id": "pos-43",
+    "order": 43,
     "slide": 35,
     "deptCode": "SR_DV",
     "deptName": "Dịch vụ Phụ tùng - Showroom",
@@ -1476,8 +1524,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-41",
-    "order": 41,
+    "id": "pos-44",
+    "order": 44,
     "slide": 35,
     "deptCode": "SR_DV",
     "deptName": "Dịch vụ Phụ tùng - Showroom",
@@ -1492,8 +1540,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-42",
-    "order": 42,
+    "id": "pos-45",
+    "order": 45,
     "slide": 36,
     "deptCode": "SR_DV",
     "deptName": "Dịch vụ Phụ tùng - Showroom",
@@ -1511,8 +1559,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-43",
-    "order": 43,
+    "id": "pos-46",
+    "order": 46,
     "slide": 36,
     "deptCode": "SR_DV",
     "deptName": "Dịch vụ Phụ tùng - Showroom",
@@ -1527,8 +1575,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-44",
-    "order": 44,
+    "id": "pos-47",
+    "order": 47,
     "slide": 36,
     "deptCode": "SR_DV",
     "deptName": "Dịch vụ Phụ tùng - Showroom",
@@ -1544,8 +1592,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-45",
-    "order": 45,
+    "id": "pos-48",
+    "order": 48,
     "slide": 37,
     "deptCode": "SR_DV",
     "deptName": "Dịch vụ Phụ tùng - Showroom",
@@ -1564,8 +1612,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-46",
-    "order": 46,
+    "id": "pos-49",
+    "order": 49,
     "slide": 37,
     "deptCode": "SR_DV",
     "deptName": "Dịch vụ Phụ tùng - Showroom",
@@ -1582,8 +1630,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-47",
-    "order": 47,
+    "id": "pos-50",
+    "order": 50,
     "slide": 37,
     "deptCode": "SR_DV",
     "deptName": "Dịch vụ Phụ tùng - Showroom",
@@ -1598,8 +1646,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-48",
-    "order": 48,
+    "id": "pos-51",
+    "order": 51,
     "slide": 38,
     "deptCode": "QTCP",
     "deptName": "Quản trị Chi phí, Giá thành",
@@ -1620,8 +1668,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-49",
-    "order": 49,
+    "id": "pos-52",
+    "order": 52,
     "slide": 38,
     "deptCode": "QTCP",
     "deptName": "Quản trị Chi phí, Giá thành",
@@ -1640,8 +1688,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-50",
-    "order": 50,
+    "id": "pos-53",
+    "order": 53,
     "slide": 38,
     "deptCode": "QTCP",
     "deptName": "Quản trị Chi phí, Giá thành",
@@ -1661,8 +1709,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-51",
-    "order": 51,
+    "id": "pos-54",
+    "order": 54,
     "slide": 39,
     "deptCode": "TCHĐ",
     "deptName": "Quản lý TCHĐ & Cơ sở vật chất",
@@ -1686,8 +1734,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-52",
-    "order": 52,
+    "id": "pos-55",
+    "order": 55,
     "slide": 39,
     "deptCode": "TCHĐ",
     "deptName": "Quản lý TCHĐ & Cơ sở vật chất",
@@ -1707,8 +1755,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-53",
-    "order": 53,
+    "id": "pos-56",
+    "order": 56,
     "slide": 39,
     "deptCode": "TCHĐ",
     "deptName": "Quản lý TCHĐ & Cơ sở vật chất",
@@ -1731,8 +1779,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-54",
-    "order": 54,
+    "id": "pos-57",
+    "order": 57,
     "slide": 40,
     "deptCode": "QLCL",
     "deptName": "Quản lý Chất lượng, GNVC & Kho xe",
@@ -1754,8 +1802,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-55",
-    "order": 55,
+    "id": "pos-58",
+    "order": 58,
     "slide": 40,
     "deptCode": "QLCL",
     "deptName": "Quản lý Chất lượng, GNVC & Kho xe",
@@ -1774,8 +1822,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-56",
-    "order": 56,
+    "id": "pos-59",
+    "order": 59,
     "slide": 41,
     "deptCode": "QLCL",
     "deptName": "Quản lý Chất lượng, GNVC & Kho xe",
@@ -1792,8 +1840,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-57",
-    "order": 57,
+    "id": "pos-60",
+    "order": 60,
     "slide": 41,
     "deptCode": "QLCL",
     "deptName": "Quản lý Chất lượng, GNVC & Kho xe",
@@ -1812,8 +1860,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-58",
-    "order": 58,
+    "id": "pos-61",
+    "order": 61,
     "slide": 42,
     "deptCode": "TDBH",
     "deptName": "Hỗ trợ Tín dụng, Bảo hiểm",
@@ -1838,8 +1886,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-59",
-    "order": 59,
+    "id": "pos-62",
+    "order": 62,
     "slide": 42,
     "deptCode": "TDBH",
     "deptName": "Hỗ trợ Tín dụng, Bảo hiểm",
@@ -1860,8 +1908,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-60",
-    "order": 60,
+    "id": "pos-63",
+    "order": 63,
     "slide": 42,
     "deptCode": "TDBH",
     "deptName": "Hỗ trợ Tín dụng, Bảo hiểm",
@@ -1881,8 +1929,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-61",
-    "order": 61,
+    "id": "pos-64",
+    "order": 64,
     "slide": 43,
     "deptCode": "NVKH",
     "deptName": "Kế hoạch Tổng hợp",
@@ -1902,8 +1950,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-62",
-    "order": 62,
+    "id": "pos-65",
+    "order": 65,
     "slide": 44,
     "deptCode": "TCKT",
     "deptName": "Kế toán – Tài chính",
@@ -1926,8 +1974,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-63",
-    "order": 63,
+    "id": "pos-66",
+    "order": 66,
     "slide": 44,
     "deptCode": "TCKT",
     "deptName": "Kế toán – Tài chính",
@@ -1948,8 +1996,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-64",
-    "order": 64,
+    "id": "pos-67",
+    "order": 67,
     "slide": 44,
     "deptCode": "TCKT",
     "deptName": "Kế toán – Tài chính",
@@ -1969,8 +2017,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-65",
-    "order": 65,
+    "id": "pos-68",
+    "order": 68,
     "slide": 45,
     "deptCode": "HCNS",
     "deptName": "Nghiệp vụ Nhân sự",
@@ -1990,8 +2038,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-66",
-    "order": 66,
+    "id": "pos-69",
+    "order": 69,
     "slide": 45,
     "deptCode": "HCNS",
     "deptName": "Nghiệp vụ Nhân sự",
@@ -2009,8 +2057,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-67",
-    "order": 67,
+    "id": "pos-70",
+    "order": 70,
     "slide": 45,
     "deptCode": "HCNS",
     "deptName": "Nghiệp vụ Nhân sự",
@@ -2030,8 +2078,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-68",
-    "order": 68,
+    "id": "pos-71",
+    "order": 71,
     "slide": 46,
     "deptCode": "MKT",
     "deptName": "Marketing",
@@ -2051,8 +2099,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-69",
-    "order": 69,
+    "id": "pos-72",
+    "order": 72,
     "slide": 46,
     "deptCode": "MKT",
     "deptName": "Marketing",
@@ -2071,8 +2119,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-70",
-    "order": 70,
+    "id": "pos-73",
+    "order": 73,
     "slide": 46,
     "deptCode": "MKT",
     "deptName": "Marketing",
@@ -2091,8 +2139,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-71",
-    "order": 71,
+    "id": "pos-74",
+    "order": 74,
     "slide": 47,
     "deptCode": "QTVP",
     "deptName": "Quản trị Văn phòng & An sinh đời sống",
@@ -2111,8 +2159,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-72",
-    "order": 72,
+    "id": "pos-75",
+    "order": 75,
     "slide": 47,
     "deptCode": "QTVP",
     "deptName": "Quản trị Văn phòng & An sinh đời sống",
@@ -2132,8 +2180,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-73",
-    "order": 73,
+    "id": "pos-76",
+    "order": 76,
     "slide": 47,
     "deptCode": "QTVP",
     "deptName": "Quản trị Văn phòng & An sinh đời sống",
@@ -2153,8 +2201,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-74",
-    "order": 74,
+    "id": "pos-77",
+    "order": 77,
     "slide": 48,
     "deptCode": "HTKD",
     "deptName": "Hỗ trợ Kinh doanh",
@@ -2179,8 +2227,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-75",
-    "order": 75,
+    "id": "pos-78",
+    "order": 78,
     "slide": 48,
     "deptCode": "HTKD",
     "deptName": "Hỗ trợ Kinh doanh",
@@ -2204,8 +2252,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-76",
-    "order": 76,
+    "id": "pos-79",
+    "order": 79,
     "slide": 49,
     "deptCode": "HTKD",
     "deptName": "Hỗ trợ Kinh doanh",
@@ -2227,8 +2275,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-77",
-    "order": 77,
+    "id": "pos-80",
+    "order": 80,
     "slide": 49,
     "deptCode": "HTKD",
     "deptName": "Hỗ trợ Kinh doanh",
@@ -2248,8 +2296,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-78",
-    "order": 78,
+    "id": "pos-81",
+    "order": 81,
     "slide": 50,
     "deptCode": "HTKD",
     "deptName": "Hỗ trợ Kinh doanh",
@@ -2268,8 +2316,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-79",
-    "order": 79,
+    "id": "pos-82",
+    "order": 82,
     "slide": 50,
     "deptCode": "HTKD",
     "deptName": "Hỗ trợ Kinh doanh",
@@ -2289,8 +2337,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-80",
-    "order": 80,
+    "id": "pos-83",
+    "order": 83,
     "slide": 51,
     "deptCode": "HTKD",
     "deptName": "Hỗ trợ Kinh doanh",
@@ -2311,8 +2359,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-81",
-    "order": 81,
+    "id": "pos-84",
+    "order": 84,
     "slide": 51,
     "deptCode": "HTKD",
     "deptName": "Hỗ trợ Kinh doanh",
@@ -2331,8 +2379,8 @@ export const orgPositionsData: OrgPositionItem[] = [
     ]
   },
   {
-    "id": "pos-82",
-    "order": 82,
+    "id": "pos-85",
+    "order": 85,
     "slide": 51,
     "deptCode": "HTKD",
     "deptName": "Hỗ trợ Kinh doanh",
