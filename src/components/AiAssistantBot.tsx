@@ -5,7 +5,9 @@ import {
   Send,
   ExternalLink,
   Bot,
-  Trash2
+  Trash2,
+  Copy,
+  Check
 } from 'lucide-react';
 import { BOT_CONFIG } from '../config/botConfig';
 import { retrieveCompactContext, BotSourceLink } from '../utils/botSearch';
@@ -30,11 +32,85 @@ const SUGGESTIONS = [
   'Tóm tắt chức năng mảng Kinh doanh Xe Du lịch'
 ];
 
+function renderInlineMarkdown(text: string): React.ReactNode[] {
+  const parts = text.split(/(\*\*[^*]+\*\*|`[^`]+`)/g);
+  return parts.map((part, idx) => {
+    if (part.startsWith('**') && part.endsWith('**') && part.length > 4) {
+      return (
+        <strong key={idx} className="font-semibold text-[#111827] dark:text-white">
+          {part.slice(2, -2)}
+        </strong>
+      );
+    }
+    if (part.startsWith('`') && part.endsWith('`') && part.length > 2) {
+      return (
+        <code
+          key={idx}
+          className="px-1 py-0.5 rounded bg-gray-100 dark:bg-gray-800 font-mono text-[11px] text-[#004B87] dark:text-blue-300"
+        >
+          {part.slice(1, -1)}
+        </code>
+      );
+    }
+    return <React.Fragment key={idx}>{part}</React.Fragment>;
+  });
+}
+
+function FormattedBotMessage({ text }: { text: string }) {
+  const lines = text.split('\n');
+  return (
+    <div className="space-y-1.5">
+      {lines.map((rawLine, idx) => {
+        const line = rawLine.trim();
+        if (!line) return <div key={idx} className="h-1" />;
+
+        // Headings
+        if (line.startsWith('### ') || line.startsWith('## ')) {
+          const content = line.replace(/^#{2,3}\s+/, '');
+          return (
+            <div key={idx} className="font-bold text-[#004B87] dark:text-blue-300 pt-1">
+              {renderInlineMarkdown(content)}
+            </div>
+          );
+        }
+
+        // Bullet points (- , * , • )
+        if (/^[-*•]\s+/.test(line)) {
+          const content = line.replace(/^[-*•]\s+/, '');
+          return (
+            <div key={idx} className="flex items-start gap-2 pl-0.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#004B87] dark:bg-blue-400 mt-1.5 flex-shrink-0" />
+              <div className="flex-1">{renderInlineMarkdown(content)}</div>
+            </div>
+          );
+        }
+
+        // Numbered list (1. , 2. )
+        const numMatch = line.match(/^(\d+)\.\s+(.*)$/);
+        if (numMatch) {
+          return (
+            <div key={idx} className="flex items-start gap-2 pl-0.5">
+              <span className="font-mono text-[11px] font-bold text-[#004B87] dark:text-blue-400 mt-0.2 flex-shrink-0">
+                {numMatch[1]}.
+              </span>
+              <div className="flex-1">{renderInlineMarkdown(numMatch[2])}</div>
+            </div>
+          );
+        }
+
+        // Normal paragraph
+        return <p key={idx}>{renderInlineMarkdown(line)}</p>;
+      })}
+    </div>
+  );
+}
+
 export const AiAssistantBot: React.FC<AiAssistantBotProps> = ({ authUser }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [cooldownLeft, setCooldownLeft] = useState(0);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 'welcome',
@@ -198,13 +274,40 @@ export const AiAssistantBot: React.FC<AiAssistantBotProps> = ({ authUser }) => {
                 className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'}`}
               >
                 <div
-                  className={`max-w-[88%] px-3.5 py-2.5 rounded-2xl text-xs leading-relaxed whitespace-pre-line ${
+                  className={`group relative max-w-[90%] px-3.5 py-2.5 rounded-2xl text-xs leading-relaxed ${
                     msg.role === 'user'
-                      ? 'bg-[#004B87] text-white rounded-br-sm'
+                      ? 'bg-[#004B87] text-white rounded-br-sm whitespace-pre-line'
                       : 'bg-white dark:bg-[#252525] text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-[#333] rounded-bl-sm shadow-2xs'
                   }`}
                 >
-                  {msg.text}
+                  {msg.role === 'assistant' ? (
+                    <>
+                      <FormattedBotMessage text={msg.text} />
+                      {msg.id !== 'welcome' && (
+                        <button
+                          onClick={() => {
+                            navigator.clipboard.writeText(msg.text.replace(/\*\*/g, ''));
+                            setCopiedId(msg.id);
+                            setTimeout(() => setCopiedId(null), 1500);
+                          }}
+                          className="mt-2 inline-flex items-center gap-1 text-[10px] text-gray-400 hover:text-[#004B87] dark:hover:text-blue-400 transition-colors"
+                          title="Copy câu trả lời"
+                        >
+                          {copiedId === msg.id ? (
+                            <>
+                              <Check className="w-3 h-3 text-emerald-600" /> Đã copy
+                            </>
+                          ) : (
+                            <>
+                              <Copy className="w-3 h-3" /> Copy
+                            </>
+                          )}
+                        </button>
+                      )}
+                    </>
+                  ) : (
+                    msg.text
+                  )}
                 </div>
 
                 {/* Source Links */}
