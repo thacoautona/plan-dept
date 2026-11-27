@@ -50,7 +50,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       iconName: 'target_goal' as AppIconName,
       badge: stats.plansCount,
       desc: 'Mục tiêu, Tiến độ & KPI',
-      adminOnly: true
+      adminOnly: false
     },
     {
       id: 'database' as ActiveTab,

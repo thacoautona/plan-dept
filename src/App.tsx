@@ -84,7 +84,7 @@ export function App() {
 
   // If user logs out or is not admin and is on an admin-only tab, redirect to governance
   useEffect(() => {
-    if (!isAdmin && (activeTab === 'dashboard' || activeTab === 'planning' || activeTab === 'digital')) {
+    if (!isAdmin && (activeTab === 'dashboard' || activeTab === 'digital')) {
       setActiveTab('governance');
     }
   }, [isAdmin, activeTab]);
