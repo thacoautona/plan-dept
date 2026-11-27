@@ -1,4 +1,4 @@
-import { realGovernanceDocs } from '../data/governanceData';
+import { mockGovernanceDocs } from '../data/governanceData';
 import { orgPositionsData, deptFunctionAreas } from '../data/orgData';
 import { SYSTEM_DATABASE_FILES } from '../data/databaseData';
 
@@ -43,7 +43,7 @@ export function retrieveCompactContext(query: string): MiniRagResult {
   const candidates: { score: number; text: string; source: BotSourceLink }[] = [];
 
   // 1. Search Governance Docs (223 docs)
-  for (const doc of realGovernanceDocs) {
+  for (const doc of mockGovernanceDocs) {
     const hay = `${doc.code} ${doc.title} ${doc.department} ${doc.departmentName} ${doc.summary}`;
     const s = scoreMatch(hay, tokens);
     if (s > 0) {
