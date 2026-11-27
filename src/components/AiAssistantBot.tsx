@@ -107,7 +107,7 @@ export const AiAssistantBot: React.FC<AiAssistantBotProps> = ({ authUser }) => {
     try {
       const response = await fetch(BOT_CONFIG.WORKER_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify({
           query: clippedQuery,
           context: contextText
