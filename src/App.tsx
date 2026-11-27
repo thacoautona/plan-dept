@@ -9,6 +9,7 @@ import { OrgStructureView } from './components/views/OrgStructureView';
 import { DigitalTransformationView } from './components/views/DigitalTransformationView';
 import { AuthGate } from './components/AuthGate';
 import { AdminSecretModal } from './components/AdminSecretModal';
+import { AiAssistantBot } from './components/AiAssistantBot';
 import { AUTH_CONFIG, AuthUser, isEmailAuthorized, isAdminUser } from './config/authConfig';
 import { logActivity } from './utils/activityLogger';
 import { CommandPalette } from './components/CommandPalette';
@@ -320,6 +321,9 @@ ${digitalList
           onClose={() => setIsAdminSecretOpen(false)}
         />
       )}
+
+      {/* AI Assistant Bot */}
+      <AiAssistantBot authUser={authUser} />
     </div>
   );
 }
