@@ -32,13 +32,21 @@ function scoreMatch(text: string, tokens: string[]): number {
   return score;
 }
 
+const STOP_WORDS = new Set([
+  'nhiem', 'vu', 'cua', 'la', 'gi', 'cho', 'toi', 'tim', 'tom', 'tat',
+  've', 'va', 'cac', 'tai', 'nhung', 'nay', 'do', 'duoc', 'trong', 'theo',
+  'quy', 'trinh', 'dinh', 'chuc', 'danh', 'ban', 'phong', 'bo', 'phan'
+]);
+
 /**
  * Mini-RAG cục bộ: Lọc nhanh tối đa 5 mục khớp nhất trong 223 văn bản, 85 chức danh & kho dữ liệu
  * để tiết kiệm 90-95% lượng token gửi lên Gemini.
  */
 export function retrieveCompactContext(query: string): MiniRagResult {
   const normQuery = normalizeText(query);
-  const tokens = Array.from(new Set(normQuery.split(/\s+/).filter((w) => w.length >= 2)));
+  const rawTokens = Array.from(new Set(normQuery.split(/\s+/).filter((w) => w.length >= 2)));
+  const meaningfulTokens = rawTokens.filter((w) => !STOP_WORDS.has(w));
+  const tokens = meaningfulTokens.length > 0 ? meaningfulTokens : rawTokens;
 
   const candidates: { score: number; text: string; source: BotSourceLink }[] = [];
 
