@@ -83,16 +83,16 @@ export const Header: React.FC<HeaderProps> = ({
           <span className="hidden md:inline">Xuất báo cáo</span>
         </button>
 
-        {/* Gmail Auth Preview / Status */}
+        {/* Auth / Login Button */}
         {onOpenAuthPreview && (
           <button
             onClick={onOpenAuthPreview}
             className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium text-[#444] dark:text-[#DDD] hover:bg-[#EAEAEA] dark:hover:bg-[#2A2A2A] transition-colors border border-[#E0E0DE] dark:border-[#383838]"
-            title="Đăng nhập / Kiểm tra phân quyền Gmail"
+            title="Đăng nhập hệ thống"
           >
             <LogIn className="w-3.5 h-3.5 text-[#004B87] dark:text-blue-400" />
             <span className="hidden lg:inline">
-              {authUser ? authUser.email : 'Đăng nhập Gmail'}
+              {authUser ? authUser.name : 'Đăng nhập'}
             </span>
           </button>
         )}

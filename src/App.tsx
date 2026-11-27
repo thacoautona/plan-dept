@@ -8,7 +8,9 @@ import { GovernanceView } from './components/views/GovernanceView';
 import { OrgStructureView } from './components/views/OrgStructureView';
 import { DigitalTransformationView } from './components/views/DigitalTransformationView';
 import { AuthGate } from './components/AuthGate';
+import { AdminSecretModal } from './components/AdminSecretModal';
 import { AUTH_CONFIG, AuthUser, isEmailAuthorized, isAdminUser } from './config/authConfig';
+import { logActivity } from './utils/activityLogger';
 import { CommandPalette } from './components/CommandPalette';
 import { PlanDetailModal } from './components/PlanDetailModal';
 import { CreateItemModal } from './components/CreateItemModal';
@@ -41,9 +43,18 @@ export function App() {
     }
   });
   const [isAuthPreview, setIsAuthPreview] = useState(false);
+  const [isAdminSecretOpen, setIsAdminSecretOpen] = useState(false);
 
   const handleLogin = (user: AuthUser) => {
     setAuthUser(user);
+    setIsAuthPreview(false);
+    logActivity({
+      userEmail: user.email,
+      userName: user.name,
+      method: user.method || 'google',
+      action: 'login',
+      detail: 'Đăng nhập hệ thống thành công'
+    });
     try {
       localStorage.setItem('thaco_na_auth_user', JSON.stringify(user));
     } catch {
@@ -52,7 +63,17 @@ export function App() {
   };
 
   const handleLogout = () => {
+    if (authUser) {
+      logActivity({
+        userEmail: authUser.email,
+        userName: authUser.name,
+        method: authUser.method || 'google',
+        action: 'logout',
+        detail: 'Đăng xuất hệ thống'
+      });
+    }
     setAuthUser(null);
+    setIsAdminSecretOpen(false);
     try {
       localStorage.removeItem('thaco_na_auth_user');
     } catch {
@@ -74,17 +95,35 @@ export function App() {
     }
   }, [darkMode]);
 
-  // Keyboard shortcut Ctrl+K
+  // Keyboard shortcuts: Ctrl+K (Search) & Ctrl+Shift+A (Hidden Admin Console)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
         setIsSearchOpen((prev) => !prev);
       }
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'a') {
+        if (isAdminUser(authUser)) {
+          e.preventDefault();
+          setIsAdminSecretOpen((prev) => !prev);
+        }
+      }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  }, [authUser]);
+
+  // Log tab changes
+  const handleSelectTab = (tab: ActiveTab) => {
+    setActiveTab(tab);
+    logActivity({
+      userEmail: authUser?.email || 'khach',
+      userName: authUser?.name || 'Khách truy cập',
+      method: authUser?.method || 'guest',
+      action: 'view_tab',
+      detail: `Truy cập mục: ${tab}`
+    });
+  };
 
   // Handlers
   const handleSavePlan = (updatedPlan: PlanGoal) => {
@@ -159,7 +198,7 @@ ${digitalList
     URL.revokeObjectURL(url);
   };
 
-  const isLockedOut = AUTH_CONFIG.REQUIRE_AUTH && (!authUser || !isEmailAuthorized(authUser.email));
+  const isLockedOut = AUTH_CONFIG.REQUIRE_AUTH && (!authUser || !isEmailAuthorized(authUser));
 
   if (isLockedOut || isAuthPreview) {
     return (
@@ -178,7 +217,7 @@ ${digitalList
       {/* Sidebar Navigation */}
       <Sidebar
         activeTab={activeTab}
-        setActiveTab={setActiveTab}
+        setActiveTab={handleSelectTab}
         isCollapsed={isSidebarCollapsed}
         setIsCollapsed={setIsSidebarCollapsed}
         darkMode={darkMode}
@@ -223,7 +262,7 @@ ${digitalList
             />
           )}
 
-          {activeTab === 'database' && <DatabaseView isAdmin={isAdminUser(authUser?.email)} />}
+          {activeTab === 'database' && <DatabaseView isAdmin={isAdminUser(authUser)} />}
 
           {activeTab === 'governance' && (
             <GovernanceView
@@ -273,6 +312,14 @@ ${digitalList
         onAddPlan={handleAddPlan}
         onAddDoc={handleAddDoc}
       />
+
+      {/* Hidden Admin Audit & Account Modal (Only accessible by Admin via Ctrl+Shift+A) */}
+      {isAdminUser(authUser) && (
+        <AdminSecretModal
+          isOpen={isAdminSecretOpen}
+          onClose={() => setIsAdminSecretOpen(false)}
+        />
+      )}
     </div>
   );
 }
