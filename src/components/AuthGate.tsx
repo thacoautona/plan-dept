@@ -54,29 +54,48 @@ export const AuthGate: React.FC<AuthGateProps> = ({
 }) => {
   const googleBtnRef = useRef<HTMLDivElement | null>(null);
   const [showSetupHint, setShowSetupHint] = useState(false);
+  const [gsiReady, setGsiReady] = useState(false);
 
   useEffect(() => {
-    if (!user && AUTH_CONFIG.GOOGLE_CLIENT_ID && window.google?.accounts?.id && googleBtnRef.current) {
-      window.google.accounts.id.initialize({
-        client_id: AUTH_CONFIG.GOOGLE_CLIENT_ID,
-        callback: (res) => {
-          const payload = decodeJwtPayload(res.credential);
-          if (payload.email) {
-            onLogin({
-              email: payload.email,
-              name: payload.name || payload.email,
-              picture: payload.picture
-            });
+    if (user || !AUTH_CONFIG.GOOGLE_CLIENT_ID) return;
+
+    const initGoogle = () => {
+      if (window.google?.accounts?.id && googleBtnRef.current) {
+        window.google.accounts.id.initialize({
+          client_id: AUTH_CONFIG.GOOGLE_CLIENT_ID,
+          callback: (res) => {
+            const payload = decodeJwtPayload(res.credential);
+            if (payload.email) {
+              onLogin({
+                email: payload.email,
+                name: payload.name || payload.email,
+                picture: payload.picture
+              });
+            }
           }
-        }
-      });
-      window.google.accounts.id.renderButton(googleBtnRef.current, {
-        theme: 'outline',
-        size: 'large',
-        width: 310,
-        text: 'signin_with'
-      });
-    }
+        });
+        googleBtnRef.current.innerHTML = '';
+        window.google.accounts.id.renderButton(googleBtnRef.current, {
+          theme: 'outline',
+          size: 'large',
+          width: 310,
+          text: 'signin_with'
+        });
+        setGsiReady(true);
+        return true;
+      }
+      return false;
+    };
+
+    if (initGoogle()) return;
+
+    const interval = setInterval(() => {
+      if (initGoogle()) {
+        clearInterval(interval);
+      }
+    }, 200);
+
+    return () => clearInterval(interval);
   }, [user, onLogin]);
 
   // Case 1: Logged in with Google, but NOT in ALLOWED_EMAILS / ADMIN_EMAILS
@@ -144,7 +163,12 @@ export const AuthGate: React.FC<AuthGateProps> = ({
         </div>
 
         {AUTH_CONFIG.GOOGLE_CLIENT_ID ? (
-          <div className="flex justify-center" ref={googleBtnRef} />
+          <div className="space-y-2">
+            <div className="flex justify-center min-h-[44px]" ref={googleBtnRef} />
+            {!gsiReady && (
+              <p className="text-[11px] text-gray-400">Đang tải nút đăng nhập Google...</p>
+            )}
+          </div>
         ) : (
           <div className="space-y-3">
             <button
