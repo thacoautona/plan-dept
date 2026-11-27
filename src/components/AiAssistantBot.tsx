@@ -169,7 +169,7 @@ export const AiAssistantBot: React.FC<AiAssistantBotProps> = ({ authUser }) => {
               <div>
                 <h3 className="text-xs font-bold leading-tight">{BOT_CONFIG.BOT_NAME}</h3>
                 <p className="text-[10px] text-blue-100">
-                  {BOT_CONFIG.WORKER_URL ? 'Gemini Flash-Lite • Bảo mật Proxy' : 'Tìm kiếm nhanh (Chưa gắn Worker AI)'}
+                  {BOT_CONFIG.WORKER_URL ? 'Bảo mật Proxy' : 'Tìm kiếm nhanh (Chưa gắn Worker AI)'}
                 </p>
               </div>
             </div>
